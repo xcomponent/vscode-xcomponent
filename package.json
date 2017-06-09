@@ -1,19 +1,17 @@
 {
-  "name": "component-viewer",
-  "displayName": "component-viewer",
-  "description": "A sample illustrating the use of TextContentProviders and the `vscode.previewHtml` command, introduce in 0.10.7",
-  "version": "0.0.10",
+  "name": "vscode-xcomponent",
+  "displayName": "vscode-xcomponent",
+  "description": "",
+  "version": "1.0.0",
+  "publisher": "xcomponent",
   "license": "Apache-2.0",
-  "publisher": "eg2",
-  "galleryBanner": {
-    "color": "#5c2d91",
-    "theme": "dark"
-  },
   "bugs": {
-    "email": "egamma@microsoft.com"
+    "email": "dev@xcomponent.com",
+    "url": "https://github.com/xcomponent/vscode-xcomponent/issues"
   },
   "repository": {
-    "type": "git"
+    "type": "git",
+    "url": "https://github.com/xcomponent/vscode-xcomponent"
   },
   "categories": [
     "Other"
@@ -22,21 +20,28 @@
     "vscode": "^1.11.0"
   },
   "activationEvents": [
-    "onLanguage:xml"
+    "*"
   ],
   "main": "out/extension",
   "contributes": {
     "commands": [
       {
-        "command": "extension.component-view",
-        "title": "Component-view"
+        "command": "component-viewer",
+        "title": "XCViewer: View cxml file"
       }
-    ]
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "component-viewer"
+        }
+      ]
+    }
   },
   "scripts": {
-    "build": "npm run vscode:prepublish && webpack",
-    "vscode:prepublish": "tsc -p ./",
-    "compile": "tsc -watch -p ./",
+    "build": "npm run build:script && npm run build:extension",
+    "build:script": "webpack -p",
+    "build:extension": "tsc -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "tslint": "tslint -c tslint.json src/extension.ts"
   },
@@ -48,8 +53,6 @@
   },
   "devDependencies": {
     "awesome-typescript-loader": "^3.0.0-beta.17",
-    "babel-polyfill": "^6.23.0",
-    "babel-runtime": "^6.20.0",
     "clean-webpack-plugin": "^0.1.16",
     "compression": "^1.6.2",
     "css-loader": "^0.26.1",

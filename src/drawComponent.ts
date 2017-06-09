@@ -7,10 +7,7 @@ import { NodeDataArrayTemplate, LinkDataArrayTemplate } from "gojsTemplates";
 export class DrawComponent {
 
     private $: any;
-    public diagram: go.Diagram;
-
-    constructor() {
-    }
+    private diagram: go.Diagram;
 
     draw(parser: Parser, divId: string): void {
         this.$ = go.GraphObject.make;
@@ -143,7 +140,3 @@ export class DrawComponent {
         return go.Model.fromJson(data);
     }
 }
-
-
-
-
