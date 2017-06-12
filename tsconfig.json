@@ -1,18 +1,17 @@
 {
-    "compilerOptions": {
-        "sourceMap": true,
-        "allowJs": true,
-        "module": "commonjs",
-        "target": "es5",
-        "jsx": "react",
-        "baseUrl": "src",
-        "outDir": "out"
-    },
+	"compilerOptions": {
+		"module": "commonjs",
+		"target": "es5",
+		"outDir": "out",
+		"sourceMap": true,
+		"rootDir": ".",
+        "baseUrl": "src"
+	},
     "include": [
-        "./src"
+        "./src",
+        "./test"
     ],
-    "exclude": [
-        "node_modules",
-        ".vscode-test"
-    ]
+	"exclude": [
+		"node_modules"
+	]
 }

@@ -11,3 +11,4 @@ settings.json
 *.orig
 out/
 dist/
+.vscode-test

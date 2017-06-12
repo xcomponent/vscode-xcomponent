@@ -13,7 +13,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		const filePath = uri.fsPath;
 		if (!/.cxml$/.test(uri.fsPath)) {
-			vscode.window.showWarningMessage("Selected file is not an cxml document");
+			vscode.window.showWarningMessage("Selected file is not a cxml document");
 			return;
 		}
 		const tmp = filePath.split(path.sep);
