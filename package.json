@@ -47,12 +47,14 @@
     "test": "node ./node_modules/vscode/bin/test"
   },
   "dependencies": {
+    "@types/mocha": "2.2.39",
+    "@types/node": "^7.0.5",
     "fs-extra": "^3.0.1",
     "gojs": "^1.7.9",
+    "mocha": "^3.4.2",
     "path": "^0.12.7",
     "vscode": "^1.1.0",
-    "@types/mocha": "2.2.39",
-    "@types/node": "^7.0.5"
+    "xml2js": "^0.4.17"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^3.0.0-beta.17",
