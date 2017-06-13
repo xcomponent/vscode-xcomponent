@@ -1,0 +1,15 @@
+node_modules/
+coverage/
+test_output/
+test_out/
+.DS_Store
+*.tgz
+dist/
+lib/
+junit.xml
+settings.json
+*.orig
+out/
+dist/
+.vscode-test
+package-lock.json
