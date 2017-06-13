@@ -5,7 +5,6 @@ import { ComponentGraphicalModel } from "parserObjects";
 export default class TextDocumentContentProvider implements vscode.TextDocumentContentProvider {
 
     private _onDidChange = new vscode.EventEmitter<vscode.Uri>();
-    private _waiting: boolean = false;
     private context: vscode.ExtensionContext;
     private componentGraphicalModel: ComponentGraphicalModel;
 
@@ -47,12 +46,6 @@ export default class TextDocumentContentProvider implements vscode.TextDocumentC
     }
 
     public update(uri: vscode.Uri) {
-        if (!this._waiting) {
-            this._waiting = true;
-            setTimeout(() => {
-                this._waiting = false;
-                this._onDidChange.fire(uri);
-            }, 300);
-        }
+        this._onDidChange.fire(uri);
     }
 }

@@ -1,9 +1,9 @@
 {
-  "name": "vscode-xcomponent",
-  "displayName": "vscode-xcomponent",
+  "name": "xcomponent",
+  "displayName": "XComponent",
   "description": "XComponent Viewer for Visual Studio Code",
-  "version": "1.0.0",
-  "publisher": "xcomponent",
+  "version": "0.1.0",
+  "publisher": "XComponent",
   "license": "Apache-2.0",
   "bugs": {
     "email": "dev@xcomponent.com",
