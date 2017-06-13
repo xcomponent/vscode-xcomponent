@@ -1,0 +1,12 @@
+.vscode/**
+typings/**
+out/test/**
+test/**
+src/**
+**/*.map
+.gitignore
+tsconfig.json
+tslint.json
+README.md
+setup-jasmine-env.js
+webpack.config.js
