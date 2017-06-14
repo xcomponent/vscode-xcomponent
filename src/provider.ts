@@ -25,7 +25,7 @@ export default class TextDocumentContentProvider implements vscode.TextDocumentC
 						margin: 0;
 					}
    				</style>`;
-        const script = `<script src="${this.getPath("dist/bundle.js")}" model='${this.componentGraphicalModel.model}' graphical='${this.componentGraphicalModel.graphical}'></script>`;
+        const script = `<script type="text/javascript" src="file:///${this.getPath("dist/bundle.js")}" model='${this.componentGraphicalModel.model}' graphical='${this.componentGraphicalModel.graphical}'></script>`;
         const html = `<!DOCTYPE html>
 				<html>
 					${style}
