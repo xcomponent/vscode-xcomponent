@@ -26,6 +26,7 @@ export class DrawComponent {
             $(go.Diagram, divId,
                 {
                     contentAlignment: go.Spot.Center,
+                    "animationManager.isInitial": false,
                     InitialLayoutCompleted: (e) => { thisObject.loadControls(e.diagram); }
                 });
         return diagram;
