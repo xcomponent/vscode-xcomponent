@@ -4,6 +4,7 @@
 	"version": "0.2.0",
 	"scripts": {
 		"postinstall": "node .build/postinstall.js",
-		"compile": "cd viewer && npm run compile && cd .. && cd extension && npm run vscode:prepublish"    
+		"compile": "cd viewer && npm run compile && cd .. && cd extension && npm run vscode:prepublish",
+		"tslint": "cd viewer && npm run tslint && cd .. && cd extension && npm run tslint"
 	}
 }
