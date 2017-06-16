@@ -6,6 +6,3 @@ src/**
 .gitignore
 tsconfig.json
 tslint.json
-README.md
-setup-jasmine-env.js
-webpack.config.js

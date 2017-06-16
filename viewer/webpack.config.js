@@ -4,9 +4,9 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const BUILD_DIR = path.resolve(__dirname, "dist");
+const BUILD_DIR = path.resolve(__dirname, "../extension/out/viewer");
 const APP_DIR = path.resolve(__dirname, "src");
-
+console.error(APP_DIR);
 const config = {
     entry: ["babel-polyfill", APP_DIR + "/index.ts"],
     devtool: "cheap-module-source-map",
@@ -55,7 +55,7 @@ const config = {
         ],
     module: {
         rules: [
-            { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
+            { test: /\.tsx?$/, loader: "ts-loader" },
             {
                 test: /\.tsx?$/,
                 enforce: "pre",

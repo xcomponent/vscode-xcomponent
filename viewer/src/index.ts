@@ -1,5 +1,5 @@
-import { Parser } from "parser";
-import { DrawComponent } from "drawComponent";
+import { Parser } from "./parser";
+import { DrawComponent } from "./drawComponent";
 
 const component = {
   model: document.currentScript.getAttribute("model"),

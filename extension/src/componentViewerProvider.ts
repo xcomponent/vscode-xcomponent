@@ -1,16 +1,17 @@
 import * as vscode from "vscode";
 import * as path from "path";
-import { ComponentGraphicalModel } from "parserObjects";
 
-export default class TextDocumentContentProvider implements vscode.TextDocumentContentProvider {
+export class ComponentViewerProvider implements vscode.TextDocumentContentProvider {
 
     private _onDidChange = new vscode.EventEmitter<vscode.Uri>();
     private context: vscode.ExtensionContext;
-    private componentGraphicalModel: ComponentGraphicalModel;
+    private model: string;
+    private graphicalModel: string;
 
-    public constructor(context: vscode.ExtensionContext, componentGraphicalModel: ComponentGraphicalModel) {
+    public constructor(context: vscode.ExtensionContext, model: string, graphicalModel: string) {
         this.context = context;
-        this.componentGraphicalModel = componentGraphicalModel;
+        this.model = model;
+        this.graphicalModel = graphicalModel;
     }
 
     public provideTextDocumentContent(uri: vscode.Uri): string {
@@ -25,7 +26,7 @@ export default class TextDocumentContentProvider implements vscode.TextDocumentC
 						margin: 0;
 					}
    				</style>`;
-        const script = `<script type="text/javascript" src="file:///${this.getPath("dist/bundle.js")}" model='${this.componentGraphicalModel.model}' graphical='${this.componentGraphicalModel.graphical}'></script>`;
+        const script = `<script type="text/javascript" src="file:///${this.getPath("out/viewer/bundle.js")}" model='${this.model}' graphical='${this.graphicalModel}'></script>`;
         const html = `<!DOCTYPE html>
 				<html>
 					${style}

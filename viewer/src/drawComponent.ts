@@ -1,8 +1,8 @@
 
 import * as go from "gojs";
-import { Parser } from "parser";
-import { stateMachineColor } from "graphicColors";
-import { NodeDataArrayTemplate, LinkDataArrayTemplate } from "gojsTemplates";
+import { Parser } from "./parser";
+import { stateMachineColor } from "./graphicColors";
+import { NodeDataArrayTemplate, LinkDataArrayTemplate } from "./gojsTemplates";
 
 export class DrawComponent {
 
