@@ -1,7 +1,10 @@
-import { graphicalTags, modelTags } from "./configurationParser";
-import { LinkLabelTemplate, TransitionTemplate, TriggerableTransitionTemplate, StateMachineTemplate, StateTemplate, LinkDataArrayTemplate, NodeDataArrayTemplate } from "./gojsTemplates";
-import { Point, Curve, StateMachine, State, ComponentGraphicalModel } from "./parserObjects";
-import { finalStateColor, stateColor, transitionPatternStateColor, entryPointStateColor } from "./graphicColors";
+import { graphicalTags, modelTags } from "configurationParser";
+import { LinkLabelTemplate, TransitionTemplate, TriggerableTransitionTemplate, StateMachineTemplate, StateTemplate, LinkDataArrayTemplate, NodeDataArrayTemplate } from "gojsTemplates";
+import { Point, Curve, StateMachine, State, ComponentGraphicalModel } from "parserObjects";
+import { finalStateColor, stateColor, transitionPatternStateColor, entryPointStateColor } from "graphicColors";
+import { parseString } from "xml2js";
+import * as promisify from "es6-promisify";
+
 export class Parser {
     private locations: { [key: string]: Point };
     private controlPointTransition: { [key: string]: Curve };
@@ -24,49 +27,57 @@ export class Parser {
         this.componentGraphicalModel = componentGraphicalModel;
     }
 
-    parse() {
-        this.parseGraphical();
-        this.parseModel();
-    }
-
-    private parseGraphical(): void {
+    private parseGraphical(graphicalJson): void {
         this.locations = {};
-        const xmlGraphicalDom = (new DOMParser()).parseFromString(this.componentGraphicalModel.graphical, "text/xml");
-        let stateGraphicalData = xmlGraphicalDom.getElementsByTagName(graphicalTags.States)[0].getElementsByTagName(graphicalTags.StateGraphicalData);
+        let stateGraphicalData = graphicalJson.ComponentViewModelGraphicalData.States[0].StateGraphicalData;
         for (let i = 0; i < stateGraphicalData.length; i++) {
-            const id = stateGraphicalData[i].getAttribute(graphicalTags.Id);
+            const id = stateGraphicalData[i].$.Id;
             this.locations[id] = {
-                x: parseFloat(stateGraphicalData[i].getAttribute(graphicalTags.CenterX)),
-                y: parseFloat(stateGraphicalData[i].getAttribute(graphicalTags.CenterY))
+                x: parseFloat(stateGraphicalData[i].$.CenterX),
+                y: parseFloat(stateGraphicalData[i].$.CenterY)
             };
         }
 
-        stateGraphicalData = xmlGraphicalDom.getElementsByTagName(graphicalTags.TransitionPatternStates)[0].getElementsByTagName(graphicalTags.StateGraphicalData);
+        stateGraphicalData = graphicalJson.ComponentViewModelGraphicalData.TransitionPatternStates[0].StateGraphicalData;
+        stateGraphicalData = (stateGraphicalData === undefined) ? [] : stateGraphicalData;
         for (let i = 0; i < stateGraphicalData.length; i++) {
-            const id = stateGraphicalData[i].getAttribute(graphicalTags.Id);
+            const id = stateGraphicalData[i].$.Id;
             this.locations[id] = {
-                x: parseFloat(stateGraphicalData[i].getAttribute(graphicalTags.CenterX)),
-                y: parseFloat(stateGraphicalData[i].getAttribute(graphicalTags.CenterY))
+                x: parseFloat(stateGraphicalData[i].$.CenterX),
+                y: parseFloat(stateGraphicalData[i].$.CenterY)
             };
         }
 
         let transitionGraphicalData;
 
-        transitionGraphicalData = xmlGraphicalDom.getElementsByTagName(graphicalTags.Links)[0]
-            .getElementsByTagName(graphicalTags.TransitionGraphicalData);
+        transitionGraphicalData = graphicalJson.ComponentViewModelGraphicalData.Links[0].TransitionGraphicalData;
         this.controlPointTransition = this.getControlPointTransition(transitionGraphicalData);
 
-        transitionGraphicalData = xmlGraphicalDom.getElementsByTagName(graphicalTags.TransversalLinks)[0]
-            .getElementsByTagName(graphicalTags.TransitionGraphicalData);
+        transitionGraphicalData = graphicalJson.ComponentViewModelGraphicalData.TransversalLinks[0].TransitionGraphicalData;
         this.controlPointTriggerable = this.getControlPointTransition(transitionGraphicalData);
     }
 
-    private parseModel(): void {
-        const scxmlDom = (new DOMParser()).parseFromString(this.componentGraphicalModel.model, "text/xml");
-        this.setComponentName(scxmlDom);
-        this.setStateMachines(scxmlDom);
-        this.setStates(scxmlDom);
-        this.setLinks(scxmlDom);
+    parse(parseListener: (error: Error, parser: Parser) => void) {
+        const promisifyParserString = promisify(parseString);
+        const thisObject = this;
+        promisifyParserString(thisObject.componentGraphicalModel.graphical).then((result) => {
+            thisObject.parseGraphical(result);
+            return promisifyParserString(thisObject.componentGraphicalModel.model);
+        }).then((result) => {
+            thisObject.parseModel(result);
+            parseListener(null, thisObject);
+        }).catch((err) => {
+            console.error("Parsing error");
+            console.error(err);
+            parseListener(err, null);
+        });
+    }
+
+    private parseModel(modelJson): void {
+        this.setComponentName(modelJson);
+        this.setStateMachines(modelJson);
+        this.setStates(modelJson);
+        this.setLinks(modelJson);
         this.finalStates = this.setFinalStates();
         this.entryPointState = this.getEntyPointState();
         this.nodeDataArray = this.setNodeDataArray();
@@ -74,8 +85,8 @@ export class Parser {
         this.addControlPoint();
     }
 
-    private setComponentName(scxmlDom: Document): void {
-        this.componentName = scxmlDom.getElementsByTagName(modelTags.ComponentViewModelData)[0].getAttribute(modelTags.Name);
+    private setComponentName(modelJson): void {
+        this.componentName = modelJson.ComponentViewModelData.$.Name;
     }
 
     private addControlPoint(): void {
@@ -106,13 +117,14 @@ export class Parser {
             stateMachine = this.stateMachines[ids[i]];
             nodeDataArray.push({
                 "key": stateMachine.name,
-                "text": stateMachine.name,
+                "text": stateMachine.name + " (0)",
                 "isGroup": true,
                 "numberOfInstances": 0
             });
         }
         ids = Object.keys(this.states).concat(Object.keys(this.transitionPatternStates));
         for (let j = 0; j < ids.length; j++) {
+            console.error(this.locations);
             state = this.states[ids[j]];
             let loc, color, text;
             if (!this.states[ids[j]]) {
@@ -124,7 +136,7 @@ export class Parser {
             } else {
                 id = ids[j].substring(modelTags.State.length, ids[j].length);
                 loc = this.locations[id].x + " " + this.locations[id].y;
-                text = state.name + "";
+                text = state.name + " (0)";
                 if (state.isFinal) {
                     color = finalStateColor;
                 } else if (!state.isEntryPoint) {
@@ -147,29 +159,35 @@ export class Parser {
         return nodeDataArray;
     }
 
-    private getControlPointTransition(transitionGraphicalData: NodeListOf<Element>): { [key: string]: Curve } {
+
+    private getControlPointTransition(transitionGraphicalData: Array<any>): { [key: string]: Curve } {
         const controlPoints: { [key: string]: Curve } = {};
         for (let i = 0; i < transitionGraphicalData.length; i++) {
-            const id = transitionGraphicalData[i].getAttribute(graphicalTags.Id);
-            const points = transitionGraphicalData[i].getElementsByTagName(graphicalTags.Point);
-            controlPoints[id] = {
-                firstPoint: {
-                    x: parseFloat(points[0].getElementsByTagName(graphicalTags.X)[0].innerHTML),
-                    y: parseFloat(points[0].getElementsByTagName(graphicalTags.Y)[0].innerHTML)
-                },
-                firstControlPoint: {
-                    x: parseFloat(points[1].getElementsByTagName(graphicalTags.X)[0].innerHTML),
-                    y: parseFloat(points[1].getElementsByTagName(graphicalTags.Y)[0].innerHTML)
-                },
-                secondControlPoint: {
-                    x: parseFloat(points[2].getElementsByTagName(graphicalTags.X)[0].innerHTML),
-                    y: parseFloat(points[2].getElementsByTagName(graphicalTags.Y)[0].innerHTML)
-                },
-                lastPoint: {
-                    x: parseFloat(points[3].getElementsByTagName(graphicalTags.X)[0].innerHTML),
-                    y: parseFloat(points[3].getElementsByTagName(graphicalTags.Y)[0].innerHTML)
-                }
+            const id = transitionGraphicalData[i].$.Id;
+            const points = transitionGraphicalData[i].Points[0].Point;
+            const firstPoint = {
+                x: parseFloat(points[0].X[0]),
+                y: parseFloat(points[0].Y[0])
             };
+            const firstControlPoint = {
+                x: parseFloat(points[1].X[0]),
+                y: parseFloat(points[1].Y[0])
+            };
+            const secondControlPoint = {
+                x: parseFloat(points[2].X[0]),
+                y: parseFloat(points[2].Y[0])
+            };
+            const lastPoint = {
+                x: parseFloat(points[3].X[0]),
+                y: parseFloat(points[3].Y[0])
+            };
+            const controlPoint = {
+                firstPoint,
+                firstControlPoint,
+                secondControlPoint,
+                lastPoint
+            };
+            controlPoints[id] = controlPoint;
         }
         return controlPoints;
     }
@@ -197,33 +215,33 @@ export class Parser {
         }
     }
 
-    private setLinks(scxmlDom: Document): void {
-        const linksDom = scxmlDom.getElementsByTagName(modelTags.TransitionData);
+    private setLinks(modelJson): void {
+        const linksJson = modelJson.ComponentViewModelData.Links[0].TransitionData;
         this.linkDataArray = [];
         this.linksLabel = [];
         let key,
             from,
             to,
             text;
-        for (let i = 0; i < linksDom.length; i++) {
-            from = this.states[linksDom[i].getAttribute(modelTags.FromKey)];
+        for (let i = 0; i < linksJson.length; i++) {
+            from = this.states[linksJson[i].$.FromKey];
             if (!from) {
-                from = this.transitionPatternStates[linksDom[i].getAttribute(modelTags.FromKey)];
+                from = this.transitionPatternStates[linksJson[i].$.FromKey];
                 for (let k = 0; k < from.selectedStatesKeys.length; k++) {
                     this.states[from.selectedStatesKeys[k]].isFinal = false;
                 }
             }
             from.isFinal = false;
-            to = this.states[linksDom[i].getAttribute(modelTags.ToKey)];
-            text = linksDom[i].getAttribute(modelTags.Name);
-            key = linksDom[i].getAttribute(modelTags.Id);
+            to = this.states[linksJson[i].$.ToKey];
+            text = linksJson[i].$.Name;
+            key = linksJson[i].$.Id;
             this.linkDataArray.push({
                 "key": key,
                 "from": from.key,
                 "stateMachineTarget": from.group,
                 "to": to.key,
                 "text": text,
-                "messageType": linksDom[i].getAttribute(modelTags.TriggeringEvent),
+                "messageType": linksJson[i].$.TriggeringEvent,
                 "labelKeys": [key],
                 "triggerable": false,
                 "controls": null
@@ -234,16 +252,15 @@ export class Parser {
                 "text": text
             });
         }
-
-        const triggerableLinksDom = scxmlDom.getElementsByTagName(modelTags.TransversalTransitionData);
-        for (let j = 0; j < triggerableLinksDom.length; j++) {
-            from = this.states[triggerableLinksDom[j].getAttribute(modelTags.FromKey)];
+        const triggerableLinksJson = modelJson.ComponentViewModelData.TransversalLinks[0].TransversalTransitionData;
+        for (let j = 0; j < triggerableLinksJson.length; j++) {
+            from = this.states[triggerableLinksJson[j].$.FromKey];
             if (!from)
-                from = this.transitionPatternStates[triggerableLinksDom[j].getAttribute(modelTags.FromKey)];
+                from = this.transitionPatternStates[triggerableLinksJson[j].$.FromKey];
             this.linkDataArray.push({
-                "key": triggerableLinksDom[j].getAttribute(modelTags.Id),
+                "key": triggerableLinksJson[j].$.Id,
                 "from": from.key,
-                "to": triggerableLinksDom[j].getAttribute(modelTags.ToId),
+                "to": triggerableLinksJson[j].$.ToId,
                 "strokeLink": "red",
                 "strokeArrow": "red",
                 "fillArrow": "red",
@@ -253,20 +270,20 @@ export class Parser {
         }
     }
 
-    private setStates(scxmlDom: Document): void {
-        const statesDom = scxmlDom.getElementsByTagName(modelTags.StateData);
+    private setStates(modelJson): void {
+        const statesJson = modelJson.ComponentViewModelData.States[0].StateData;
         const states = {};
         let id,
             group,
             name,
             isEntryPoint;
         let entryPointStateMachine;
-        for (let i = 0; i < statesDom.length; i++) {
-            id = statesDom[i].getAttribute(modelTags.SubGraphKey);
+        for (let i = 0; i < statesJson.length; i++) {
+            id = statesJson[i].$.SubGraphKey;
             group = this.stateMachines[id].name;
-            name = statesDom[i].getAttribute(modelTags.Name);
-            isEntryPoint = statesDom[i].getAttribute(modelTags.IsEntryPoint) === "true";
-            states[modelTags.State + statesDom[i].getAttribute(modelTags.Id)] = {
+            name = statesJson[i].$.Name;
+            isEntryPoint = statesJson[i].$.IsEntryPoint === "true";
+            states[modelTags.State + statesJson[i].$.Id] = {
                 name: name,
                 group: group,
                 key: group + modelTags.Separator + name,
@@ -280,18 +297,18 @@ export class Parser {
         }
         // transition pattern state
         const transitionPatternStates = {};
-        const transitionPatternStateDataDom = scxmlDom.getElementsByTagName(modelTags.TransitionPatternStateData);
-        for (let i = 0; i < transitionPatternStateDataDom.length; i++) {
-            id = transitionPatternStateDataDom[i].getAttribute(modelTags.SubGraphKey);
+        let transitionPatternStateDataJson = modelJson.ComponentViewModelData.TransitionPatternStates[0].TransitionPatternStateData;
+        transitionPatternStateDataJson = (transitionPatternStateDataJson === undefined) ? [] : transitionPatternStateDataJson;
+        for (let i = 0; i < transitionPatternStateDataJson.length; i++) {
+            id = transitionPatternStateDataJson[i].$.SubGraphKey;
             group = this.stateMachines[id].name;
-            name = transitionPatternStateDataDom[i].getAttribute(modelTags.Name);
+            name = transitionPatternStateDataJson[i].$.Name;
             const selectedStatesKeys = [];
-            const selectedStatesKeysDom = transitionPatternStateDataDom[i].getElementsByTagName(modelTags.SelectedStatesKeys)[0]
-                .getElementsByTagName(modelTags.string);
-            for (let k = 0; k < selectedStatesKeysDom.length; k++) {
-                selectedStatesKeys.push(selectedStatesKeysDom[k].innerHTML);
+            const selectedStatesKeysJson = transitionPatternStateDataJson[i].SelectedStatesKeys[0].string;
+            for (let k = 0; k < selectedStatesKeysJson.length; k++) {
+                selectedStatesKeys.push(selectedStatesKeysJson[k]);
             }
-            transitionPatternStates[modelTags.TP_State + transitionPatternStateDataDom[i].getAttribute(modelTags.Id)] = {
+            transitionPatternStates[modelTags.TP_State + transitionPatternStateDataJson[i].$.Id] = {
                 name: name,
                 group: group,
                 key: group + modelTags.Separator + name,
@@ -305,17 +322,17 @@ export class Parser {
         this.entryPointStateMachine = entryPointStateMachine;
     }
 
-    private setStateMachines(scxmlDom: Document): void {
-        const stateMachineDom = scxmlDom.getElementsByTagName(modelTags.StateMachineData);
+    private setStateMachines(modelJson): void {
+        const stateMachineJson = modelJson.ComponentViewModelData.StateMachines[0].StateMachineData;
         const stateMachines = {};
         const stateMachineNames = [];
         let id, name;
-        for (let i = 0; i < stateMachineDom.length; i++) {
-            id = stateMachineDom[i].getAttribute(modelTags.Id);
-            name = stateMachineDom[i].getAttribute(modelTags.Name);
+        for (let i = 0; i < stateMachineJson.length; i++) {
+            id = stateMachineJson[i].$.Id;
+            name = stateMachineJson[i].$.Name;
             stateMachines[modelTags.StateMachine + id] = {
                 name: name,
-                publicMember: stateMachineDom[i].getAttribute(modelTags.PublicMember)
+                publicMember: stateMachineJson[i].$.PublicMember
             };
             stateMachineNames.push(name);
         }
@@ -325,29 +342,29 @@ export class Parser {
 
     public getFinalStates(): Array<String> {
         return this.finalStates;
-    }
+    };
 
     public getEntryPointState(): string {
         return this.entryPointState;
-    }
+    };
 
     public getEntryPointStateMachine(): string {
         return this.entryPointStateMachine;
-    }
+    };
 
     public getStateMachineNames(): Array<string> {
         return this.stateMachineNames;
-    }
+    };
 
     public getLinkDataArray(): Array<LinkDataArrayTemplate> {
         return this.linkDataArray;
-    }
+    };
 
     public getNodeDataArray(): Array<NodeDataArrayTemplate> {
         return this.nodeDataArray;
-    }
+    };
 
     public getComponentName(): string {
         return this.componentName;
-    }
+    };
 }

@@ -6,6 +6,10 @@ const component = {
   graphical: document.currentScript.getAttribute("graphical")
 };
 const parser = new Parser(component);
-parser.parse();
-const drawComponent = new DrawComponent();
-drawComponent.draw(parser, "diagram");
+parser.parse((err, p) => {
+  if (err) {
+    return;
+  }
+  const drawComponent = new DrawComponent();
+  drawComponent.draw(p, "diagram");
+});

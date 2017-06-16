@@ -6,5 +6,9 @@
 		"postinstall": "node .build/postinstall.js",
 		"compile": "cd viewer && npm run compile && cd .. && cd extension && npm run vscode:prepublish",
 		"tslint": "cd viewer && npm run tslint && cd .. && cd extension && npm run tslint"
+	},
+	"dependencies": {
+		"es6-promisify": "^5.0.0",
+		"xml2js": "^0.4.17"
 	}
 }
