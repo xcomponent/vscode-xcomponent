@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import * as fs from "fs-extra";
 import * as path from "path";
-import TextDocumentContentProvider from "./provider";
+import { ComponentViewerProvider } from "./componentViewerProvider";
 
 const fileUriProviders = {};
 
@@ -40,11 +40,9 @@ export function deactivate() {
 
 function getFileUriProvider(context: vscode.ExtensionContext, filePath: string, title: string) {
     const graphicalFile = filePath.replace(".cxml", "") + "_Graphical.xml";
-    const componentGraphicalModel = {
-        model: fs.readFileSync(filePath).toString(),
-        graphical: fs.readFileSync(graphicalFile).toString()
-    };
-    const provider = new TextDocumentContentProvider(context, componentGraphicalModel);
+    const model = fs.readFileSync(filePath).toString();
+    const graphicalModel = fs.readFileSync(graphicalFile).toString();
+    const provider = new ComponentViewerProvider(context, model, graphicalModel);
     const registration = vscode.workspace.registerTextDocumentContentProvider(title, provider);
     return {
         provider: provider,

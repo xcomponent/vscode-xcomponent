@@ -3,13 +3,11 @@
 		"module": "commonjs",
 		"target": "es5",
 		"outDir": "out",
-		"sourceMap": true,
-		"rootDir": ".",
-        "baseUrl": "src"
+		"sourceMap": true,		
+        "baseUrl": "src"		
 	},
     "include": [
-        "./src",
-        "./test"
+        "./src"
     ],
 	"exclude": [
 		"node_modules"

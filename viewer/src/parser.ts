@@ -1,7 +1,7 @@
-import { graphicalTags, modelTags } from "configurationParser";
-import { LinkLabelTemplate, TransitionTemplate, TriggerableTransitionTemplate, StateMachineTemplate, StateTemplate, LinkDataArrayTemplate, NodeDataArrayTemplate } from "gojsTemplates";
-import { Point, Curve, StateMachine, State, ComponentGraphicalModel } from "parserObjects";
-import { finalStateColor, stateColor, transitionPatternStateColor, entryPointStateColor } from "graphicColors";
+import { graphicalTags, modelTags } from "./configurationParser";
+import { LinkLabelTemplate, TransitionTemplate, TriggerableTransitionTemplate, StateMachineTemplate, StateTemplate, LinkDataArrayTemplate, NodeDataArrayTemplate } from "./gojsTemplates";
+import { Point, Curve, StateMachine, State, ComponentGraphicalModel } from "./parserObjects";
+import { finalStateColor, stateColor, transitionPatternStateColor, entryPointStateColor } from "./graphicColors";
 export class Parser {
     private locations: { [key: string]: Point };
     private controlPointTransition: { [key: string]: Curve };
@@ -325,29 +325,29 @@ export class Parser {
 
     public getFinalStates(): Array<String> {
         return this.finalStates;
-    };
+    }
 
     public getEntryPointState(): string {
         return this.entryPointState;
-    };
+    }
 
     public getEntryPointStateMachine(): string {
         return this.entryPointStateMachine;
-    };
+    }
 
     public getStateMachineNames(): Array<string> {
         return this.stateMachineNames;
-    };
+    }
 
     public getLinkDataArray(): Array<LinkDataArrayTemplate> {
         return this.linkDataArray;
-    };
+    }
 
     public getNodeDataArray(): Array<NodeDataArrayTemplate> {
         return this.nodeDataArray;
-    };
+    }
 
     public getComponentName(): string {
         return this.componentName;
-    };
+    }
 }
