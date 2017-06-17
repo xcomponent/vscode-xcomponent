@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "stable"
+  - "8"
 
 sudo: false
 
@@ -10,4 +10,4 @@ os:
 install:
   - npm install
   - npm run tslint
-  - npm run vscode:prepublish
+  - npm run compile
