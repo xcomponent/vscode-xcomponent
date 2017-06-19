@@ -2,8 +2,10 @@ import { graphicalTags, modelTags } from "configurationParser";
 import { LinkLabelTemplate, TransitionTemplate, TriggerableTransitionTemplate, StateMachineTemplate, StateTemplate, LinkDataArrayTemplate, NodeDataArrayTemplate } from "gojsTemplates";
 import { Point, Curve, StateMachine, State, ComponentGraphicalModel } from "parserObjects";
 import { finalStateColor, stateColor, transitionPatternStateColor, entryPointStateColor } from "graphicColors";
+import { Graphical, $, StateGraphicalDataElement, TransitionGraphicalDataElement } from "GraphicalTypes";
 import { parseString } from "xml2js";
 import * as promisify from "es6-promisify";
+import { Model } from "ModelTypes";
 
 export class Parser {
     private locations: { [key: string]: Point };
@@ -27,9 +29,9 @@ export class Parser {
         this.componentGraphicalModel = componentGraphicalModel;
     }
 
-    private parseGraphical(graphicalJson): void {
+    private parseGraphical(graphicalJson: Graphical): void {
         this.locations = {};
-        let stateGraphicalData = graphicalJson.ComponentViewModelGraphicalData.States[0].StateGraphicalData;
+        let stateGraphicalData: Array<$<StateGraphicalDataElement>> = graphicalJson.ComponentViewModelGraphicalData.States[0].StateGraphicalData;
         for (let i = 0; i < stateGraphicalData.length; i++) {
             const id = stateGraphicalData[i].$.Id;
             this.locations[id] = {
@@ -73,7 +75,7 @@ export class Parser {
         });
     }
 
-    private parseModel(modelJson): void {
+    private parseModel(modelJson: Model): void {
         this.setComponentName(modelJson);
         this.setStateMachines(modelJson);
         this.setStates(modelJson);
@@ -85,7 +87,7 @@ export class Parser {
         this.addControlPoint();
     }
 
-    private setComponentName(modelJson): void {
+    private setComponentName(modelJson: Model): void {
         this.componentName = modelJson.ComponentViewModelData.$.Name;
     }
 
@@ -117,14 +119,13 @@ export class Parser {
             stateMachine = this.stateMachines[ids[i]];
             nodeDataArray.push({
                 "key": stateMachine.name,
-                "text": stateMachine.name + " (0)",
+                "text": stateMachine.name,
                 "isGroup": true,
                 "numberOfInstances": 0
             });
         }
         ids = Object.keys(this.states).concat(Object.keys(this.transitionPatternStates));
         for (let j = 0; j < ids.length; j++) {
-            console.error(this.locations);
             state = this.states[ids[j]];
             let loc, color, text;
             if (!this.states[ids[j]]) {
@@ -136,7 +137,7 @@ export class Parser {
             } else {
                 id = ids[j].substring(modelTags.State.length, ids[j].length);
                 loc = this.locations[id].x + " " + this.locations[id].y;
-                text = state.name + " (0)";
+                text = state.name;
                 if (state.isFinal) {
                     color = finalStateColor;
                 } else if (!state.isEntryPoint) {
@@ -160,7 +161,7 @@ export class Parser {
     }
 
 
-    private getControlPointTransition(transitionGraphicalData: Array<any>): { [key: string]: Curve } {
+    private getControlPointTransition(transitionGraphicalData: Array<TransitionGraphicalDataElement>): { [key: string]: Curve } {
         const controlPoints: { [key: string]: Curve } = {};
         for (let i = 0; i < transitionGraphicalData.length; i++) {
             const id = transitionGraphicalData[i].$.Id;
@@ -215,7 +216,7 @@ export class Parser {
         }
     }
 
-    private setLinks(modelJson): void {
+    private setLinks(modelJson: Model): void {
         const linksJson = modelJson.ComponentViewModelData.Links[0].TransitionData;
         this.linkDataArray = [];
         this.linksLabel = [];
@@ -270,7 +271,7 @@ export class Parser {
         }
     }
 
-    private setStates(modelJson): void {
+    private setStates(modelJson: Model): void {
         const statesJson = modelJson.ComponentViewModelData.States[0].StateData;
         const states = {};
         let id,
@@ -322,7 +323,7 @@ export class Parser {
         this.entryPointStateMachine = entryPointStateMachine;
     }
 
-    private setStateMachines(modelJson): void {
+    private setStateMachines(modelJson: Model): void {
         const stateMachineJson = modelJson.ComponentViewModelData.StateMachines[0].StateMachineData;
         const stateMachines = {};
         const stateMachineNames = [];

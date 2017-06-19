@@ -8,6 +8,7 @@ const component = {
 const parser = new Parser(component);
 parser.parse((err, p) => {
   if (err) {
+    console.error(err);
     return;
   }
   const drawComponent = new DrawComponent();
