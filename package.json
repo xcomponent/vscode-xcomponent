@@ -5,6 +5,7 @@
 	"scripts": {
 		"postinstall": "node .build/postinstall.js",
 		"compile": "cd viewer && npm run compile && cd .. && cd extension && npm run vscode:prepublish",
+		"test": "cd viewer && npm run test && cd .. && cd extension && npm run test",
 		"tslint": "cd viewer && npm run tslint && cd .. && cd extension && npm run tslint"
 	}
 }
