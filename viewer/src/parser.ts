@@ -236,6 +236,7 @@ export class Parser {
             to = this.states[linksJson[i].$.ToKey];
             text = linksJson[i].$.Name;
             key = linksJson[i].$.Id;
+            const color = (from.group === to.key.split(modelTags.Separator)[0]) ? "black" : "green";
             this.linkDataArray.push({
                 "key": key,
                 "from": from.key,
@@ -245,7 +246,10 @@ export class Parser {
                 "messageType": linksJson[i].$.TriggeringEvent,
                 "labelKeys": [key],
                 "triggerable": false,
-                "controls": null
+                "controls": null,
+                "strokeLink": color,
+                "strokeArrow": color,
+                "fillArrow": color
             });
             this.linksLabel.push({
                 "key": key,
