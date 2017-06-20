@@ -21,7 +21,7 @@ export class ComponentModelParser {
     private finalStates: Array<String>;
     private entryPointState: string;
     private entryPointStateMachine: string;
-    private linkDataArray: Array<LinkDataArrayTemplate>;
+    private linkDataArray: Array<any>;
     private nodeDataArray: Array<NodeDataArrayTemplate>;
 
     private promisifyParseString: any;
@@ -256,6 +256,7 @@ export class ComponentModelParser {
                 "strokeLink": "red",
                 "strokeArrow": "red",
                 "fillArrow": "red",
+                "strokeDashArray": [3, 2],
                 "triggerable": true,
                 "controls": null
             });
