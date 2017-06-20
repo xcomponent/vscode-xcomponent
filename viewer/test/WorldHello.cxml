@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ComponentViewModelData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="WorldHello" Version="75">
+  <StateMachines>
+    <StateMachineData Id="1" Name="Manager" />
+    <StateMachineData Id="2" Name="Reponse" PublicMember="XComponent.WorldHello.UserObject.Reponse" />
+  </StateMachines>
+  <States>
+    <StateData Id="1" Name="EntryPoint" IsEntryPoint="true" SubGraphKey="StateMachine1">
+      <TriggeredMethods />
+    </StateData>
+    <StateData Id="2" Name="first" IsEntryPoint="false" SubGraphKey="StateMachine2">
+      <TriggeredMethods>
+        <TriggeredMethodData IsNodeInitializer="false" IsSelected="true" TransitionName="SayHello" TriggeringEvent="XComponent.WorldHello.UserObject.SayHello" />
+      </TriggeredMethods>
+    </StateData>
+    <StateData Id="3" Name="Done" IsEntryPoint="false" SubGraphKey="StateMachine2">
+      <TriggeredMethods>
+        <TriggeredMethodData IsNodeInitializer="false" IsSelected="true" TransitionName="Done" TriggeringEvent="XComponent.WorldHello.UserObject.Done" />
+      </TriggeredMethods>
+    </StateData>
+    <StateData Id="4" Name="second" IsEntryPoint="false" SubGraphKey="StateMachine2">
+      <TriggeredMethods>
+        <TriggeredMethodData IsNodeInitializer="false" IsSelected="true" TransitionName="FirstTransition" TriggeringEvent="XComponent.WorldHello.UserObject.SayHello" />
+      </TriggeredMethods>
+    </StateData>
+    <StateData Id="6" Name="Third" IsEntryPoint="false" SubGraphKey="StateMachine2">
+      <TriggeredMethods>
+        <TriggeredMethodData IsNodeInitializer="false" IsSelected="true" TransitionName="SecondTransition" TriggeringEvent="XComponent.WorldHello.UserObject.SayHello" />
+      </TriggeredMethods>
+    </StateData>
+  </States>
+  <TransitionPatternStates>
+    <TransitionPatternStateData Id="5" Name="FirstSecondThirdPatternState" SelectAllStates="false" SubGraphKey="StateMachine2">
+      <TriggeredMethods />
+      <SelectedStatesKeys>
+        <string>State2</string>
+        <string>State4</string>
+        <string>State6</string>
+      </SelectedStatesKeys>
+    </TransitionPatternStateData>
+  </TransitionPatternStates>
+  <Links>
+    <TransitionData Id="2" Name="SayHello" FromKey="State1" ToKey="State2" Type="X" ExecutionDelay="0" SetCustomTimeout="false" TriggeringEvent="XComponent.WorldHello.UserObject.SayHello" UserSpecificRule="false">
+      <MatchingRules />
+    </TransitionData>
+    <TransitionData Id="5" Name="Done" FromKey="TP_State5" ToKey="State3" Type="Standard" ExecutionDelay="0" SetCustomTimeout="false" TriggeringEvent="XComponent.WorldHello.UserObject.Done" UserSpecificRule="false">
+      <MatchingRules />
+    </TransitionData>
+    <TransitionData Id="1" Name="FirstTransition" FromKey="State2" ToKey="State4" Type="Standard" ExecutionDelay="0" SetCustomTimeout="false" TriggeringEvent="XComponent.WorldHello.UserObject.SayHello" UserSpecificRule="false">
+      <MatchingRules />
+    </TransitionData>
+    <TransitionData Id="7" Name="SecondTransition" FromKey="State4" ToKey="State6" Type="Standard" ExecutionDelay="0" SetCustomTimeout="false" TriggeringEvent="XComponent.WorldHello.UserObject.SayHello" UserSpecificRule="false">
+      <MatchingRules />
+    </TransitionData>
+  </Links>
+  <TransversalLinks>
+    <TransversalTransitionData Id="6" Name="" FromKey="TP_State5" ToId="5" SelectAllTransitions="true" Type="Triggerable">
+      <SelectedTransitions />
+    </TransversalTransitionData>
+    <TransversalTransitionData Id="3" Name="" FromKey="State2" ToId="1" SelectAllTransitions="true" Type="Triggerable">
+      <SelectedTransitions>
+        <SelectedTransitionData Event="XComponent.WorldHello.UserObject.SayHello" Name="SayHello" />
+      </SelectedTransitions>
+    </TransversalTransitionData>
+  </TransversalLinks>
+  <PublicAssemblies />
+  <ExternalAssemblies />
+</ComponentViewModelData>

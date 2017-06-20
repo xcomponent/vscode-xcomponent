@@ -2,10 +2,10 @@ import { graphicalTags, modelTags } from "configurationParser";
 import { LinkLabelTemplate, TransitionTemplate, TriggerableTransitionTemplate, StateMachineTemplate, StateTemplate, LinkDataArrayTemplate, NodeDataArrayTemplate } from "gojsTemplates";
 import { Point, Curve, StateMachine, State, ComponentGraphicalModel } from "parserObjects";
 import { finalStateColor, stateColor, transitionPatternStateColor, entryPointStateColor } from "graphicColors";
-import { Graphical, $, StateGraphicalDataElement, TransitionGraphicalDataElement } from "GraphicalTypes";
+import { Graphical, $, StateGraphicalDataElement, TransitionGraphicalDataElement } from "graphicalTypes";
 import { parseString } from "xml2js";
 import * as promisify from "es6-promisify";
-import { Model } from "ModelTypes";
+import { Model } from "modelTypes";
 
 export class Parser {
     private locations: { [key: string]: Point };
@@ -21,20 +21,36 @@ export class Parser {
     private finalStates: Array<String>;
     private entryPointState: string;
     private entryPointStateMachine: string;
-    private stateMachineNames: Array<string>;
     private linkDataArray: Array<LinkDataArrayTemplate>;
     private nodeDataArray: Array<NodeDataArrayTemplate>;
 
+    public promisifyParserString: any;
+
     constructor(componentGraphicalModel: ComponentGraphicalModel) {
         this.componentGraphicalModel = componentGraphicalModel;
+        this.promisifyParserString = promisify(parseString);
     }
 
-    private parseGraphical(graphicalJson: Graphical): void {
-        this.locations = {};
+    parse(parseListener: (error: Error, parser: Parser) => void) {
+        this.promisifyParserString(this.componentGraphicalModel.graphical).then((graphicalJson: Graphical) => {
+            this.parseGraphical(graphicalJson);
+            return this.promisifyParserString(this.componentGraphicalModel.model);
+        }).then((modelJson: Model) => {
+            this.parseModel(modelJson);
+            parseListener(null, this);
+        }).catch((err) => {
+            console.error("Parsing error");
+            console.error(err);
+            parseListener(err, null);
+        });
+    }
+
+    public getLocationState(graphicalJson: Graphical): { [key: string]: Point } {
+        const locations = {};
         let stateGraphicalData: Array<$<StateGraphicalDataElement>> = graphicalJson.ComponentViewModelGraphicalData.States[0].StateGraphicalData;
         for (let i = 0; i < stateGraphicalData.length; i++) {
             const id = stateGraphicalData[i].$.Id;
-            this.locations[id] = {
+            locations[id] = {
                 x: parseFloat(stateGraphicalData[i].$.CenterX),
                 y: parseFloat(stateGraphicalData[i].$.CenterY)
             };
@@ -44,54 +60,37 @@ export class Parser {
         stateGraphicalData = (stateGraphicalData === undefined) ? [] : stateGraphicalData;
         for (let i = 0; i < stateGraphicalData.length; i++) {
             const id = stateGraphicalData[i].$.Id;
-            this.locations[id] = {
+            locations[id] = {
                 x: parseFloat(stateGraphicalData[i].$.CenterX),
                 y: parseFloat(stateGraphicalData[i].$.CenterY)
             };
         }
 
-        let transitionGraphicalData;
-
-        transitionGraphicalData = graphicalJson.ComponentViewModelGraphicalData.Links[0].TransitionGraphicalData;
-        this.controlPointTransition = this.getControlPointTransition(transitionGraphicalData);
-
-        transitionGraphicalData = graphicalJson.ComponentViewModelGraphicalData.TransversalLinks[0].TransitionGraphicalData;
-        this.controlPointTriggerable = this.getControlPointTransition(transitionGraphicalData);
+        return locations;
     }
 
-    parse(parseListener: (error: Error, parser: Parser) => void) {
-        const promisifyParserString = promisify(parseString);
-        const thisObject = this;
-        promisifyParserString(thisObject.componentGraphicalModel.graphical).then((result) => {
-            thisObject.parseGraphical(result);
-            return promisifyParserString(thisObject.componentGraphicalModel.model);
-        }).then((result) => {
-            thisObject.parseModel(result);
-            parseListener(null, thisObject);
-        }).catch((err) => {
-            console.error("Parsing error");
-            console.error(err);
-            parseListener(err, null);
-        });
+    public parseGraphical(graphicalJson: Graphical): void {
+        this.locations = this.getLocationState(graphicalJson);
+        this.controlPointTransition = this.getControlPointTransition(graphicalJson.ComponentViewModelGraphicalData.Links[0].TransitionGraphicalData);
+        this.controlPointTriggerable = this.getControlPointTransition(graphicalJson.ComponentViewModelGraphicalData.TransversalLinks[0].TransitionGraphicalData);
     }
 
     private parseModel(modelJson: Model): void {
-        this.setComponentName(modelJson);
+        this.componentName = this.getComponentName(modelJson);
         this.setStateMachines(modelJson);
         this.setStates(modelJson);
         this.setLinks(modelJson);
         this.finalStates = this.setFinalStates();
-        this.entryPointState = this.getEntyPointState();
         this.nodeDataArray = this.setNodeDataArray();
         this.nodeDataArray = this.nodeDataArray.concat(this.linksLabel);
         this.addControlPoint();
     }
 
-    private setComponentName(modelJson: Model): void {
-        this.componentName = modelJson.ComponentViewModelData.$.Name;
+    public getComponentName(modelJson: Model): string {
+        return modelJson.ComponentViewModelData.$.Name;
     }
 
-    private addControlPoint(): void {
+    public addControlPoint(): void {
         for (let i = 0; i < this.linkDataArray.length; i++) {
             if (this.linkDataArray[i].triggerable) {
                 const keyLink = this.linkDataArray[i].key;
@@ -111,7 +110,7 @@ export class Parser {
         }
     }
 
-    private setNodeDataArray(): Array<NodeDataArrayTemplate> {
+    public setNodeDataArray(): Array<NodeDataArrayTemplate> {
         const nodeDataArray: Array<NodeDataArrayTemplate> = [];
         let ids, state, stateMachine, id;
         ids = Object.keys(this.stateMachines);
@@ -161,7 +160,7 @@ export class Parser {
     }
 
 
-    private getControlPointTransition(transitionGraphicalData: Array<TransitionGraphicalDataElement>): { [key: string]: Curve } {
+    public getControlPointTransition(transitionGraphicalData: Array<TransitionGraphicalDataElement>): { [key: string]: Curve } {
         const controlPoints: { [key: string]: Curve } = {};
         for (let i = 0; i < transitionGraphicalData.length; i++) {
             const id = transitionGraphicalData[i].$.Id;
@@ -198,7 +197,7 @@ export class Parser {
         return this.locations[id].x + " " + this.locations[id].y;
     }
 
-    private setFinalStates(): Array<String> {
+    public setFinalStates(): Array<String> {
         const finalStates = [];
         for (let id in this.states) {
             if (this.states[id].isFinal) {
@@ -208,15 +207,7 @@ export class Parser {
         return finalStates;
     }
 
-    private getEntyPointState(): string {
-        for (let id in this.states) {
-            if (this.states[id].isEntryPoint) {
-                return this.states[id].key;
-            }
-        }
-    }
-
-    private setLinks(modelJson: Model): void {
+    public setLinks(modelJson: Model): void {
         const linksJson = modelJson.ComponentViewModelData.Links[0].TransitionData;
         this.linkDataArray = [];
         this.linksLabel = [];
@@ -236,7 +227,8 @@ export class Parser {
             to = this.states[linksJson[i].$.ToKey];
             text = linksJson[i].$.Name;
             key = linksJson[i].$.Id;
-            const color = (from.group === to.key.split(modelTags.Separator)[0]) ? "black" : "green";
+            const isForkTransition = from.group === to.key.split(modelTags.Separator)[0];
+            const color = (isForkTransition) ? "black" : "green";
             this.linkDataArray.push({
                 "key": key,
                 "from": from.key,
@@ -275,7 +267,7 @@ export class Parser {
         }
     }
 
-    private setStates(modelJson: Model): void {
+    public setStates(modelJson: Model): void {
         const statesJson = modelJson.ComponentViewModelData.States[0].StateData;
         const states = {};
         let id,
@@ -327,10 +319,9 @@ export class Parser {
         this.entryPointStateMachine = entryPointStateMachine;
     }
 
-    private setStateMachines(modelJson: Model): void {
+    public setStateMachines(modelJson: Model): void {
         const stateMachineJson = modelJson.ComponentViewModelData.StateMachines[0].StateMachineData;
         const stateMachines = {};
-        const stateMachineNames = [];
         let id, name;
         for (let i = 0; i < stateMachineJson.length; i++) {
             id = stateMachineJson[i].$.Id;
@@ -339,10 +330,8 @@ export class Parser {
                 name: name,
                 publicMember: stateMachineJson[i].$.PublicMember
             };
-            stateMachineNames.push(name);
         }
         this.stateMachines = stateMachines;
-        this.stateMachineNames = stateMachineNames;
     }
 
     public getFinalStates(): Array<String> {
@@ -357,10 +346,6 @@ export class Parser {
         return this.entryPointStateMachine;
     }
 
-    public getStateMachineNames(): Array<string> {
-        return this.stateMachineNames;
-    }
-
     public getLinkDataArray(): Array<LinkDataArrayTemplate> {
         return this.linkDataArray;
     }
@@ -369,7 +354,14 @@ export class Parser {
         return this.nodeDataArray;
     }
 
-    public getComponentName(): string {
-        return this.componentName;
+    public getStateMachines(): { [key: string]: StateMachine } {
+        return this.stateMachines;
     }
+    public getStates(): { [key: string]: State } {
+        return this.states;
+    }
+    public getTransitionPatternStates(): { [key: string]: State } {
+        return this.transitionPatternStates;
+    }
+
 }
