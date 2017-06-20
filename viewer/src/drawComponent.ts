@@ -1,6 +1,6 @@
 
 import * as go from "gojs";
-import { Parser } from "./parser";
+import { ComponentModelParser } from "./componentModelParser";
 import { stateMachineColor } from "./graphicColors";
 import { NodeDataArrayTemplate, LinkDataArrayTemplate } from "./gojsTemplates";
 
@@ -9,7 +9,7 @@ export class DrawComponent {
     private $: any;
     private diagram: go.Diagram;
 
-    draw(parser: Parser, divId: string): void {
+    draw(parser: ComponentModelParser, divId: string): void {
         this.$ = go.GraphObject.make;
         this.diagram = this.createDiagram(divId);
         this.diagram.nodeTemplate = this.getNodeTemplate();
