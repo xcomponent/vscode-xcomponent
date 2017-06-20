@@ -20,7 +20,7 @@ export interface TransitionGraphicalDataElement {
 }
 
 export interface TransitionGraphicalDataPointElement {
-    Point: Array<PointGraphical>
+    Point: Array<PointGraphical>;
 }
 
 export interface PointGraphical {
@@ -29,7 +29,7 @@ export interface PointGraphical {
 }
 
 export interface States {
-    StateGraphicalData: Array<$<StateGraphicalDataElement>>
+    StateGraphicalData: Array<$<StateGraphicalDataElement>>;
 }
 
 export interface StateGraphicalDataElement {
@@ -43,7 +43,7 @@ export interface TransitionPatternStates {
 }
 
 export interface TransversalLinks {
-    TransitionGraphicalData: Array<TransitionGraphicalDataElement>
+    TransitionGraphicalData: Array<TransitionGraphicalDataElement>;
 }
 
 export interface Properties {
