@@ -1,16 +1,17 @@
-import { Parser } from "./parser";
+import { ComponentModelParser } from "./componentModelParser";
 import { DrawComponent } from "./drawComponent";
 
 const component = {
   model: document.currentScript.getAttribute("model"),
   graphical: document.currentScript.getAttribute("graphical")
 };
-const parser = new Parser(component);
-parser.parse((err, p) => {
-  if (err) {
+const parser = new ComponentModelParser(component);
+parser.parse()
+  .then(() => {
+    const drawComponent = new DrawComponent();
+    drawComponent.draw(parser, "diagram");
+  })
+  .catch((err) => {
+    console.error("Parsing error");
     console.error(err);
-    return;
-  }
-  const drawComponent = new DrawComponent();
-  drawComponent.draw(p, "diagram");
-});
+  });

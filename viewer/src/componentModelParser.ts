@@ -7,7 +7,7 @@ import { parseString } from "xml2js";
 import * as promisify from "es6-promisify";
 import { Model } from "modelTypes";
 
-export class Parser {
+export class ComponentModelParser {
     private locations: { [key: string]: Point };
     private controlPointTransition: { [key: string]: Curve };
     private controlPointTriggerable: { [key: string]: Curve };
@@ -24,24 +24,19 @@ export class Parser {
     private linkDataArray: Array<LinkDataArrayTemplate>;
     private nodeDataArray: Array<NodeDataArrayTemplate>;
 
-    public promisifyParserString: any;
+    private promisifyParseString: any;
 
     constructor(componentGraphicalModel: ComponentGraphicalModel) {
         this.componentGraphicalModel = componentGraphicalModel;
-        this.promisifyParserString = promisify(parseString);
+        this.promisifyParseString = promisify(parseString);
     }
 
-    parse(parseListener: (error: Error, parser: Parser) => void) {
-        this.promisifyParserString(this.componentGraphicalModel.graphical).then((graphicalJson: Graphical) => {
+    parse() {
+        return this.promisifyParseString(this.componentGraphicalModel.graphical).then((graphicalJson: Graphical) => {
             this.parseGraphical(graphicalJson);
-            return this.promisifyParserString(this.componentGraphicalModel.model);
+            return this.promisifyParseString(this.componentGraphicalModel.model);
         }).then((modelJson: Model) => {
             this.parseModel(modelJson);
-            parseListener(null, this);
-        }).catch((err) => {
-            console.error("Parsing error");
-            console.error(err);
-            parseListener(err, null);
         });
     }
 
@@ -334,18 +329,6 @@ export class Parser {
         this.stateMachines = stateMachines;
     }
 
-    public getFinalStates(): Array<String> {
-        return this.finalStates;
-    }
-
-    public getEntryPointState(): string {
-        return this.entryPointState;
-    }
-
-    public getEntryPointStateMachine(): string {
-        return this.entryPointStateMachine;
-    }
-
     public getLinkDataArray(): Array<LinkDataArrayTemplate> {
         return this.linkDataArray;
     }
@@ -353,15 +336,4 @@ export class Parser {
     public getNodeDataArray(): Array<NodeDataArrayTemplate> {
         return this.nodeDataArray;
     }
-
-    public getStateMachines(): { [key: string]: StateMachine } {
-        return this.stateMachines;
-    }
-    public getStates(): { [key: string]: State } {
-        return this.states;
-    }
-    public getTransitionPatternStates(): { [key: string]: State } {
-        return this.transitionPatternStates;
-    }
-
 }
