@@ -20,7 +20,7 @@ describe("Test Parser", () => {
         });
     });
 
-    test("Should throw an error while parsing", (done) => {
+    test("Should throw an error while parsing invalid model files.", (done) => {
         let parser: ComponentModelParser;
         let componentGraphicalModel, model, graphical;
         model = fs.readFileSync("./test/ressources/Wrong_WorldHello.cxml").toString();
