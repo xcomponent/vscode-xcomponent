@@ -41,7 +41,12 @@ export function deactivate() {
 function getFileUriProvider(context: vscode.ExtensionContext, filePath: string, title: string) {
     const graphicalFile = filePath.replace(".cxml", "") + "_Graphical.xml";
     const model = fs.readFileSync(filePath).toString();
-    const graphicalModel = fs.readFileSync(graphicalFile).toString();
+    let graphicalModel = undefined;
+    try {
+        graphicalModel = fs.readFileSync(graphicalFile).toString();
+    } catch (e) {
+        vscode.window.showWarningMessage("Graphical file not found");
+    }
     const provider = new ComponentViewerProvider(context, model, graphicalModel);
     const registration = vscode.workspace.registerTextDocumentContentProvider(title, provider);
     return {

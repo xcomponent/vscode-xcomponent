@@ -32,10 +32,18 @@ export class ComponentModelParser {
     }
 
     parse() {
-        return this.promisifyParseString(this.componentGraphicalModel.graphical).then((graphicalJson: Graphical) => {
-            this.parseGraphical(graphicalJson);
-            return this.promisifyParseString(this.componentGraphicalModel.model);
-        }).then((modelJson: Model) => {
+        const model = this.componentGraphicalModel.model;
+        const graphical = this.componentGraphicalModel.graphical;
+        let pomiseParseGraphical;
+        if (graphical) {
+            pomiseParseGraphical = this.promisifyParseString(graphical).then((graphicalJson: Graphical) => {
+                this.parseGraphical(graphicalJson);
+                return this.promisifyParseString(model);
+            });
+        } else {
+             pomiseParseGraphical = this.promisifyParseString(model);
+        }
+        return pomiseParseGraphical.then((modelJson: Model) => {
             this.parseModel(modelJson);
             return {
                 nodeDataArray: this.nodeDataArray,
@@ -82,7 +90,10 @@ export class ComponentModelParser {
         this.finalStates = this.setFinalStates();
         this.nodeDataArray = this.setNodeDataArray();
         this.nodeDataArray = this.nodeDataArray.concat(this.linksLabel);
-        this.addControlPoint();
+        const graphical = this.componentGraphicalModel.graphical;
+        if (graphical) {
+            this.addControlPoint();
+        }
     }
 
     public getComponentName(modelJson: Model): string {
@@ -128,13 +139,13 @@ export class ComponentModelParser {
             let loc, color, text;
             if (!this.states[ids[j]]) {
                 id = ids[j].substring(modelTags.TP_State.length, ids[j].length);
-                loc = this.locations[id].x + " " + this.locations[id].y;
+                loc = (this.locations && this.locations[id]) ? this.locations[id].x + " " + this.locations[id].y : undefined;
                 color = transitionPatternStateColor;
                 state = this.transitionPatternStates[ids[j]];
                 text = state.name;
             } else {
                 id = ids[j].substring(modelTags.State.length, ids[j].length);
-                loc = this.locations[id].x + " " + this.locations[id].y;
+                loc = (this.locations && this.locations[id]) ? this.locations[id].x + " " + this.locations[id].y : undefined;
                 text = state.name;
                 if (state.isFinal) {
                     color = finalStateColor;
