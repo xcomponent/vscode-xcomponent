@@ -36,7 +36,9 @@
     "testEnvironment": "jsdom"
   },
   "dependencies": {
-    "gojs": "^1.7.9"
+    "es6-promisify": "^5.0.0",
+    "gojs": "^1.7.9",
+    "xml2js": "^0.4.17"
   },
   "devDependencies": {
     "@types/expect": "^1.20.1",

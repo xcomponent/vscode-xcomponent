@@ -1,11 +1,18 @@
-import { Parser } from "./parser";
+import { ComponentModelParser } from "./componentModelParser";
 import { DrawComponent } from "./drawComponent";
+import { DrawComponentData } from "gojsTemplates";
 
 const component = {
   model: document.currentScript.getAttribute("model"),
   graphical: document.currentScript.getAttribute("graphical")
 };
-const parser = new Parser(component);
-parser.parse();
-const drawComponent = new DrawComponent();
-drawComponent.draw(parser, "diagram");
+const parser = new ComponentModelParser(component);
+parser.parse()
+  .then((data: DrawComponentData) => {
+    const drawComponent = new DrawComponent();
+    drawComponent.draw(data, "diagram");
+  })
+  .catch((err) => {
+    console.error("Parsing error");
+    console.error(err);
+  });

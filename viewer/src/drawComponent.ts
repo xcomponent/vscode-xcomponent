@@ -1,22 +1,22 @@
 
 import * as go from "gojs";
-import { Parser } from "./parser";
+import { ComponentModelParser } from "./componentModelParser";
 import { stateMachineColor } from "./graphicColors";
-import { NodeDataArrayTemplate, LinkDataArrayTemplate } from "./gojsTemplates";
+import { NodeDataArrayTemplate, LinkDataArrayTemplate, DrawComponentData } from "./gojsTemplates";
 
 export class DrawComponent {
 
     private $: any;
     private diagram: go.Diagram;
 
-    draw(parser: Parser, divId: string): void {
+    draw(data: DrawComponentData, divId: string): void {
         this.$ = go.GraphObject.make;
         this.diagram = this.createDiagram(divId);
         this.diagram.nodeTemplate = this.getNodeTemplate();
         this.diagram.nodeTemplateMap.add("LinkLabel", this.getLinkLabelTemplate());
         this.diagram.groupTemplate = this.getGroupTemplate();
         this.diagram.linkTemplate = this.getLinkTemplate();
-        this.diagram.model = this.getModel(parser.getNodeDataArray(), parser.getLinkDataArray());
+        this.diagram.model = this.getModel(data);
     }
 
     private createDiagram(divId: string): go.Diagram {
@@ -125,19 +125,19 @@ export class DrawComponent {
             $(go.Link,
                 { curve: go.Link.Bezier, adjusting: go.Link.Stretch, reshapable: true },
                 $(go.Shape, new go.Binding("stroke", "strokeLink")),
-                $(go.Shape, { toArrow: "Standard" }, new go.Binding("fill", "fillArrow"), new go.Binding("stroke", "strokeArrow"))
+                $(go.Shape, { toArrow: "Standard" }, new go.Binding("fill", "fillArrow"), new go.Binding("stroke", "strokeArrow")),
+                new go.Binding("strokeDashArray", "strokeDashArray")
             );
         return linkTemplate;
     }
 
 
-    private getModel(nodeDataArray: Array<NodeDataArrayTemplate>, linkDataArray: Array<LinkDataArrayTemplate>): go.Model {
-        const data = {
+    private getModel(data: DrawComponentData): go.Model {
+        return go.Model.fromJson({
             "class": "go.GraphLinksModel",
             "linkLabelKeysProperty": "labelKeys",
-            "nodeDataArray": nodeDataArray,
-            "linkDataArray": linkDataArray
-        };
-        return go.Model.fromJson(data);
+            "nodeDataArray": data.nodeDataArray,
+            "linkDataArray": data.linkDataArray
+        });
     }
 }
