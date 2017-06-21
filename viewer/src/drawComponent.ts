@@ -2,21 +2,21 @@
 import * as go from "gojs";
 import { ComponentModelParser } from "./componentModelParser";
 import { stateMachineColor } from "./graphicColors";
-import { NodeDataArrayTemplate, LinkDataArrayTemplate } from "./gojsTemplates";
+import { NodeDataArrayTemplate, LinkDataArrayTemplate, DrawComponentData } from "./gojsTemplates";
 
 export class DrawComponent {
 
     private $: any;
     private diagram: go.Diagram;
 
-    draw(linkDataArray: Array<LinkDataArrayTemplate>, nodeDataArray: Array<NodeDataArrayTemplate>, divId: string): void {
+    draw(data: DrawComponentData, divId: string): void {
         this.$ = go.GraphObject.make;
         this.diagram = this.createDiagram(divId);
         this.diagram.nodeTemplate = this.getNodeTemplate();
         this.diagram.nodeTemplateMap.add("LinkLabel", this.getLinkLabelTemplate());
         this.diagram.groupTemplate = this.getGroupTemplate();
         this.diagram.linkTemplate = this.getLinkTemplate();
-        this.diagram.model = this.getModel(nodeDataArray, linkDataArray);
+        this.diagram.model = this.getModel(data);
     }
 
     private createDiagram(divId: string): go.Diagram {
@@ -132,13 +132,12 @@ export class DrawComponent {
     }
 
 
-    private getModel(nodeDataArray: Array<NodeDataArrayTemplate>, linkDataArray: Array<LinkDataArrayTemplate>): go.Model {
-        const data = {
+    private getModel(data: DrawComponentData): go.Model {
+        return go.Model.fromJson({
             "class": "go.GraphLinksModel",
             "linkLabelKeysProperty": "labelKeys",
-            "nodeDataArray": nodeDataArray,
-            "linkDataArray": linkDataArray
-        };
-        return go.Model.fromJson(data);
+            "nodeDataArray": data.nodeDataArray,
+            "linkDataArray": data.linkDataArray
+        });
     }
 }

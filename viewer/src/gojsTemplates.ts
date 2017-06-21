@@ -45,3 +45,8 @@ export interface TriggerableTransitionTemplate extends LinkInterface {
 
 export type LinkDataArrayTemplate = TransitionTemplate | TriggerableTransitionTemplate;
 export type NodeDataArrayTemplate = StateMachineTemplate | StateTemplate | LinkLabelTemplate;
+
+export interface DrawComponentData {
+    nodeDataArray: Array<NodeDataArrayTemplate>;
+    linkDataArray: Array<NodeDataArrayTemplate>;
+};

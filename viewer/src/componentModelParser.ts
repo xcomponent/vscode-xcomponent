@@ -37,6 +37,10 @@ export class ComponentModelParser {
             return this.promisifyParseString(this.componentGraphicalModel.model);
         }).then((modelJson: Model) => {
             this.parseModel(modelJson);
+            return {
+                nodeDataArray: this.nodeDataArray,
+                linkDataArray: this.linkDataArray
+            };
         });
     }
 
@@ -327,13 +331,5 @@ export class ComponentModelParser {
             };
         }
         this.stateMachines = stateMachines;
-    }
-
-    public getLinkDataArray(): Array<LinkDataArrayTemplate> {
-        return this.linkDataArray;
-    }
-
-    public getNodeDataArray(): Array<NodeDataArrayTemplate> {
-        return this.nodeDataArray;
     }
 }
