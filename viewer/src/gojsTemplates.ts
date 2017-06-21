@@ -49,4 +49,4 @@ export type NodeDataArrayTemplate = StateMachineTemplate | StateTemplate | LinkL
 export interface DrawComponentData {
     nodeDataArray: Array<NodeDataArrayTemplate>;
     linkDataArray: Array<NodeDataArrayTemplate>;
-};
+}
