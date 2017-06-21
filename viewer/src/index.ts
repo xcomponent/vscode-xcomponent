@@ -9,7 +9,7 @@ const parser = new ComponentModelParser(component);
 parser.parse()
   .then(() => {
     const drawComponent = new DrawComponent();
-    drawComponent.draw(parser, "diagram");
+    drawComponent.draw(parser.getLinkDataArray(), parser.getNodeDataArray(), "diagram");
   })
   .catch((err) => {
     console.error("Parsing error");

@@ -9,14 +9,14 @@ export class DrawComponent {
     private $: any;
     private diagram: go.Diagram;
 
-    draw(parser: ComponentModelParser, divId: string): void {
+    draw(linkDataArray: Array<LinkDataArrayTemplate>, nodeDataArray: Array<NodeDataArrayTemplate>, divId: string): void {
         this.$ = go.GraphObject.make;
         this.diagram = this.createDiagram(divId);
         this.diagram.nodeTemplate = this.getNodeTemplate();
         this.diagram.nodeTemplateMap.add("LinkLabel", this.getLinkLabelTemplate());
         this.diagram.groupTemplate = this.getGroupTemplate();
         this.diagram.linkTemplate = this.getLinkTemplate();
-        this.diagram.model = this.getModel(parser.getNodeDataArray(), parser.getLinkDataArray());
+        this.diagram.model = this.getModel(nodeDataArray, linkDataArray);
     }
 
     private createDiagram(divId: string): go.Diagram {
