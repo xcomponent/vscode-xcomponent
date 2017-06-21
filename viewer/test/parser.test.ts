@@ -2,6 +2,7 @@ import * as expect from "expect";
 import { ComponentModelParser } from "../src/componentModelParser";
 import * as fs from "fs-extra";
 import { correctNodeDataArray, correctLinkDataArray } from "./parser.expectation";
+import {DrawComponentData } from "../src/gojsTemplates";
 
 describe("Test Parser", () => {
 
@@ -12,9 +13,9 @@ describe("Test Parser", () => {
         graphical = fs.readFileSync("./test/ressources/WorldHello_Graphical.xml").toString();
         parser = new ComponentModelParser({ model, graphical });
 
-        parser.parse().then(() => {
-            expect(parser.getNodeDataArray()).toEqual(correctNodeDataArray);
-            expect(parser.getLinkDataArray()).toEqual(correctLinkDataArray);
+        parser.parse().then((data: DrawComponentData) => {
+            expect(data.nodeDataArray).toEqual(correctNodeDataArray);
+            expect(data.linkDataArray).toEqual(correctLinkDataArray);
             done();
         });
     });
