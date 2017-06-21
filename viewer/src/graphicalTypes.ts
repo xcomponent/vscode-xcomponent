@@ -29,7 +29,7 @@ export interface PointGraphical {
 }
 
 export interface States {
-    StateGraphicalData: Array<$<StateGraphicalDataElement>>;
+    StateGraphicalData: Array<Attribute<StateGraphicalDataElement>>;
 }
 
 export interface StateGraphicalDataElement {
@@ -39,7 +39,7 @@ export interface StateGraphicalDataElement {
 }
 
 export interface TransitionPatternStates {
-    StateGraphicalData: Array<$<StateGraphicalDataElement>>;
+    StateGraphicalData: Array<Attribute<StateGraphicalDataElement>>;
 }
 
 export interface TransversalLinks {
@@ -52,6 +52,6 @@ export interface Properties {
     Id: string;
 }
 
-export interface $<T> {
+export interface Attribute<T> {
     $: T;
 }

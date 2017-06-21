@@ -9,12 +9,12 @@ export interface ComponentViewModelData {
     StateMachines: Array<StateMachines>;
     States: Array<State>;
     TransitionPatternStates: Array<TransitionPatternStates>;
-    TransversalTransitionData: Array<$<TransversalTransitionData>>;
+    TransversalTransitionData: Array<Attribute<TransversalTransitionData>>;
     TransversalLinks: Array<TransversalTransitionData>;
 }
 
 export interface TransversalTransitionData {
-    TransversalTransitionData: Array<$<TransversalTransitionDataProterties>>;
+    TransversalTransitionData: Array<Attribute<TransversalTransitionDataProterties>>;
 }
 
 export interface TransversalTransitionDataProterties {
@@ -47,7 +47,7 @@ export interface TransitionPatternStateDataProperties {
 }
 
 export interface State {
-    StateData: Array<$<StateData>>;
+    StateData: Array<Attribute<StateData>>;
 }
 
 export interface StateData {
@@ -58,7 +58,7 @@ export interface StateData {
 }
 
 export interface StateMachines {
-    StateMachineData: Array<$<StateMachineData>>;
+    StateMachineData: Array<Attribute<StateMachineData>>;
 }
 
 export interface StateMachineData {
@@ -68,7 +68,7 @@ export interface StateMachineData {
 }
 
 export interface ModelLinks {
-    TransitionData: Array<$<TransitionData>>;
+    TransitionData: Array<Attribute<TransitionData>>;
 }
 
 export interface TransitionData {
@@ -88,6 +88,6 @@ export interface ModelProperties {
     Version: string;
 }
 
-export interface $<T> {
+export interface Attribute<T> {
     $: T;
 }

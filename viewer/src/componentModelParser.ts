@@ -2,7 +2,7 @@ import { graphicalTags, modelTags } from "configurationParser";
 import { LinkLabelTemplate, TransitionTemplate, TriggerableTransitionTemplate, StateMachineTemplate, StateTemplate, LinkDataArrayTemplate, NodeDataArrayTemplate } from "gojsTemplates";
 import { Point, Curve, StateMachine, State, ComponentGraphicalModel } from "parserObjects";
 import { finalStateColor, stateColor, transitionPatternStateColor, entryPointStateColor } from "graphicColors";
-import { Graphical, $, StateGraphicalDataElement, TransitionGraphicalDataElement } from "graphicalTypes";
+import { Graphical, Attribute, StateGraphicalDataElement, TransitionGraphicalDataElement } from "graphicalTypes";
 import { parseString } from "xml2js";
 import * as promisify from "es6-promisify";
 import { Model } from "modelTypes";
@@ -46,7 +46,7 @@ export class ComponentModelParser {
 
     public getLocationState(graphicalJson: Graphical): { [key: string]: Point } {
         const locations = {};
-        let stateGraphicalData: Array<$<StateGraphicalDataElement>> = graphicalJson.ComponentViewModelGraphicalData.States[0].StateGraphicalData;
+        let stateGraphicalData: Array<Attribute<StateGraphicalDataElement>> = graphicalJson.ComponentViewModelGraphicalData.States[0].StateGraphicalData;
         for (let i = 0; i < stateGraphicalData.length; i++) {
             const id = stateGraphicalData[i].$.Id;
             locations[id] = {
