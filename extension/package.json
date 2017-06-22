@@ -39,9 +39,11 @@
       }
     ],
     "menus": {
-        "editor/title": [{
-            "command": "xcomponent.preview"
-        }]
+      "editor/title": [
+        {
+          "command": "xcomponent.preview"
+        }
+      ]
     }
   },
   "scripts": {
