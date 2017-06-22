@@ -19,6 +19,8 @@ export class ComponentViewerProvider implements vscode.TextDocumentContentProvid
 					  	min-height: 100%;
                         display: block;
 						background-color: white;">
+                        <h1 style="color:#000000;"
+                        id ="error"></h1>
 					</div>`;
         const style = `<style type="text/css">
 					html, body {
@@ -26,7 +28,7 @@ export class ComponentViewerProvider implements vscode.TextDocumentContentProvid
 						margin: 0;
 					}
    				</style>`;
-        const script = `<script type="text/javascript" src="file:///${this.getPath("out/viewer/bundle.js")}" model='${this.model}' graphical='${this.graphicalModel}'></script>`;
+        const script = `<script type="text/javascript" src="file:///${this.getPath("out/viewer/bundle.js")}" model='${this.model}' graphical='${this.graphicalModel}'}></script>`;
         const html = `<!DOCTYPE html>
 				<html>
 					${style}
