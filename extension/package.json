@@ -34,9 +34,15 @@
     "commands": [
       {
         "command": "xcomponent.preview",
-        "title": "XComponent: preview component"
+        "title": "XComponent: preview component",
+        "group": "navigation"
       }
-    ]
+    ],
+    "menus": {
+        "editor/title": [{
+            "command": "xcomponent.preview"
+        }]
+    }
   },
   "scripts": {
     "vscode:prepublish": "tsc -p ./",
