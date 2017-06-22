@@ -124,7 +124,7 @@ export class DrawComponent {
         const linkTemplate =
             $(go.Link,
                 { curve: go.Link.Bezier, adjusting: go.Link.Stretch, reshapable: true },
-                $(go.Shape, new go.Binding("stroke", "strokeLink")),
+                $(go.Shape, new go.Binding("stroke", "strokeLink"), new go.Binding("strokeDashArray", "dash")),
                 $(go.Shape, { toArrow: "Standard" }, new go.Binding("fill", "fillArrow"), new go.Binding("stroke", "strokeArrow")),
                 new go.Binding("strokeDashArray", "strokeDashArray")
             );
