@@ -62,7 +62,7 @@ describe("ComponentModelProvider Tests", () => {
     ];
 
     isCxmlDocumentTests.forEach(test => {
-        it(`Given ${test.input} as input file, isCxml should return ${test.expect}`, () => {
+        it(`Given ${test.input} as input file, isCxmlDocument should return ${test.expect}`, () => {
             return vscode.workspace.openTextDocument(path.join(inputPath, test.input)).then(document => {
                 return vscode.window.showTextDocument(document);
             }).then(editor => {
@@ -74,7 +74,7 @@ describe("ComponentModelProvider Tests", () => {
         });
     });
 
-    it("If no document is opened, isCxml should return false", () => {
+    it("If no document is opened, isCxmlDocument should return false", () => {
         return vscode.commands.executeCommand("workbench.action.closeAllEditors")
             .then(() => {
                 let componentModelProvider = new ComponentModelProvider();
