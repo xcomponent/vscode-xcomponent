@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import * as path from "path";
-import * as fs from "fs-extra";
+import * as fs from "fs";
 import { ComponentModelProvider } from "../src/componentModelProvider";
 import * as chai from "chai";
 const should = chai.should();
@@ -51,17 +51,17 @@ describe("ComponentModelProvider Tests", () => {
                     should.not.exist(rawModel);
                 }
             }, reason => {
-                should.fail(reason, undefined, "Raw model provider failed", "");
+                should.fail(reason, undefined);
             });
         });
     });
 
-    const testIsCxmlDocumentTests = [
+    const isCxmlDocumentTests = [
         { input: cxmlFileName, expect: true },
         { input: otherInputFileName, expect: false }
     ];
 
-    testIsCxmlDocumentTests.forEach(test => {
+    isCxmlDocumentTests.forEach(test => {
         it(`Given ${test.input} as input file, isCxml should return ${test.expect}`, () => {
             return vscode.workspace.openTextDocument(path.join(inputPath, test.input)).then(document => {
                 return vscode.window.showTextDocument(document);
@@ -69,7 +69,7 @@ describe("ComponentModelProvider Tests", () => {
                 let componentModelProvider = new ComponentModelProvider();
                 componentModelProvider.isCxmlDocument().should.equal(test.expect);
             }, reason => {
-                should.fail(reason, undefined, "Raw model provider failed", "");
+                should.fail(reason, undefined);
             });
         });
     });
@@ -80,7 +80,7 @@ describe("ComponentModelProvider Tests", () => {
                 let componentModelProvider = new ComponentModelProvider();
                 componentModelProvider.isCxmlDocument().should.be.false;
             }, reason => {
-                should.fail(reason, undefined, "Raw model provider failed", "");
+                should.fail(reason, undefined);
             });
     });
 });

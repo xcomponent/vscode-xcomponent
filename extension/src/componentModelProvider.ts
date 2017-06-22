@@ -1,9 +1,10 @@
 import * as vscode from "vscode";
-import * as fs from "fs-extra";
+import * as fs from "fs";
 import * as path from "path";
 
 const cxmlExtension = ".cxml";
-const graphicalFileSuffix = "_Graphical.xml";
+const graphicalFileSuffix = "_Graphical";
+const graphicalFileExtension = ".xml";
 
 export interface ComponentRawModel {
     model: string;
@@ -36,10 +37,16 @@ export class ComponentModelProvider {
     }
 
     private getGraphicalRawModel(): string | undefined {
-        const graphicalFile = `${this.editor.document.fileName.replace(cxmlExtension, "")}${graphicalFileSuffix}`;
-        if (fs.existsSync(graphicalFile)) {
-            return fs.readFileSync(graphicalFile).toString();
+        const graphicalFilePath = this.getGraphicalPath();
+        if (fs.existsSync(graphicalFilePath)) {
+            return fs.readFileSync(graphicalFilePath).toString();
         }
         return undefined;
+    }
+
+    private getGraphicalPath(): string {
+        let parsedFile = path.parse(this.editor.document.fileName);
+        parsedFile.base = `${parsedFile.name}${graphicalFileSuffix}${graphicalFileExtension}`;
+        return path.format(parsedFile);
     }
 }

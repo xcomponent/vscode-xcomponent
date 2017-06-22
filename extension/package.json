@@ -34,7 +34,7 @@
     "commands": [
       {
         "command": "xcomponent.preview",
-        "title": "XComponent: preview component",
+        "title": "XComponent: component preview",
         "group": "navigation"
       }
     ],
@@ -53,10 +53,7 @@
     "tslint": "tslint -c tslint.json src/**/*.ts*",
     "test": "node ./node_modules/vscode/bin/test"
   },
-  "dependencies": {
-    "fs-extra": "^3.0.1",
-    "path": "^0.12.7"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/chai": "^4.0.0",
     "@types/fs-extra": "^3.0.3",

@@ -2,7 +2,7 @@ import * as TypeMoq from "typemoq";
 import * as vscode from "vscode";
 import { ExtensionContext } from "vscode";
 import * as path from "path";
-import * as fs from "fs-extra";
+import * as fs from "fs";
 import { ComponentViewerProvider } from "../src/componentViewerProvider";
 import * as chai from "chai";
 const should = chai.should();
@@ -34,7 +34,7 @@ describe("ComponentViewerProvider Tests", () => {
                 const htmlPreview = provider.provideTextDocumentContent(null);
                 htmlPreview.should.equal(expectedHtml);
             }, reason => {
-                should.fail(reason, undefined, "Viewer provider failed", "");
+                should.fail(reason, undefined);
             });
         });
     });
