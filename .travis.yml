@@ -2,18 +2,20 @@ language: node_js
 node_js:
 - '8'
 sudo: false
+
 branches:
   only:
-    - master
+  - master
+
 os:
 - linux
 
 before_install:
-  - if [ $TRAVIS_OS_NAME == "linux" ]; then
+- if [ $TRAVIS_OS_NAME == "linux" ]; then
       export CXX="g++-4.9" CC="gcc-4.9" DISPLAY=:99.0;
       sh -e /etc/init.d/xvfb start;
       sleep 3;
-    fi
+  fi
 
 install:
 - npm install
@@ -21,10 +23,8 @@ install:
 - npm run compile
 
 script:
-  - npm test --silent
-  
+- npm test --silent
+
 notifications:
   slack:
-    secure: uVHsmJpDoJM8IBTdof0q+cYlD2eQhLpg3ZG3OT0u298HCkQALewD1vdsKaHgnAQUyd1v7f6GeT5k6ezNIH94klJaLoDrFM9vMNxHxZz2uefCGclQgXsGKCnZqlRv+mWNrK47F4saYtLrXz0Pb2aEOeujuf8YiP3iTOUMXft0XNR45d/1O5ZSmfTADD0RxN4cPG2POWlSB6CNDVTvN2Qd28DtLOJxcAH3OTK+5FkZRQ+feGwN+FTiV/EgRCIZipR+YeC+fPNvRfgGwILCre9+GJ4L8QbHFsXh+mlL039kbUPYCpLBvaQVFMtexo2TgZqX9TRga3QU9ZzHzT3isxWiBQTCxicLGFynW1hBOaQeocd9xezfenLdPJ8+NX04yY5e3hzV/OaIYCaGtlLhk4juJ6JeJEQDe54YoEZETiNRJ5wYUjGqbZcRYd3Yl9hwuZg4Udy0yxQ6kXYQ0pgKh5R6XsVbd4gBFFBrQYLjpQ/pv8PutfpTiqsUPXM8Kj/zxqtZotLdBEKoTFPvfMFs3FR6d+sU5MPEJjB0h31xFkdKaPLh2xNn0wuZDxI3EFc5H/qz/NULSnziVXsXOF01QsJawt3VgZGfpRKbJB3tZpJUozrsDjIsXk//JJJz2EzUgq66oU3YYqJ279WEjy6gRj3F2QupSD7y8gZ1c9+NvJIZ+18=
-    on_success: change
-    on_failure: always
+    secure: lxH/XC2aNHEmR7won/wYZ+0Qogb3nH4c9TWUdWJ8v7JYIZMZcgqWLDA/A++BPK/rSxcq8TWYALB1UOKWlSfUMRmdmOA5bMjIF6bNVWEHMq+KRTJKtMppgAnlodgd7RVyoR1XvU/Eixy0UwfWlBn32/rof0KDweb2atQQOUuZ2VIn3xQ1co3jpVns7OzbgSlUI5pJWJK1O72D+Fh9A2gjt7jttSf1rUtB1riR9S0YupP8iBFAQa/CkYZWMoND/Han2G8N/oUMSJWlSbiZvodMGleW0hmHjOx87SHjm6J96DMQgailKK9abPTXq2DlPXtPf740QCVYM4AUISj9WxZWgUbLYute85wIfmXZYo2/Q17UAi29A9cZOLGp5u3BnPv+/MXBr8/vhlcJ/pdY3itM+ybbnfOyJOdNq5R7BTSH//iJFz8aG3PPTaG4mLKoFAlVtNLFBqlRZQ/CXrtArxmzItf/+I6OWt25dfDO9P8ccZVOaWgdvu3GusrJ8ecC49Aox++xRkKW3ueTa++erIS2m5GyRMzxEX3byNgDBlLS+tpIiGy6dFmxBrnicvA+3jkUBrND3eFm8tCPF9eQi43SvGq0Q8ncCU0FrULKHFfm73yv76gAkT+JiveglbUBUJv5zVPY7qXzzVT7eq4WMITHFmA3XLkD/v6EVV+nVhmhFLA=
