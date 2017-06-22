@@ -155,6 +155,7 @@ export const correctLinkDataArray = [{
     strokeArrow: "red",
     fillArrow: "red",
     triggerable: true,
+    dash: [3, 2],
     controls:
     [696.1133311981484,
         -182.9564730403514,
@@ -171,6 +172,7 @@ export const correctLinkDataArray = [{
     strokeArrow: "red",
     fillArrow: "red",
     triggerable: true,
+    dash: [3, 2],
     controls:
     [565.8987616780212,
         -45.03776123817483,
@@ -323,6 +325,7 @@ export const correctLinkDataArrayWithoutGraphical =
         strokeArrow: "red",
         fillArrow: "red",
         triggerable: true,
+        dash: [3, 2],
         controls: null
     },
     {
@@ -333,6 +336,7 @@ export const correctLinkDataArrayWithoutGraphical =
         strokeArrow: "red",
         fillArrow: "red",
         triggerable: true,
+        dash: [3, 2],
         controls: null
     }];
 
@@ -503,6 +507,7 @@ export const correctLinkDataArrayWithExtraData = [{
     strokeArrow: "red",
     fillArrow: "red",
     triggerable: true,
+    dash: [3, 2],
     controls: null
 },
 {
@@ -513,5 +518,6 @@ export const correctLinkDataArrayWithExtraData = [{
     strokeArrow: "red",
     fillArrow: "red",
     triggerable: true,
+    dash: [3, 2],
     controls: null
 }];

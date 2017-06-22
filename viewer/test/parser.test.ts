@@ -43,7 +43,7 @@ describe("Test Parser", () => {
         });
     });
 
-    test("Should parse a cxml file with extra data and without graphical file", (done) => {
+    test("Should parse a cxml file with extra data", (done) => {
         let parser: ComponentModelParser;
         let model, graphical = undefined;
         model = fs.readFileSync("./test/ressources/WorldHello_with_extra_data.cxml").toString();

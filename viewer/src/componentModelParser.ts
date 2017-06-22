@@ -271,7 +271,8 @@ export class ComponentModelParser {
                 "strokeArrow": "red",
                 "fillArrow": "red",
                 "triggerable": true,
-                "controls": null
+                "controls": null,
+                "dash": [3, 2]
             });
         }
     }

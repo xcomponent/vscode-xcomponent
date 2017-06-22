@@ -41,6 +41,7 @@ export interface TriggerableTransitionTemplate extends LinkInterface {
     text: string;
     messageType: string;
     labelKeys: Array<String>;
+    dash: Array<number>;
 }
 
 export type LinkDataArrayTemplate = TransitionTemplate | TriggerableTransitionTemplate;
