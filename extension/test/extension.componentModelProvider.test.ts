@@ -5,75 +5,76 @@ import { ComponentModelProvider } from "../src/componentModelProvider";
 import * as chai from "chai";
 const should = chai.should();
 
-const cxmlFile = path.join(__dirname, "..", "..", "test", "inputs", "TechTest.cxml");
-const graphicalFile = path.join(__dirname, "..", "..", "test", "inputs", "TechTest_Graphical.xml");
+const inputPath = path.join(__dirname, "..", "..", "test", "inputs");
 
-const cxmlWithoutGraphicalFile = path.join(__dirname, "..", "..", "test", "inputs", "ModelWithoutGraphical.cxml");
+const cxmlFileName = "TechTest.cxml";
+const graphicalFileName = "TechTest_Graphical.xml";
 
-const otherInputFile = path.join(__dirname, "..", "..", "test", "inputs", "other_input.txt");
+const cxmlWithoutGraphicalFileName = "ModelWithoutGraphical.cxml";
 
-suite("ComponentModelProvider Tests", () => {
+const otherInputFileName = "other_input.txt";
 
-    const testGetModel = (modelFilePath: string) => {
-        return vscode.workspace.openTextDocument(modelFilePath).then(document => {
-            return vscode.window.showTextDocument(document);
-        }).then(editor => {
-            let componentModelProvider = new ComponentModelProvider();
-            return componentModelProvider.getRawModel();
-        });
-    };
+interface GetModelInputData {
+    input: string;
+    expectModel: boolean;
+    expectedGraphical?: string;
+}
 
-    test("Given a cxml files opened in vscode associated with a graohical file, getModel should return models as string", () => {
-        const expectedModel = fs.readFileSync(cxmlFile).toString();
-        const expectedGraphicalModel = fs.readFileSync(graphicalFile).toString();
+describe("ComponentModelProvider Tests", () => {
 
-        return testGetModel(cxmlFile).then(rawModel => {
-            rawModel.model.should.equal(expectedModel);
-            rawModel.graphical.should.equal(expectedGraphicalModel);
-        }, reason => {
-            should.fail(reason, undefined, "Raw model provider failed", "");
+    const getModelTests: Array<GetModelInputData> = [
+        { input: cxmlFileName, expectModel: true, expectedGraphical: graphicalFileName },
+        { input: cxmlWithoutGraphicalFileName, expectModel: true },
+        { input: otherInputFileName, expectModel: false }
+    ];
+
+    getModelTests.forEach(test => {
+        const graphicalTestLabel = test.expectedGraphical === undefined ? "" : ` with graphical details (${test.expectedGraphical})`;
+        it(`Given ${test.input} as input file, getModel should return ${test.expectModel ? "the model as string" : "undefined"} ${graphicalTestLabel}`, () => {
+            return vscode.workspace.openTextDocument(path.join(inputPath, test.input)).then(document => {
+                return vscode.window.showTextDocument(document);
+            }).then(editor => {
+                let componentModelProvider = new ComponentModelProvider();
+                const rawModel = componentModelProvider.getRawModel();
+                if (test.expectModel) {
+                    const expectedModel = fs.readFileSync(path.join(inputPath, test.input)).toString();
+                    rawModel.model.should.equal(expectedModel);
+                    if (test.expectedGraphical) {
+                        const expectedGraphicalModel = fs.readFileSync(path.join(inputPath, test.expectedGraphical)).toString();
+                        rawModel.graphical.should.equal(expectedGraphicalModel);
+                    }
+                    else {
+                        should.not.exist(rawModel.graphical);
+                    }
+                }
+                else {
+                    should.not.exist(rawModel);
+                }
+            }, reason => {
+                should.fail(reason, undefined, "Raw model provider failed", "");
+            });
         });
     });
 
-    test("Given a cxml files opened in vscode without a graohical file, getModel should return a component model as string without graphical", () => {
-        const expectedModel = fs.readFileSync(cxmlWithoutGraphicalFile).toString();
+    const testIsCxmlDocumentTests = [
+        { input: cxmlFileName, expect: true },
+        { input: otherInputFileName, expect: false }
+    ];
 
-        return testGetModel(cxmlWithoutGraphicalFile).then(rawModel => {
-            rawModel.model.should.equal(expectedModel);
-            should.not.exist(rawModel.graphical);
-        }, reason => {
-            should.fail(reason, undefined, "Raw model provider failed", "");
+    testIsCxmlDocumentTests.forEach(test => {
+        it(`Given ${test.input} as input file, isCxml should return ${test.expect}`, () => {
+            return vscode.workspace.openTextDocument(path.join(inputPath, test.input)).then(document => {
+                return vscode.window.showTextDocument(document);
+            }).then(editor => {
+                let componentModelProvider = new ComponentModelProvider();
+                componentModelProvider.isCxmlDocument().should.equal(test.expect);
+            }, reason => {
+                should.fail(reason, undefined, "Raw model provider failed", "");
+            });
         });
     });
 
-    test("Given a non cxml files opened in vscode without a graohical file, getModel should return undefined", () => {
-        return testGetModel(otherInputFile).then(rawModel => {
-            should.not.exist(rawModel);
-        }, reason => {
-            should.fail(reason, undefined, "Raw model provider failed", "");
-        });
-    });
-
-    const testIsCxmlDocument = (modelFilePath: string, expectedValue: boolean) => {
-        return vscode.workspace.openTextDocument(modelFilePath).then(document => {
-            return vscode.window.showTextDocument(document);
-        }).then(editor => {
-            let componentModelProvider = new ComponentModelProvider();
-            componentModelProvider.isCxmlDocument().should.equal(expectedValue);
-        }, reason => {
-            should.fail(reason, undefined, "Raw model provider failed", "");
-        });
-    };
-
-    test("Given a cxml files opened in vscode, isCxml should return true", () => {
-        return testIsCxmlDocument(cxmlFile, true);
-    });
-
-    test("Given a non cxml files opened in vscode, isCxml should return false", () => {
-        return testIsCxmlDocument(otherInputFile, false);
-    });
-
-    test("If no document is opened, isCxml should return false", () => {
+    it("If no document is opened, isCxml should return false", () => {
         return vscode.commands.executeCommand("workbench.action.closeAllEditors")
             .then(() => {
                 let componentModelProvider = new ComponentModelProvider();

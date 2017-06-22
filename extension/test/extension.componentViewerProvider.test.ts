@@ -7,47 +7,35 @@ import { ComponentViewerProvider } from "../src/componentViewerProvider";
 import * as chai from "chai";
 const should = chai.should();
 
+const inputPath = path.join(__dirname, "..", "..", "test", "inputs");
+const outputPath = path.join(__dirname, "..", "..", "test", "outputs");
 
-const cxmlFile = path.join(__dirname, "..", "..", "test", "inputs", "TechTest.cxml");
-const expectedPreviewHtmlFile = path.join(__dirname, "..", "..", "test", "outputs", "expectedPreview.html");
-const otherInputFile = path.join(__dirname, "..", "..", "test", "inputs", "other_input.txt");
-const expectedErrorHtmlFile = path.join(__dirname, "..", "..", "test", "outputs", "expectedError.html");
+const cxmlFileName = "TechTest.cxml";
+const expectedPreviewHtmlFileName = "expectedPreview.html";
+const otherInputFileName = "other_input.txt";
+const expectedErrorHtmlFileName = "expectedError.html";
 
-suite("ComponentViewerProvider Tests", () => {
+describe("ComponentViewerProvider Tests", () => {
 
-    const testProvideTextDocumentContent = (modelFilePath: string) => {
-        const expectedHtml = fs.readFileSync(expectedErrorHtmlFile).toString();
-        return vscode.workspace.openTextDocument(otherInputFile).then(document => {
-            return vscode.window.showTextDocument(document);
-        }).then(editor => {
-            const extensionContextMock: TypeMoq.IMock<vscode.ExtensionContext> = TypeMoq.Mock.ofType<vscode.ExtensionContext>();
-            extensionContextMock.setup(x => x.extensionPath).returns(() => "/test/extensionpath");
-            const provider = new ComponentViewerProvider(extensionContextMock.object);
-            return provider.provideTextDocumentContent(null);
-        });
-    };
+    const providerTests = [
+        { input: otherInputFileName, expected: expectedErrorHtmlFileName },
+        { input: cxmlFileName, expected: expectedPreviewHtmlFileName }
+    ];
 
-    test("Show preview command on non cxml document should display an error html", () => {
-        const expectedHtml = fs.readFileSync(expectedErrorHtmlFile).toString();
-        return testProvideTextDocumentContent(expectedErrorHtmlFile).then(htmlPreview => {
-            htmlPreview.should.equal(expectedHtml);
-        }, reason => {
-            should.fail(reason, undefined, "Viewer provider failed", "");
-        });
-    });
-
-    test("Show preview command on cxml document should display a preview html", () => {
-        const expectedHtml = fs.readFileSync(expectedPreviewHtmlFile).toString();
-        return vscode.workspace.openTextDocument(cxmlFile).then(document => {
-            return vscode.window.showTextDocument(document);
-        }).then(editor => {
-            const extensionContextMock: TypeMoq.IMock<vscode.ExtensionContext> = TypeMoq.Mock.ofType<vscode.ExtensionContext>();
-            extensionContextMock.setup(x => x.extensionPath).returns(() => "/test/extensionpath");
-            const provider = new ComponentViewerProvider(extensionContextMock.object);
-            const htmlPreview = provider.provideTextDocumentContent(null);
-            htmlPreview.should.equal(expectedHtml);
-        }, reason => {
-            should.fail(reason, undefined, "Viewer provider failed", "");
+    providerTests.forEach(test => {
+        it(`Given ${test.input} as input file, should display ${test.expected} as html output`, () => {
+            const expectedHtml = fs.readFileSync(path.join(outputPath, expectedErrorHtmlFileName)).toString();
+            return vscode.workspace.openTextDocument(path.join(inputPath, otherInputFileName)).then(document => {
+                return vscode.window.showTextDocument(document);
+            }).then(editor => {
+                const extensionContextMock: TypeMoq.IMock<vscode.ExtensionContext> = TypeMoq.Mock.ofType<vscode.ExtensionContext>();
+                extensionContextMock.setup(x => x.extensionPath).returns(() => "/test/extensionpath");
+                const provider = new ComponentViewerProvider(extensionContextMock.object);
+                const htmlPreview = provider.provideTextDocumentContent(null);
+                htmlPreview.should.equal(expectedHtml);
+            }, reason => {
+                should.fail(reason, undefined, "Viewer provider failed", "");
+            });
         });
     });
 });
