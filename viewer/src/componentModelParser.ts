@@ -41,7 +41,7 @@ export class ComponentModelParser {
                 return this.promisifyParseString(model);
             });
         } else {
-             pomiseParseGraphical = this.promisifyParseString(model);
+            pomiseParseGraphical = this.promisifyParseString(model);
         }
         return pomiseParseGraphical.then((modelJson: Model) => {
             this.parseModel(modelJson);
@@ -102,19 +102,18 @@ export class ComponentModelParser {
 
     public addControlPoint(): void {
         for (let i = 0; i < this.linkDataArray.length; i++) {
+            const keyLink = this.linkDataArray[i].key;
+            const controlPoint = (this.linkDataArray[i].triggerable) ? this.controlPointTriggerable : this.controlPointTransition;
+            if (controlPoint[keyLink] === undefined || controlPoint[keyLink] === undefined) {
+                continue;
+            }
+            const firstPoint = controlPoint[keyLink].firstPoint;
+            const lastPoint = controlPoint[keyLink].lastPoint;
+            const firstControlPoint = controlPoint[keyLink].firstControlPoint;
+            const secondControlPoint = controlPoint[keyLink].secondControlPoint;
             if (this.linkDataArray[i].triggerable) {
-                const keyLink = this.linkDataArray[i].key;
-                const firstPoint = this.controlPointTriggerable[keyLink].firstPoint;
-                const lastPoint = this.controlPointTriggerable[keyLink].lastPoint;
-                const firstControlPoint = this.controlPointTriggerable[keyLink].firstControlPoint;
-                const secondControlPoint = this.controlPointTriggerable[keyLink].secondControlPoint;
                 this.linkDataArray[i].controls = [firstControlPoint.x, firstControlPoint.y, secondControlPoint.x, secondControlPoint.y, lastPoint.x, lastPoint.y];
             } else {
-                const keyLink = this.linkDataArray[i].key;
-                const firstPoint = this.controlPointTransition[keyLink].firstPoint;
-                const lastPoint = this.controlPointTransition[keyLink].lastPoint;
-                const firstControlPoint = this.controlPointTransition[keyLink].firstControlPoint;
-                const secondControlPoint = this.controlPointTransition[keyLink].secondControlPoint;
                 this.linkDataArray[i].controls = [firstControlPoint.x, firstControlPoint.y, secondControlPoint.x, secondControlPoint.y];
             }
         }

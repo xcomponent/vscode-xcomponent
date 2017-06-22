@@ -5,7 +5,7 @@
     <StateMachineData Id="2" Name="Reponse" PublicMember="XComponent.WorldHello.UserObject.Reponse" />
   </StateMachines>
   <States>
-    <StateData Id="" Name="ExtraState" SubGraphKey="StateMachine1">
+    <StateData Id="0" Name="ExtraState" SubGraphKey="StateMachine1">
       <TriggeredMethods />
     </StateData>
     <StateData Id="1" Name="EntryPoint" IsEntryPoint="true" SubGraphKey="StateMachine1">
@@ -43,6 +43,10 @@
     </TransitionPatternStateData>
   </TransitionPatternStates>
   <Links>
+      <TransitionData Id="01" Name="ExtraTransition" FromKey="State0" ToKey="State1" Type="X" ExecutionDelay="0" SetCustomTimeout="false" TriggeringEvent="XComponent.WorldHello.UserObject.SayHello" UserSpecificRule="false">
+      <MatchingRules />
+    </TransitionData>
+
     <TransitionData Id="2" Name="SayHello" FromKey="State1" ToKey="State2" Type="X" ExecutionDelay="0" SetCustomTimeout="false" TriggeringEvent="XComponent.WorldHello.UserObject.SayHello" UserSpecificRule="false">
       <MatchingRules />
     </TransitionData>

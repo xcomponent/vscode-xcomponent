@@ -337,7 +337,7 @@ export const correctLinkDataArrayWithoutGraphical =
     }];
 
 
-export const correctNodeDataArrayWithExtraState = [{
+export const correctNodeDataArrayWithExtraData = [{
     key: "Manager",
     text: "Manager",
     isGroup: true,
@@ -355,8 +355,8 @@ export const correctNodeDataArrayWithExtraState = [{
     group: "Manager",
     stateName: "ExtraState",
     numberOfStates: 0,
-    fill: "Green",
-    stroke: "Green",
+    fill: "White",
+    stroke: "White",
     loc: undefined
 },
 {
@@ -419,7 +419,99 @@ export const correctNodeDataArrayWithExtraState = [{
     stroke: "rgba(102,0,204,0.45)",
     loc: undefined
 },
+{ key: "01", category: "LinkLabel", text: "ExtraTransition" },
 { key: "2", category: "LinkLabel", text: "SayHello" },
 { key: "5", category: "LinkLabel", text: "Done" },
 { key: "1", category: "LinkLabel", text: "FirstTransition" },
 { key: "7", category: "LinkLabel", text: "SecondTransition" }];
+
+export const correctLinkDataArrayWithExtraData = [{
+    key: "01",
+    from: "Manager&ExtraState",
+    stateMachineTarget: "Manager",
+    to: "Manager&EntryPoint",
+    text: "ExtraTransition",
+    messageType: "XComponent.WorldHello.UserObject.SayHello",
+    labelKeys: ["01"],
+    triggerable: false,
+    controls: null,
+    strokeLink: "black",
+    strokeArrow: "black",
+    fillArrow: "black"
+},
+{
+    key: "2",
+    from: "Manager&EntryPoint",
+    stateMachineTarget: "Manager",
+    to: "Reponse&first",
+    text: "SayHello",
+    messageType: "XComponent.WorldHello.UserObject.SayHello",
+    labelKeys: ["2"],
+    triggerable: false,
+    controls: null,
+    strokeLink: "green",
+    strokeArrow: "green",
+    fillArrow: "green"
+},
+{
+    key: "5",
+    from: "Reponse&FirstSecondThirdPatternState",
+    stateMachineTarget: "Reponse",
+    to: "Reponse&Done",
+    text: "Done",
+    messageType: "XComponent.WorldHello.UserObject.Done",
+    labelKeys: ["5"],
+    triggerable: false,
+    controls: null,
+    strokeLink: "black",
+    strokeArrow: "black",
+    fillArrow: "black"
+},
+{
+    key: "1",
+    from: "Reponse&first",
+    stateMachineTarget: "Reponse",
+    to: "Reponse&second",
+    text: "FirstTransition",
+    messageType: "XComponent.WorldHello.UserObject.SayHello",
+    labelKeys: ["1"],
+    triggerable: false,
+    controls: null,
+    strokeLink: "black",
+    strokeArrow: "black",
+    fillArrow: "black"
+},
+{
+    key: "7",
+    from: "Reponse&second",
+    stateMachineTarget: "Reponse",
+    to: "Reponse&Third",
+    text: "SecondTransition",
+    messageType: "XComponent.WorldHello.UserObject.SayHello",
+    labelKeys: ["7"],
+    triggerable: false,
+    controls: null,
+    strokeLink: "black",
+    strokeArrow: "black",
+    fillArrow: "black"
+},
+{
+    key: "6",
+    from: "Reponse&FirstSecondThirdPatternState",
+    to: "5",
+    strokeLink: "red",
+    strokeArrow: "red",
+    fillArrow: "red",
+    triggerable: true,
+    controls: null
+},
+{
+    key: "3",
+    from: "Reponse&first",
+    to: "1",
+    strokeLink: "red",
+    strokeArrow: "red",
+    fillArrow: "red",
+    triggerable: true,
+    controls: null
+}];
