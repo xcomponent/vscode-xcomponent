@@ -41,13 +41,13 @@
     "xml2js": "^0.4.17"
   },
   "devDependencies": {
-    "@types/expect": "^1.20.1",
-    "@types/jest": "^19.2.4",
+    "@types/chai": "^4.0.0",
+    "@types/jest": "^20.0.1",
     "babel-polyfill": "^6.23.0",
+    "chai": "^4.0.2",
     "clean-webpack-plugin": "^0.1.16",
     "compression": "^1.6.2",
     "css-loader": "^0.28.4",
-    "expect": "^1.20.2",
     "express": "^4.14.0",
     "extract-text-webpack-plugin": "^2.1.0",
     "html-webpack-plugin": "^2.24.1",
@@ -63,7 +63,7 @@
     "tslint": "^5.4.3",
     "tslint-loader": "^3.3.0",
     "typescript": "^2.3.4",
-    "webpack": "^2.4.1",
+    "webpack": "^3.0.0",
     "webpack-dev-server": "^2.4.2"
   },
   "false": {}
