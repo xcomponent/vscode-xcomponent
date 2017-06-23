@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ComponentViewModelData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="TechTest" Version="426">
+  <StateMachines>
+    <StateMachineData Id="1" Name="TechTestManger" PublicMember="XComponent.TechTest.UserObject.InputData" />
+    <StateMachineData Id="2" Name="TestSpec" PublicMember="XComponent.TechTest.UserObject.TestSpec" InternalMember="XComponent.TechTest.UserObject.InputData" />
+  </StateMachines>
+  <States>
+    <StateData Id="1" Name="EntryPoint" IsEntryPoint="true" SubGraphKey="StateMachine1">
+      <Comment />
+      <TriggeredMethods />
+    </StateData>
+    <StateData Id="2" Name="Up" IsEntryPoint="false" SubGraphKey="StateMachine1">
+      <Comment />
+      <TriggeredMethods>
+        <TriggeredMethodData IsNodeInitializer="false" IsSelected="true" TransitionName="Init" TriggeringEvent="XComponent.Common.Event.DefaultEvent" />
+        <TriggeredMethodData IsNodeInitializer="false" IsSelected="true" TransitionName="TranferInterviewInfos" TriggeringEvent="XComponent.Authentication.UserObject.Interview" />
+      </TriggeredMethods>
+    </StateData>
+    <StateData Id="3" Name="Choice" IsEntryPoint="false" SubGraphKey="StateMachine2">
+      <Comment />
+      <TriggeredMethods>
+        <TriggeredMethodData IsNodeInitializer="false" IsSelected="true" TransitionName="ChooseTestTech" TriggeringEvent="XComponent.TechTest.UserObject.InputData" />
+      </TriggeredMethods>
+    </StateData>
+    <StateData Id="4" Name="Uploading" IsEntryPoint="false" SubGraphKey="StateMachine2">
+      <Comment />
+      <TriggeredMethods>
+        <TriggeredMethodData IsNodeInitializer="false" IsSelected="true" TransitionName="UploadTest" TriggeringEvent="XComponent.Common.Event.DefaultEvent" />
+      </TriggeredMethods>
+    </StateData>
+    <StateData Id="5" Name="TestUploaded" IsEntryPoint="false" SubGraphKey="StateMachine2">
+      <Comment />
+      <TriggeredMethods>
+        <TriggeredMethodData IsNodeInitializer="false" IsSelected="true" TransitionName="UploadingTest" TriggeringEvent="XComponent.TechTest.UserObject.TestSpec" />
+      </TriggeredMethods>
+    </StateData>
+    <StateData Id="6" Name="Error" IsEntryPoint="false" SubGraphKey="StateMachine2">
+      <Comment />
+      <TriggeredMethods />
+    </StateData>
+    <StateData Id="14" Name="TestInProgress" IsEntryPoint="false" SubGraphKey="StateMachine2">
+      <TriggeredMethods>
+        <TriggeredMethodData IsNodeInitializer="false" IsSelected="true" TransitionName="StartTest" TriggeringEvent="XComponent.Common.Event.DefaultEvent" />
+        <TriggeredMethodData IsNodeInitializer="false" IsSelected="true" TransitionName="AnswerReceived" TriggeringEvent="XComponent.TechTest.UserObject.Answer" />
+        <TriggeredMethodData IsNodeInitializer="false" IsSelected="true" TransitionName="ResponseTimedOut" TriggeringEvent="XComponent.Common.Event.DefaultEvent" />
+      </TriggeredMethods>
+    </StateData>
+    <StateData Id="16" Name="EndOfTest" IsEntryPoint="false" SubGraphKey="StateMachine2">
+      <TriggeredMethods>
+        <TriggeredMethodData IsNodeInitializer="false" IsSelected="true" TransitionName="EndingTest" TriggeringEvent="XComponent.TechTest.UserObject.EndingTest" />
+      </TriggeredMethods>
+    </StateData>
+    <StateData Id="17" Name="Reponse" IsEntryPoint="false" SubGraphKey="StateMachine2">
+      <TriggeredMethods>
+        <TriggeredMethodData IsNodeInitializer="false" IsSelected="true" TransitionName="OnNewAnswer" TriggeringEvent="XComponent.Common.Event.DefaultEvent" />
+      </TriggeredMethods>
+    </StateData>
+    <StateData Id="7" Name="SendingEmails" IsEntryPoint="false" SubGraphKey="StateMachine2">
+      <TriggeredMethods>
+        <TriggeredMethodData IsNodeInitializer="false" IsSelected="true" TransitionName="SendResults" TriggeringEvent="XComponent.TechTest.UserObject.Email" />
+      </TriggeredMethods>
+    </StateData>
+  </States>
+  <TransitionPatternStates />
+  <Links>
+    <TransitionData Id="2" Name="ChooseTestTech" FromKey="State2" ToKey="State3" Type="X" ExecutionDelay="0" SetCustomTimeout="true" TriggeringEvent="XComponent.TechTest.UserObject.InputData" UserSpecificRule="false">
+      <MatchingRules />
+    </TransitionData>
+    <TransitionData Id="3" Name="UploadTest" FromKey="State3" ToKey="State4" Type="TimeOut" ExecutionDelay="0" SetCustomTimeout="false" TriggeringEvent="XComponent.Common.Event.DefaultEvent" UserSpecificRule="false">
+      <MatchingRules />
+    </TransitionData>
+    <TransitionData Id="4" Name="UploadSucess" FromKey="State4" ToKey="State5" Type="Standard" ExecutionDelay="0" SetCustomTimeout="false" TriggeringEvent="XComponent.TechTest.UserObject.UploadSucess" UserSpecificRule="false">
+      <MatchingRules />
+    </TransitionData>
+    <TransitionData Id="5" Name="UploadError" FromKey="State4" ToKey="State6" Type="Standard" ExecutionDelay="0" SetCustomTimeout="false" TriggeringEvent="XComponent.TechTest.UserObject.UploadError" UserSpecificRule="false">
+      <MatchingRules />
+    </TransitionData>
+    <TransitionData Id="6" Name="StartTest" FromKey="State5" ToKey="State14" Type="Standard" ExecutionDelay="0" SetCustomTimeout="false" TriggeringEvent="XComponent.Common.Event.DefaultEvent" UserSpecificRule="false">
+      <MatchingRules />
+    </TransitionData>
+    <TransitionData Id="9" Name="WaitAnswer" FromKey="State14" ToKey="State17" Type="Standard" ExecutionDelay="0" SetCustomTimeout="false" TriggeringEvent="XComponent.TechTest.UserObject.WaitAnwser" UserSpecificRule="false">
+      <MatchingRules />
+    </TransitionData>
+    <TransitionData Id="7" Name="EndingTest" FromKey="State14" ToKey="State16" Type="Standard" ExecutionDelay="0" SetCustomTimeout="false" TriggeringEvent="XComponent.TechTest.UserObject.EndingTest" UserSpecificRule="false">
+      <MatchingRules />
+    </TransitionData>
+    <TransitionData Id="15" Name="SendResults" FromKey="State16" ToKey="State7" Type="Standard" ExecutionDelay="0" SetCustomTimeout="false" TriggeringEvent="XComponent.TechTest.UserObject.Email" UserSpecificRule="false">
+      <MatchingRules />
+    </TransitionData>
+    <TransitionData Id="11" Name="AnswerReceived" FromKey="State17" ToKey="State14" Type="Standard" ExecutionDelay="0" SetCustomTimeout="false" TriggeringEvent="XComponent.TechTest.UserObject.Answer" UserSpecificRule="false">
+      <MatchingRules />
+    </TransitionData>
+    <TransitionData Id="12" Name="ResponseTimedOut" FromKey="State17" ToKey="State14" Type="TimeOut" ExecutionDelay="60" SetCustomTimeout="true" TriggeringEvent="XComponent.Common.Event.DefaultEvent" UserSpecificRule="false">
+      <MatchingRules />
+    </TransitionData>
+    <TransitionData Id="8" Name="UploadingTest" FromKey="State2" ToKey="State5" Type="X" ExecutionDelay="0" SetCustomTimeout="false" TriggeringEvent="XComponent.TechTest.UserObject.TestSpec" UserSpecificRule="false">
+      <MatchingRules />
+    </TransitionData>
+    <TransitionData Id="1" Name="Init" FromKey="State1" ToKey="State2" Type="TimeOut" ExecutionDelay="0" SetCustomTimeout="false" TriggeringEvent="XComponent.Common.Event.DefaultEvent" UserSpecificRule="false">
+      <MatchingRules />
+    </TransitionData>
+    <TransitionData Id="10" Name="TranferInterviewInfos" FromKey="State2" ToKey="State2" Type="Standard" ExecutionDelay="0" SetCustomTimeout="false" TriggeringEvent="XComponent.Authentication.UserObject.Interview" UserSpecificRule="false">
+      <MatchingRules />
+    </TransitionData>
+  </Links>
+  <TransversalLinks>
+    <TransversalTransitionData Id="12" Name="" FromKey="State4" ToId="4" SelectAllTransitions="true" Type="Triggerable">
+      <SelectedTransitions>
+        <SelectedTransitionData Event="XComponent.Common.Event.DefaultEvent" Name="UploadTest" />
+      </SelectedTransitions>
+    </TransversalTransitionData>
+    <TransversalTransitionData Id="13" Name="" FromKey="State4" ToId="5" SelectAllTransitions="true" Type="Triggerable">
+      <SelectedTransitions>
+        <SelectedTransitionData Event="XComponent.Common.Event.DefaultEvent" Name="UploadTest" />
+      </SelectedTransitions>
+    </TransversalTransitionData>
+    <TransversalTransitionData Id="15" Name="" FromKey="State14" ToId="9" SelectAllTransitions="true" Type="Triggerable">
+      <SelectedTransitions>
+        <SelectedTransitionData Event="XComponent.Common.Event.DefaultEvent" Name="StartTest" />
+        <SelectedTransitionData Event="XComponent.TechTest.UserObject.Answer" Name="AnswerReceived" />
+        <SelectedTransitionData Event="XComponent.Common.Event.DefaultEvent" Name="ResponseTimedOut" />
+      </SelectedTransitions>
+    </TransversalTransitionData>
+    <TransversalTransitionData Id="16" Name="" FromKey="State14" ToId="7" SelectAllTransitions="true" Type="Triggerable">
+      <SelectedTransitions>
+        <SelectedTransitionData Event="XComponent.Common.Event.DefaultEvent" Name="StartTest" />
+        <SelectedTransitionData Event="XComponent.TechTest.UserObject.Answer" Name="AnswerReceived" />
+        <SelectedTransitionData Event="XComponent.Common.Event.DefaultEvent" Name="ResponseTimedOut" />
+      </SelectedTransitions>
+    </TransversalTransitionData>
+    <TransversalTransitionData Id="18" Name="" FromKey="State16" ToId="15" SelectAllTransitions="true" Type="Triggerable">
+      <SelectedTransitions>
+        <SelectedTransitionData Event="XComponent.TechTest.UserObject.EndingTest" Name="EndingTest" />
+      </SelectedTransitions>
+    </TransversalTransitionData>
+    <TransversalTransitionData Id="10" Name="" FromKey="State2" ToId="8" SelectAllTransitions="true" Type="Triggerable">
+      <SelectedTransitions>
+        <SelectedTransitionData Event="XComponent.Common.Event.DefaultEvent" Name="Init" />
+        <SelectedTransitionData Event="XComponent.Authentication.UserObject.Interview" Name="TranferInterviewInfos" />
+      </SelectedTransitions>
+    </TransversalTransitionData>
+    <TransversalTransitionData Id="99" Name="" FromKey="State2" ToId="2" SelectAllTransitions="true" Type="Triggerable">
+      <SelectedTransitions>
+        <SelectedTransitionData Event="XComponent.Common.Event.DefaultEvent" Name="Init" />
+        <SelectedTransitionData Event="XComponent.Authentication.UserObject.Interview" Name="TranferInterviewInfos" />
+      </SelectedTransitions>
+    </TransversalTransitionData>
+  </TransversalLinks>
+  <PublicAssemblies>
+    <AssemblyData Name="Authentication" Path="..\Authentication\generated\UserObject\XComponent.Authentication.UserObject.dll" />
+  </PublicAssemblies>
+  <ExternalAssemblies />
+</ComponentViewModelData>
