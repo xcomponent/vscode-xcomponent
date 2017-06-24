@@ -11,7 +11,7 @@ More features yet to come...
 
 ## Component preview
 
-You can display a graphical preview (state machine diagram) of a cxml file by using the *"XComponent: Preview Component"* command.
+To display a component *.cxml file, use the *"XComponent: Preview Component"* command.
 
 ![component preview](https://raw.githubusercontent.com/xcomponent/vscode-xcomponent/master/extension/images/cxml_preview.gif)
 
