@@ -7,3 +7,5 @@ src/**
 tsconfig.json
 tslint.json
 .vscode-test/**
+images/**/*.gif
+images/**/*.png
