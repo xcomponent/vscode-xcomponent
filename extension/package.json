@@ -34,7 +34,7 @@
     "commands": [
       {
         "command": "xcomponent.preview",
-        "title": "XComponent: component preview",
+        "title": "XComponent: Preview Component",
         "group": "navigation"
       }
     ],
