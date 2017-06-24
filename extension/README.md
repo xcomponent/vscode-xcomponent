@@ -1,21 +1,19 @@
-# xcomponent
-
-This extension provides a development environment for [XComponent](http://www.xcomponent.com/).
+# XComponent
 
 XComponent is a platform to easily create, monitor and share **microservices**. To get more details about XComponent, go to [the resource center](https://github.com/xcomponent/xcomponent).
 
-The extension includes the following features:
-* cxml preview
+This extension makes it easy to work with [XComponent](http://www.xcomponent.com/) projects. It includes the following features:
+* Component preview
 
 More features yet to come...
 
 ## Feature details
 
-## cxml preview
+## Component preview
 
-You can display a graphical preview (state machine diagram) of a cxml file by using the *"XComponent: component preview"* command.
+You can display a graphical preview (state machine diagram) of a cxml file by using the *"XComponent: Preview Component"* command.
 
-![cxml preview](https://raw.githubusercontent.com/xcomponent/vscode-xcomponent/master/extension/images/cxml_preview.gif)
+![component preview](https://raw.githubusercontent.com/xcomponent/vscode-xcomponent/master/extension/images/cxml_preview.gif)
 
 ## Feedback & Contributing
 

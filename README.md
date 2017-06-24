@@ -4,15 +4,29 @@
 
 # Visual Studio Code extension for [XComponent](http://www.xcomponent.com/)
 
-This repository contains:
-* [xcomponent extension](https://github.com/xcomponent/vscode-xcomponent/blob/master/extension/README.md)
-* [xcomponent viewer](https://github.com/xcomponent/vscode-xcomponent/tree/master/viewer) used in the extension
+XComponent is a platform to easily create, monitor and share **microservices**. To get more details about XComponent, go to [the resource center](https://github.com/xcomponent/xcomponent).
 
-## Build the extension
+This extension makes it easy to work with [XComponent](http://www.xcomponent.com/) projects. It includes the following features:
+* Component preview
 
-``` npm install ```
+More features yet to come...
 
-``` npm run compile ```
+## [Getting started](https://github.com/xcomponent/vscode-xcomponent/blob/master/extension/README.md)
+
+## Development
+
+First install:
+* Node.js (newer than 8.0)
+* Npm (newer than 5.0)
+
+To **run and develop** do the following:
+
+* Run `npm install`
+* Run `npm run compile`
+* Open in Visual Studio Code (`code ./extension/.`)
+* Press <kbd>F5</kbd> to debug
+
+To **test** do the following: `npm run test` or <kbd>F5</kbd> in VS Code with the "Launch Tests" debug configuration.
 
 ## Feedback & Contributing
 
