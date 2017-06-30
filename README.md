@@ -17,16 +17,16 @@ More features yet to come...
 
 First install:
 * Node.js (newer than 8.0)
-* Npm (newer than 5.0)
+* Yarn
 
 To **run and develop** do the following:
 
-* Run `npm install`
-* Run `npm run compile`
+* Run `yarn install`
+* Run `yarn run compile`
 * Open in Visual Studio Code (`code ./extension/.`)
 * Press <kbd>F5</kbd> to debug
 
-To **test** do the following: `npm run test` or <kbd>F5</kbd> in VS Code with the "Launch Tests" debug configuration.
+To **test** do the following: `yarn run test` or <kbd>F5</kbd> in VS Code with the "Launch Tests" debug configuration.
 
 ## Feedback & Contributing
 

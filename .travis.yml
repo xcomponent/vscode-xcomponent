@@ -7,15 +7,24 @@ branches:
   - master
 os:
 - linux
+dist: trusty
+cache: yarn
+addons:
+  apt:
+    sources:
+      - sourceline: 'deb https://dl.yarnpkg.com/debian/ stable main'
+        key_url: 'https://dl.yarnpkg.com/debian/pubkey.gpg'
+    packages:
+      - yarn
 before_install:
 - if [ $TRAVIS_OS_NAME == "linux" ]; then export CXX="g++-4.9" CC="gcc-4.9" DISPLAY=:99.0;
   sh -e /etc/init.d/xvfb start; sleep 3; fi
 install:
-- npm install
-- npm run tslint
-- npm run compile
+- yarn install
+- yarn run tslint
+- yarn run compile
 script:
-- npm test --silent
+- yarn test --silent
 notifications:
   slack:
     rooms:
