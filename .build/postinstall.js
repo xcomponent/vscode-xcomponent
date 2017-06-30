@@ -1,10 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 const cp = require('child_process');
-const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
+const yarn = process.platform === 'win32' ? 'yarn.cmd' : 'yarn';
 
-function npmInstall(location) {
-	const result = cp.spawnSync(npm, ['install'], {
+function yarnInstall(location) {
+	const result = cp.spawnSync(yarn, ['install'], {
 		cwd: location,
 		stdio: 'inherit'
 	});
@@ -19,6 +19,6 @@ const cwd = process.cwd();
 for (const element of fs.readdirSync(cwd)) {
 	const fullpath = path.join(cwd, element, 'package.json');
 	if (fs.existsSync(fullpath)) {
-		npmInstall(path.join(cwd, element));
+		yarnInstall(path.join(cwd, element));
 	}
 }

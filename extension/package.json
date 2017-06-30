@@ -62,7 +62,6 @@
     "chai": "^4.0.2",
     "install": "^0.10.1",
     "mocha": "^3.4.2",
-    "npm": "^5.0.3",
     "ts-loader": "^2.1.0",
     "tslint": "^5.4.3",
     "tslint-loader": "^3.3.0",
