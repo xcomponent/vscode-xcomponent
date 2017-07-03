@@ -1,5 +1,5 @@
 import { graphicalTags, modelTags } from "configurationParser";
-import { Parser } from "./parser";
+import { parseGraphical, parseModel } from "./parser";
 import { LinkLabelTemplate, TransitionTemplate, TriggerableTransitionTemplate, StateMachineTemplate, StateTemplate, LinkDataArrayTemplate, NodeDataArrayTemplate } from "gojsTemplates";
 import { Point, Curve, StateMachine, State, ComponentGraphicalModel } from "parserObjects";
 import { finalStateColor, stateColor, transitionPatternStateColor, entryPointStateColor } from "graphicColors";
@@ -15,7 +15,6 @@ export class ComponentModel {
     private transitionPatternStates: { [key: string]: State };
     private linksLabel: Array<LinkLabelTemplate>;
     private componentGraphicalModel: ComponentGraphicalModel;
-    private parser: Parser;
 
     private componentName: string;
     private finalStates: Array<String>;
@@ -26,7 +25,6 @@ export class ComponentModel {
 
     constructor(componentGraphicalModel: ComponentGraphicalModel) {
         this.componentGraphicalModel = componentGraphicalModel;
-        this.parser = new Parser();
     }
 
     parse() {
@@ -35,12 +33,12 @@ export class ComponentModel {
         let pomiseParseGraphical;
 
         if (graphical) {
-            pomiseParseGraphical = this.parser.parseGraphical(graphical).then((graphicalJson: Graphical) => {
+            pomiseParseGraphical = parseGraphical(graphical).then((graphicalJson: Graphical) => {
                 this.parseGraphical(graphicalJson);
-                return this.parser.parseModel(model);
+                return parseModel(model);
             });
         } else {
-            pomiseParseGraphical = this.parser.parseModel(model);
+            pomiseParseGraphical = parseModel(model);
         }
 
         return pomiseParseGraphical.then((modelJson: Model) => {
