@@ -1,13 +1,12 @@
 import { graphicalTags, modelTags } from "configurationParser";
+import { Parser } from "./parser";
 import { LinkLabelTemplate, TransitionTemplate, TriggerableTransitionTemplate, StateMachineTemplate, StateTemplate, LinkDataArrayTemplate, NodeDataArrayTemplate } from "gojsTemplates";
 import { Point, Curve, StateMachine, State, ComponentGraphicalModel } from "parserObjects";
 import { finalStateColor, stateColor, transitionPatternStateColor, entryPointStateColor } from "graphicColors";
 import { Graphical, Attribute, StateGraphicalDataElement, TransitionGraphicalDataElement } from "graphicalTypes";
-import { parseString } from "xml2js";
-import * as promisify from "es6-promisify";
 import { Model } from "modelTypes";
 
-export class ComponentModelParser {
+export class ComponentModel {
     private locations: { [key: string]: Point };
     private controlPointTransition: { [key: string]: Curve };
     private controlPointTriggerable: { [key: string]: Curve };
@@ -16,6 +15,7 @@ export class ComponentModelParser {
     private transitionPatternStates: { [key: string]: State };
     private linksLabel: Array<LinkLabelTemplate>;
     private componentGraphicalModel: ComponentGraphicalModel;
+    private parser: Parser;
 
     private componentName: string;
     private finalStates: Array<String>;
@@ -24,25 +24,25 @@ export class ComponentModelParser {
     private linkDataArray: Array<LinkDataArrayTemplate>;
     private nodeDataArray: Array<NodeDataArrayTemplate>;
 
-    private promisifyParseString: any;
-
     constructor(componentGraphicalModel: ComponentGraphicalModel) {
         this.componentGraphicalModel = componentGraphicalModel;
-        this.promisifyParseString = promisify(parseString);
+        this.parser = new Parser();
     }
 
     parse() {
         const model = this.componentGraphicalModel.model;
         const graphical = this.componentGraphicalModel.graphical;
         let pomiseParseGraphical;
+
         if (graphical) {
-            pomiseParseGraphical = this.promisifyParseString(graphical).then((graphicalJson: Graphical) => {
+            pomiseParseGraphical = this.parser.parseGraphical(graphical).then((graphicalJson: Graphical) => {
                 this.parseGraphical(graphicalJson);
-                return this.promisifyParseString(model);
+                return this.parser.parseModel(model);
             });
         } else {
-            pomiseParseGraphical = this.promisifyParseString(model);
+            pomiseParseGraphical = this.parser.parseModel(model);
         }
+
         return pomiseParseGraphical.then((modelJson: Model) => {
             this.parseModel(modelJson);
             return {

@@ -1,11 +1,11 @@
-import { ComponentModelParser } from "./componentModelParser";
+import { ComponentModel } from "./componentModel";
 import { DrawComponent } from "./drawComponent";
 import { DrawComponentData } from "gojsTemplates";
 
 const model = document.currentScript.getAttribute("model");
 let graphical = document.currentScript.getAttribute("graphical");
 graphical = (graphical === "undefined") ? undefined : graphical;
-const parser = new ComponentModelParser({ model, graphical });
+const parser = new ComponentModel({ model, graphical });
 parser.parse()
   .then((data: DrawComponentData) => {
     const drawComponent = new DrawComponent();
