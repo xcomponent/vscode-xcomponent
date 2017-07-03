@@ -1,6 +1,6 @@
 import { ComponentModel } from "../src/componentModel";
 import * as fs from "fs-extra";
-import { correctNodeDataArray, correctLinkDataArray, correctLinkDataArrayWithoutGraphical, correctNodeDataArrayWithoutGraphical, correctLinkDataArrayWithExtraData, correctNodeDataArrayWithExtraData } from "./parser.expectation";
+import { correctNodeDataArray, correctLinkDataArray, correctLinkDataArrayWithoutGraphical, correctNodeDataArrayWithoutGraphical, correctLinkDataArrayWithExtraData, correctNodeDataArrayWithExtraData } from "./componentModel.expectation";
 import { DrawComponentData } from "../src/gojsTemplates";
 import * as chai from "chai";
 const should = chai.should();
