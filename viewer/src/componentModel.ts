@@ -27,14 +27,14 @@ export class ComponentModel {
         this.componentGraphicalModel = componentGraphicalModel;
     }
 
-    parse() {
+    load() {
         const model = this.componentGraphicalModel.model;
         const graphical = this.componentGraphicalModel.graphical;
         let pomiseParseGraphical;
 
         if (graphical) {
             pomiseParseGraphical = parseGraphical(graphical).then((graphicalJson: Graphical) => {
-                this.parseGraphical(graphicalJson);
+                this.loadGraphical(graphicalJson);
                 return parseModel(model);
             });
         } else {
@@ -42,7 +42,7 @@ export class ComponentModel {
         }
 
         return pomiseParseGraphical.then((modelJson: Model) => {
-            this.parseModel(modelJson);
+            this.loadModel(modelJson);
             return {
                 nodeDataArray: this.nodeDataArray,
                 linkDataArray: this.linkDataArray
@@ -74,13 +74,13 @@ export class ComponentModel {
         return locations;
     }
 
-    public parseGraphical(graphicalJson: Graphical): void {
+    private loadGraphical(graphicalJson: Graphical): void {
         this.locations = this.getLocationState(graphicalJson);
         this.controlPointTransition = this.getControlPointTransition(graphicalJson.ComponentViewModelGraphicalData.Links[0].TransitionGraphicalData);
         this.controlPointTriggerable = this.getControlPointTransition(graphicalJson.ComponentViewModelGraphicalData.TransversalLinks[0].TransitionGraphicalData);
     }
 
-    private parseModel(modelJson: Model): void {
+    private loadModel(modelJson: Model): void {
         this.componentName = this.getComponentName(modelJson);
         this.setStateMachines(modelJson);
         this.setStates(modelJson);

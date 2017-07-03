@@ -5,8 +5,8 @@ import { DrawComponentData } from "gojsTemplates";
 const model = document.currentScript.getAttribute("model");
 let graphical = document.currentScript.getAttribute("graphical");
 graphical = (graphical === "undefined") ? undefined : graphical;
-const parser = new ComponentModel({ model, graphical });
-parser.parse()
+
+new ComponentModel({ model, graphical }).load()
   .then((data: DrawComponentData) => {
     const drawComponent = new DrawComponent();
     drawComponent.draw(data, "diagram");
