@@ -5,6 +5,7 @@ import { Point, Curve, StateMachine, State, ComponentGraphicalModel } from "pars
 import { finalStateColor, stateColor, transitionPatternStateColor, entryPointStateColor } from "graphicColors";
 import { Graphical, Attribute, StateGraphicalDataElement, TransitionGraphicalDataElement } from "graphicalTypes";
 import { Model } from "modelTypes";
+import { DrawComponentData } from "gojsTemplates";
 
 export class ComponentModel {
     private locations: { [key: string]: Point };
@@ -27,22 +28,22 @@ export class ComponentModel {
         this.componentGraphicalModel = componentGraphicalModel;
     }
 
-    load() {
-        const model = this.componentGraphicalModel.model;
-        const graphical = this.componentGraphicalModel.graphical;
-        let pomiseParseGraphical;
+    public load(): Promise<DrawComponentData> {
+        const modelContent = this.componentGraphicalModel.model;
+        const graphicalContent = this.componentGraphicalModel.graphical;
+        let parsedModel: Promise<Model>;
 
-        if (graphical) {
-            pomiseParseGraphical = parseGraphical(graphical).then((graphicalJson: Graphical) => {
-                this.loadGraphical(graphicalJson);
-                return parseModel(model);
+        if (graphicalContent) {
+            parsedModel = parseGraphical(graphicalContent).then((graphical: Graphical) => {
+                this.loadGraphical(graphical);
+                return parseModel(modelContent);
             });
         } else {
-            pomiseParseGraphical = parseModel(model);
+            parsedModel = parseModel(modelContent);
         }
 
-        return pomiseParseGraphical.then((modelJson: Model) => {
-            this.loadModel(modelJson);
+        return parsedModel.then((model: Model) => {
+            this.loadModel(model);
             return {
                 nodeDataArray: this.nodeDataArray,
                 linkDataArray: this.linkDataArray
