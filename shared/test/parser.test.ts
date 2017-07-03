@@ -1,26 +1,22 @@
-import { ComponentModel } from "../src/componentModel";
 import * as fs from "fs-extra";
 import { correctNodeDataArray, correctLinkDataArray, correctLinkDataArrayWithoutGraphical, correctNodeDataArrayWithoutGraphical, correctLinkDataArrayWithExtraData, correctNodeDataArrayWithExtraData } from "./componentModel.expectation";
-import { DrawComponentData } from "../src/gojsTemplates";
 import * as chai from "chai";
+import * from "../src/parser";
+import { Model } from "../src/modelTypes";
 const should = chai.should();
 
 describe("Test Parser", () => {
 
-    test("Should get the right data from the model and graphical files", (done) => {
-        let componentModel: ComponentModel;
-        let model, graphical;
+    test("Should get the right data from the model files", (done) => {
+        let model;
         model = fs.readFileSync("./test/ressources/WorldHello.cxml").toString();
-        graphical = fs.readFileSync("./test/ressources/WorldHello_Graphical.xml").toString();
-        componentModel = new ComponentModel({ model, graphical });
 
-        componentModel.load().then((data: DrawComponentData) => {
-            data.nodeDataArray.should.eql(correctNodeDataArray);
-            data.linkDataArray.should.eql(correctLinkDataArray);
+        parseModel(model).then((data: Model) => {
+            console.log(data);
             done();
         });
     });
-
+/*
     test("Should throw an error while parsing invalid model files.", (done) => {
         let componentModel: ComponentModel;
         let model, graphical;
@@ -55,5 +51,6 @@ describe("Test Parser", () => {
             done();
         });
     });
+*/
 
 });

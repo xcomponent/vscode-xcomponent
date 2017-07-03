@@ -1,16 +1,21 @@
 {
-  "name": "xcomponent-viewer",
-  "description": "XComponent Viewer",
-  "version": "0.4.0",
-  "license": "Apache-2.0",
+  "name": "xcomponent-shared",
+  "version": "0.1.0",
+  "description": "Shared code between packages",
   "scripts": {
-    "preinstall": "rm-local-modules",
     "compile:dev": "webpack -d --watch --progress",
     "compile": "webpack -p --define process.env.NODE_ENV='\"production\"' --progress --colors",
-    "test": "jest --coverage",
+    "test": "jest --coverage ",
     "tslint": "tslint -c tslint.json src/**/*.ts*"
   },
   "author": "XComponent <dev@xcomponent.com> (http://www.xcomponent.com)",
+  "license": "Apache-2.0",
+  "main": "./lib/xcomponent-shared.js",
+  "types": "./lib/types/index.d.ts",
+  "typings": "./lib/types/index.d.ts",
+  "directories": {
+    "lib": "./lib"
+  },
   "jest": {
     "moduleFileExtensions": [
       "ts",
@@ -37,8 +42,8 @@
     "testEnvironment": "jsdom"
   },
   "dependencies": {
-    "gojs": "^1.7.9",
-    "xcomponent-shared": "file:..\\shared\\"
+    "es6-promisify": "^5.0.0",
+    "xml2js": "^0.4.17"
   },
   "devDependencies": {
     "@types/chai": "^4.0.0",
@@ -55,7 +60,6 @@
     "jest": "^20.0.4",
     "jest-cli": "^20.0.4",
     "node-sass": "^4.0.0",
-    "rm-local-modules": "^0.0.2",
     "sass-loader": "^6.0.5",
     "source-map-loader": "^0.2.1",
     "style-loader": "^0.18.2",

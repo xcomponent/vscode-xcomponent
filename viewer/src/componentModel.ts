@@ -1,11 +1,14 @@
-import { graphicalTags, modelTags } from "configurationParser";
-import { parseGraphical, parseModel } from "./parser";
 import { LinkLabelTemplate, TransitionTemplate, TriggerableTransitionTemplate, StateMachineTemplate, StateTemplate, LinkDataArrayTemplate, NodeDataArrayTemplate } from "gojsTemplates";
-import { Point, Curve, StateMachine, State, ComponentGraphicalModel } from "parserObjects";
 import { finalStateColor, stateColor, transitionPatternStateColor, entryPointStateColor } from "graphicColors";
-import { Graphical, Attribute, StateGraphicalDataElement, TransitionGraphicalDataElement } from "graphicalTypes";
-import { Model } from "modelTypes";
+import { Graphical, Attribute, StateGraphicalDataElement, TransitionGraphicalDataElement, Model, Point, Curve, StateMachine, State, ComponentGraphicalModel } from "xcomponent-shared";
 import { DrawComponentData } from "gojsTemplates";
+import * as shared from "xcomponent-shared";
+
+const parseModel = shared["xcomponent-shared"].parseModel;
+const parseGraphical = shared["xcomponent-shared"].parseGraphical;
+const modelTags = shared["xcomponent-shared"].modelTags; 
+const graphicalTags = shared["xcomponent-shared"].graphicalTags; 
+
 
 export class ComponentModel {
     private locations: { [key: string]: Point };
