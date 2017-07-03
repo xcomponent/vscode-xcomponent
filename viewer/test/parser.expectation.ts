@@ -1,4 +1,6 @@
-export const correctNodeDataArray = [{
+import { NodeDataArrayTemplate, LinkDataArrayTemplate, DrawComponentData } from "../src/gojsTemplates";
+
+export const correctNodeDataArray: Array<NodeDataArrayTemplate> = [{
     key: "Manager",
     text: "Manager",
     isGroup: true,
@@ -75,7 +77,7 @@ export const correctNodeDataArray = [{
 { key: "1", category: "LinkLabel", text: "FirstTransition" },
 { key: "7", category: "LinkLabel", text: "SecondTransition" }];
 
-export const correctLinkDataArray = [{
+export const correctLinkDataArray: Array<LinkDataArrayTemplate> = [{
     key: "2",
     from: "Manager&EntryPoint",
     stateMachineTarget: "Manager",
@@ -182,7 +184,7 @@ export const correctLinkDataArray = [{
         3.417641519114177]
 }];
 
-export const correctNodeDataArrayWithoutGraphical =
+export const correctNodeDataArrayWithoutGraphical: Array<NodeDataArrayTemplate> =
     [{
         key: "Manager",
         text: "Manager",
@@ -260,7 +262,7 @@ export const correctNodeDataArrayWithoutGraphical =
     { key: "1", category: "LinkLabel", text: "FirstTransition" },
     { key: "7", category: "LinkLabel", text: "SecondTransition" }];
 
-export const correctLinkDataArrayWithoutGraphical =
+export const correctLinkDataArrayWithoutGraphical: Array<LinkDataArrayTemplate> =
     [{
         key: "2",
         from: "Manager&EntryPoint",
@@ -341,7 +343,7 @@ export const correctLinkDataArrayWithoutGraphical =
     }];
 
 
-export const correctNodeDataArrayWithExtraData = [{
+export const correctNodeDataArrayWithExtraData: Array<NodeDataArrayTemplate> = [{
     key: "Manager",
     text: "Manager",
     isGroup: true,
@@ -429,7 +431,7 @@ export const correctNodeDataArrayWithExtraData = [{
 { key: "1", category: "LinkLabel", text: "FirstTransition" },
 { key: "7", category: "LinkLabel", text: "SecondTransition" }];
 
-export const correctLinkDataArrayWithExtraData = [{
+export const correctLinkDataArrayWithExtraData: Array<LinkDataArrayTemplate> = [{
     key: "01",
     from: "Manager&ExtraState",
     stateMachineTarget: "Manager",
