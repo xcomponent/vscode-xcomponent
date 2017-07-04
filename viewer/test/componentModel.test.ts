@@ -1,6 +1,6 @@
 import { ComponentModel } from "../src/componentModel";
 import * as fs from "fs-extra";
-import { correctNodeDataArray, correctLinkDataArray, correctLinkDataArrayWithoutGraphical, correctNodeDataArrayWithoutGraphical, correctLinkDataArrayWithExtraData, correctNodeDataArrayWithExtraData } from "./parser.expectation";
+import { correctNodeDataArray, correctLinkDataArray, correctLinkDataArrayWithoutGraphical, correctNodeDataArrayWithoutGraphical, correctLinkDataArrayWithExtraData, correctNodeDataArrayWithExtraData } from "./componentModel.expectation";
 import { DrawComponentData } from "../src/gojsTemplates";
 import * as chai from "chai";
 const should = chai.should();
@@ -37,7 +37,7 @@ describe("Test Parser", () => {
         let model, graphical = undefined;
         model = fs.readFileSync("./test/ressources/WorldHello_without_graphical.cxml").toString();
         componentModel = new ComponentModel({ model, graphical });
-        componentModel.load().then((data) => {
+        componentModel.load().then((data: DrawComponentData) => {
             correctLinkDataArrayWithoutGraphical.should.eql(data.linkDataArray);
             correctNodeDataArrayWithoutGraphical.should.eql(data.nodeDataArray);
             done();
@@ -49,7 +49,7 @@ describe("Test Parser", () => {
         let model, graphical = undefined;
         model = fs.readFileSync("./test/ressources/WorldHello_with_extra_data.cxml").toString();
         componentModel = new ComponentModel({ model, graphical });
-        componentModel.load().then((data) => {
+        componentModel.load().then((data: DrawComponentData) => {
             correctNodeDataArrayWithExtraData.should.eql(data.nodeDataArray);
             correctLinkDataArrayWithExtraData.should.eql(data.linkDataArray);
             done();
