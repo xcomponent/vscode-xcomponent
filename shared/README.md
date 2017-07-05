@@ -1,6 +1,6 @@
-# XComponent viewer
+# XComponent Shared code
 
-cxml web viewer
+Code for dealing with XComponent specific logic
 
 ## License
 
