@@ -14,7 +14,7 @@ const config = {
         path: BUILD_DIR,
         filename: "xcomponent-shared.js",
         publicPath: "/",
-        libraryTarget: "commonjs",
+        libraryTarget: "commonjs2",
         library: "xcomponent-shared"
     },
     resolve: {

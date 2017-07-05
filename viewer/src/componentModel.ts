@@ -2,13 +2,7 @@ import { LinkLabelTemplate, TransitionTemplate, TriggerableTransitionTemplate, S
 import { finalStateColor, stateColor, transitionPatternStateColor, entryPointStateColor } from "graphicColors";
 import { Graphical, Attribute, StateGraphicalDataElement, TransitionGraphicalDataElement, Model, Point, Curve, StateMachine, State, ComponentGraphicalModel } from "xcomponent-shared";
 import { DrawComponentData } from "gojsTemplates";
-import * as shared from "xcomponent-shared";
-
-const parseModel = shared["xcomponent-shared"].parseModel;
-const parseGraphical = shared["xcomponent-shared"].parseGraphical;
-const modelTags = shared["xcomponent-shared"].modelTags;
-const graphicalTags = shared["xcomponent-shared"].graphicalTags;
-
+import { parseModel, parseGraphical, modelTags, graphicalTags } from "xcomponent-shared";
 
 export class ComponentModel {
     private locations: { [key: string]: Point };
