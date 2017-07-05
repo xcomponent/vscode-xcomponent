@@ -1,8 +1,8 @@
 import { LinkLabelTemplate, TransitionTemplate, TriggerableTransitionTemplate, StateMachineTemplate, StateTemplate, LinkDataArrayTemplate, NodeDataArrayTemplate } from "gojsTemplates";
 import { finalStateColor, stateColor, transitionPatternStateColor, entryPointStateColor } from "graphicColors";
 import { Graphical, Attribute, StateGraphicalDataElement, TransitionGraphicalDataElement, Model, Point, Curve, StateMachine, State, ComponentGraphicalModel } from "xcomponent-shared";
-import { DrawComponentData } from "gojsTemplates";
 import { parseModel, parseGraphical, modelTags, graphicalTags } from "xcomponent-shared";
+import { DrawComponentData } from "gojsTemplates";
 
 export class ComponentModel {
     private locations: { [key: string]: Point };
