@@ -1,7 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const BUILD_DIR = path.resolve(__dirname, "lib");
@@ -38,17 +37,17 @@ const config = {
             "process.env": {
                 "NODE_ENV": JSON.stringify("production")
             }
-        })/*,
+        }),
         new webpack.optimize.ModuleConcatenationPlugin(),
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: true,
             minimize: true
-        })*/
+        })
     ] : [
-            /*new ExtractTextPlugin({
+            new ExtractTextPlugin({
                 filename: '[name].[contenthash:16].css',
                 allChunks: true
-            }),*/
+            }),
             new CleanWebpackPlugin([BUILD_DIR, "test_output", "coverage"], {
                 root: __dirname,
                 verbose: true,
