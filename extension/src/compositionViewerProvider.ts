@@ -13,14 +13,21 @@ export class CompositionViewerProvider implements vscode.TextDocumentContentProv
     }
 
     public provideTextDocumentContent(uri: vscode.Uri): string {
-
         const compositionModelProvider = new CompositionModelProvider();
-        const compositionModel = compositionModelProvider.getCompositionModel();
+        let composition, components;
+        try {
+            composition = compositionModelProvider.getComposition();
+            components = compositionModelProvider.getComponentsData();
+        } catch (e) {
+            console.error(e);
+            composition = undefined;
+            components = undefined;
+        }
         let body;
-        if (compositionModel === undefined || compositionModel.models === undefined) {
+        if (composition === undefined || components === undefined) {
             body = this.errorSnippet("Cannot preview xcml file");
         } else {
-            body = this.previewSnippet(compositionModel.composition, JSON.stringify(compositionModel.models));
+            body = this.previewSnippet(composition, JSON.stringify(components));
         }
         const html = `<!DOCTYPE html>
 				<html>
@@ -36,12 +43,13 @@ export class CompositionViewerProvider implements vscode.TextDocumentContentProv
 				</body>`;
     }
 
-    private previewSnippet(composition: string, models: string): string {
+    private previewSnippet(composition: string, components: string): string {
         const container = `<div id="diagram" style="
 					  	min-height: 100%;
                         display: block;
 						background-color: white;">
-                        HELLO HAZEM
+                        <h1 style="color:#000000;"
+                        id ="error"></h1>
 					</div>`;
         const style = `<style type="text/css">
 					html, body {
@@ -49,7 +57,7 @@ export class CompositionViewerProvider implements vscode.TextDocumentContentProv
 						margin: 0;
 					}
    				</style>`;
-        const script = `<script type="text/javascript" src="file:///${this.getBundlePath("out/viewer/bundle.js")}" models='${models}' composition='${composition}'></script>`;
+        const script = `<script type="text/javascript" src="file:///${this.getBundlePath("out/viewer/bundle.js")}" components='${components}' composition='${composition}'></script>`;
         return `
 				${style}
 				<body>

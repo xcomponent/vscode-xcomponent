@@ -6,11 +6,6 @@ import { parseStringSync } from "xml2js-parser";
 const xcmlExtension = ".xcml";
 const cxmlExtension = ".cxml";
 
-export interface CompositionModel {
-    models: Array<string>;
-    composition: string;
-}
-
 export class CompositionModelProvider {
 
     private editor: vscode.TextEditor;
@@ -23,19 +18,41 @@ export class CompositionModelProvider {
         return this.editor != null && this.editor.document != null && path.extname(this.editor.document.fileName) === xcmlExtension;
     }
 
-    public getCompositionModel(): CompositionModel {
+    public getComposition(): string {
         if (!this.isXcmlDocument()) {
             return undefined;
         }
+        return this.editor.document.getText();
+    }
 
-        return {
-            models: this.getModels(),
-            composition: this.editor.document.getText()
-        };
+    public getComponentsData() {
+        if (!this.isXcmlDocument()) {
+            return undefined;
+        }
+        const models = this.getModels();
+        if (models === undefined)
+            return undefined;
+        const components = {};
+        models.forEach(model => {
+            let modelJson;
+            modelJson = parseStringSync(model);
+            const stateMachines = {};
+            modelJson.ComponentViewModelData.$.Name;
+            modelJson.ComponentViewModelData.StateMachines[0].StateMachineData.forEach(stateMachine => {
+                stateMachines[stateMachine.$.Id] = { name: stateMachine.$.Name, states: {} };
+            });
+            modelJson.ComponentViewModelData.States[0].StateData.forEach(state => {
+                const stateMachineId = state.$.SubGraphKey.substring("StateMachine".length, state.$.SubGraphKey.length);
+                stateMachines[stateMachineId].states[state.$.Id] = state.$.Name;
+            });
+            components[modelJson.ComponentViewModelData.$.Name] = stateMachines;
+        });
+        return components;
     }
 
     private getComponentNames(): Array<string> {
-        const compositionJson = parseStringSync(this.editor.document.getText());
+        let compositionJson;
+        compositionJson = parseStringSync(this.editor.document.getText());
         const linkedComponents = compositionJson.LinkingSchema.LinkedComponents[0].LinkedComponent;
         const componentNames = [];
         linkedComponents.forEach(linkedComponent => {
