@@ -6,8 +6,8 @@ import * as shared from "xcomponent-shared";
 
 const parseModel = shared["xcomponent-shared"].parseModel;
 const parseGraphical = shared["xcomponent-shared"].parseGraphical;
-const modelTags = shared["xcomponent-shared"].modelTags; 
-const graphicalTags = shared["xcomponent-shared"].graphicalTags; 
+const modelTags = shared["xcomponent-shared"].modelTags;
+const graphicalTags = shared["xcomponent-shared"].graphicalTags;
 
 
 export class ComponentModel {
