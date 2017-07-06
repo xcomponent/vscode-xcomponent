@@ -16,7 +16,6 @@ export class ComponentViewerProvider implements vscode.TextDocumentContentProvid
         const componentModelProvider = new ComponentModelProvider();
         const body = componentModelProvider.isCxmlDocument() ? this.previewSnippet(componentModelProvider.getRawModel()) : this.errorSnippet("Cannot preview the file");
         const html = `<!DOCTYPE html><html>${body}</html>`;
-        // console.log(html);        
         return html;
     }
 

@@ -17,17 +17,17 @@ export function activate(context: vscode.ExtensionContext) {
     const registration = vscode.workspace.registerTextDocumentContentProvider("xc-preview", componentProvider);
 
     const update = (e) => {
-        if (e &&  e.document === vscode.window.activeTextEditor.document) {
+        if (e && e.document === vscode.window.activeTextEditor.document) {
             if (e.document.fileName.endsWith(cxmlExtension)) {
                 componentProvider.update(previewUri);
             } else if (e.document.fileName.endsWith(xcmlExtension)) {
-                 compositionProvider.update(previewUriComposition);
+                compositionProvider.update(previewUriComposition);
             }
         }
     };
 
     vscode.workspace.onDidChangeTextDocument((e: vscode.TextDocumentChangeEvent) => {
-        update(e);        
+        update(e);
     });
 
     vscode.window.onDidChangeActiveTextEditor((e: vscode.TextEditor) => {
