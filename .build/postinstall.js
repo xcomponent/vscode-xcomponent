@@ -4,8 +4,7 @@ const cp = require('child_process');
 const yarn = process.platform === 'win32' ? 'yarn.cmd' : 'yarn';
 
 function yarnInstall(location) {
-	console.log("Installing at ", location, "...");
-	const result = cp.spawnSync(yarn, ['install', '--check-files'], {
+	const result = cp.spawnSync(yarn, ['install'], {
 		cwd: location,
 		stdio: 'inherit'
 	});
