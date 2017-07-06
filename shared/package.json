@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "description": "Shared code between packages",
   "scripts": {
-    "preinstall": "yarn compile",
     "compile:dev": "webpack -d --watch --progress",
     "compile": "webpack -p --define process.env.NODE_ENV='\"production\"' --progress --colors",
     "test": "jest --coverage ",

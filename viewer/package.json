@@ -4,6 +4,7 @@
   "version": "0.4.0",
   "license": "Apache-2.0",
   "scripts": {
+    "preinstall": "cd ../shared && yarn install && yarn compile",
     "compile:dev": "webpack -d --watch --progress",
     "compile": "webpack -p --define process.env.NODE_ENV='\"production\"' --progress --colors",
     "test": "jest --coverage",
