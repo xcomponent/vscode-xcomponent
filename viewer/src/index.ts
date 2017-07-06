@@ -1,7 +1,7 @@
 import { ComponentModel } from "./componentModel";
 import { DrawComponent } from "./drawComponent";
 import { DrawComponentData } from "gojsTemplates";
-import { CompositionModel } from "CompositionModel";
+import { CompositionModel } from "compositionModel";
 import { DrawComposition } from "drawComposition";
 import { CompositionData } from "compositionTypes";
 
