@@ -7,7 +7,9 @@ import { ComponentViewerProvider } from "../src/componentViewerProvider";
 import * as chai from "chai";
 import { HtmlDiffer } from "html-differ";
 
-const htmlDiffer = new HtmlDiffer({});
+const htmlDiffer = new HtmlDiffer({
+    ignoreAttributes: ["model", "graphical"]
+});
 
 const should = chai.should();
 

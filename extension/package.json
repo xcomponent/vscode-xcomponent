@@ -34,12 +34,12 @@
   "contributes": {
     "commands": [
       {
-        "command": "xcomponent.preview",
+        "command": "xcomponent.preview.component",
         "title": "XComponent: Preview Component",
         "group": "navigation"
       },
       {
-        "command": "composition.preview",
+        "command": "xcomponent.preview.composition",
         "title": "XComponent: Preview Composition",
         "group": "navigation"
       }
@@ -47,7 +47,7 @@
     "menus": {
       "editor/title": [
         {
-          "command": "xcomponent.preview"
+          "command": "xcomponent.preview.component"
         }
       ]
     }

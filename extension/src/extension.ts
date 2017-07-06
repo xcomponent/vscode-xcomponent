@@ -34,14 +34,14 @@ export function activate(context: vscode.ExtensionContext) {
         update(e);
     });
 
-    const disposable = vscode.commands.registerCommand("xcomponent.preview", () => {
+    const disposable = vscode.commands.registerCommand("xcomponent.preview.component", () => {
         return vscode.commands.executeCommand("vscode.previewHtml", previewUri, vscode.ViewColumn.Two, "Component preview").then((success) => {
         }, (reason) => {
             vscode.window.showErrorMessage(reason);
         });
     });
 
-    const disposableComposition = vscode.commands.registerCommand("composition.preview", () => {
+    const disposableComposition = vscode.commands.registerCommand("xcomponent.preview.composition", () => {
         return vscode.commands.executeCommand("vscode.previewHtml", previewUriComposition, vscode.ViewColumn.Two, "Composition preview").then((success) => {
         }, (reason) => {
             vscode.window.showErrorMessage(reason);

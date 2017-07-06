@@ -8,7 +8,9 @@ import { CompositionViewerProvider } from "../src/compositionViewerProvider";
 import { HtmlDiffer } from "html-differ";
 
 
-const htmlDiffer = new HtmlDiffer({});
+const htmlDiffer = new HtmlDiffer({
+    ignoreAttributes: ["components", "composition"]
+});
 
 const should = chai.should();
 
