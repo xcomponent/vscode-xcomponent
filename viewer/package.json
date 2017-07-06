@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "gojs": "^1.7.9",
-    "xcomponent-shared": "file:..\\shared\\"
+    "xcomponent-shared": "file:../shared/"
   },
   "devDependencies": {
     "@types/chai": "^4.0.0",
