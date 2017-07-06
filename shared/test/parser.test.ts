@@ -1,5 +1,4 @@
 import * as fs from "fs-extra";
-import { correctNodeDataArray, correctLinkDataArray, correctLinkDataArrayWithoutGraphical, correctNodeDataArrayWithoutGraphical, correctLinkDataArrayWithExtraData, correctNodeDataArrayWithExtraData } from "./componentModel.expectation";
 import * as chai from "chai";
 import * as parser from "../src/parser";
 import { Model } from "../src/modelTypes";

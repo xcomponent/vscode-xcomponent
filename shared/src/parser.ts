@@ -1,8 +1,8 @@
 import { parseString as parseStringCallback } from "xml2js";
 import * as promisify from "es6-promisify";
-import { ComponentGraphicalModel } from "./parserObjects";
-import { Model } from "./modelTypes";
-import { Graphical } from "./graphicalTypes";
+import { ComponentGraphicalModel } from "parserObjects";
+import { Model } from "modelTypes";
+import { Graphical } from "graphicalTypes";
 
 let parseString = promisify(parseStringCallback);
 
