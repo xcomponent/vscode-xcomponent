@@ -5,7 +5,7 @@ import { DrawComponentData } from "../src/gojsTemplates";
 import * as chai from "chai";
 const should = chai.should();
 
-describe("Test Parser", () => {
+describe("Test ComponentModel", () => {
 
     test("Should get the right data from the model and graphical files", (done) => {
         let componentModel: ComponentModel;

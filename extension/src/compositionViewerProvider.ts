@@ -25,7 +25,7 @@ export class CompositionViewerProvider implements vscode.TextDocumentContentProv
         }
         let body;
         if (composition === undefined || components === undefined) {
-            body = this.errorSnippet("Cannot preview xcml file");
+            body = this.errorSnippet("Cannot preview the file");
         } else {
             body = this.previewSnippet(composition, JSON.stringify(components));
         }

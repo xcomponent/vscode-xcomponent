@@ -5,6 +5,10 @@ import * as path from "path";
 import * as fs from "fs";
 import { ComponentViewerProvider } from "../src/componentViewerProvider";
 import * as chai from "chai";
+import { HtmlDiffer } from "html-differ";
+
+const htmlDiffer = new HtmlDiffer({});
+
 const should = chai.should();
 
 const inputPath = path.join(__dirname, "..", "..", "test", "inputs");
@@ -24,15 +28,15 @@ describe("ComponentViewerProvider Tests", () => {
 
     providerTests.forEach(test => {
         it(`Given ${test.input} as input file, should display ${test.expected} as html output`, () => {
-            const expectedHtml = fs.readFileSync(path.join(outputPath, expectedErrorHtmlFileName)).toString();
-            return vscode.workspace.openTextDocument(path.join(inputPath, otherInputFileName)).then(document => {
+            const expectedHtml = fs.readFileSync(path.join(outputPath, test.expected)).toString();
+            return vscode.workspace.openTextDocument(path.join(inputPath, test.input)).then(document => {
                 return vscode.window.showTextDocument(document);
             }).then(editor => {
                 const extensionContextMock: TypeMoq.IMock<vscode.ExtensionContext> = TypeMoq.Mock.ofType<vscode.ExtensionContext>();
                 extensionContextMock.setup(x => x.extensionPath).returns(() => "/test/extensionpath");
                 const provider = new ComponentViewerProvider(extensionContextMock.object);
                 const htmlPreview = provider.provideTextDocumentContent(null);
-                htmlPreview.should.equal(expectedHtml);
+                htmlDiffer.isEqual(htmlPreview, expectedHtml).should.eql(true);
             }, reason => {
                 should.fail(reason, undefined);
             });

@@ -14,19 +14,14 @@ export class ComponentViewerProvider implements vscode.TextDocumentContentProvid
 
     public provideTextDocumentContent(uri: vscode.Uri): string {
         const componentModelProvider = new ComponentModelProvider();
-        const body = componentModelProvider.isCxmlDocument() ? this.previewSnippet(componentModelProvider.getRawModel()) : this.errorSnippet("Cannot preview cxml file");
-        const html = `<!DOCTYPE html>
-				<html>
-					${body}
-				</html>`;
+        const body = componentModelProvider.isCxmlDocument() ? this.previewSnippet(componentModelProvider.getRawModel()) : this.errorSnippet("Cannot preview the file");
+        const html = `<!DOCTYPE html><html>${body}</html>`;
+        // console.log(html);        
         return html;
     }
 
     private errorSnippet(error: string): string {
-        return `
-				<body>
-					${error}
-				</body>`;
+        return `<body>${error}</body>`;
     }
 
     private previewSnippet(rawModel: ComponentRawModel): string {
