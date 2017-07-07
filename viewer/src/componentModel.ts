@@ -1,10 +1,7 @@
-import { graphicalTags, modelTags } from "configurationParser";
-import { parseGraphical, parseModel } from "./parser";
 import { LinkLabelTemplate, TransitionTemplate, TriggerableTransitionTemplate, StateMachineTemplate, StateTemplate, LinkDataArrayTemplate, NodeDataArrayTemplate } from "gojsTemplates";
-import { Point, Curve, StateMachine, State, ComponentGraphicalModel } from "parserObjects";
 import { finalStateColor, stateColor, transitionPatternStateColor, entryPointStateColor } from "graphicColors";
-import { Graphical, Attribute, StateGraphicalDataElement, TransitionGraphicalDataElement } from "graphicalTypes";
-import { Model } from "modelTypes";
+import { Graphical, Attribute, StateGraphicalDataElement, TransitionGraphicalDataElement, Model, Point, Curve, StateMachine, State, ComponentGraphicalModel } from "xcomponent-shared";
+import { parseModel, parseGraphical, modelTags, graphicalTags } from "xcomponent-shared";
 import { DrawComponentData } from "gojsTemplates";
 
 export class ComponentModel {

@@ -56,5 +56,4 @@ describe("Test ComponentModel", () => {
         });
     });
 
-
 });
