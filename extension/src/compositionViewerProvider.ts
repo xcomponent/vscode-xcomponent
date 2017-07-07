@@ -29,18 +29,12 @@ export class CompositionViewerProvider implements vscode.TextDocumentContentProv
         } else {
             body = this.previewSnippet(composition, JSON.stringify(components));
         }
-        const html = `<!DOCTYPE html>
-				<html>
-					${body}
-				</html>`;
+        const html = `<!DOCTYPE html><html>${body}</html>`;
         return html;
     }
 
     private errorSnippet(error: string): string {
-        return `
-				<body>
-					${error}
-				</body>`;
+        return `<body>${error}</body>`;
     }
 
     private previewSnippet(composition: string, components: string): string {
