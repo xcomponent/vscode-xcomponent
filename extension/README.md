@@ -13,6 +13,10 @@ More features yet to come...
 
 To display a component *.cxml file, use the *"XComponent: Preview Component"* command.
 
+## Composition preview
+
+To display a composition *.xcml file, use the *"XComponent: Preview Composition"* command.
+
 ![component preview](https://raw.githubusercontent.com/xcomponent/vscode-xcomponent/master/extension/images/cxml_preview.gif)
 
 ## Feedback & Contributing
