@@ -5,11 +5,8 @@ import * as path from "path";
 import * as fs from "fs";
 import { ComponentViewerProvider } from "../src/componentViewerProvider";
 import * as chai from "chai";
-import { HtmlDiffer } from "html-differ";
-
-const htmlDiffer = new HtmlDiffer({
-    ignoreAttributes: ["model", "graphical"]
-});
+import { parseStringSync } from "xml2js-parser";
+import * as deepEql from "deep-eql";
 
 const should = chai.should();
 
@@ -21,11 +18,24 @@ const expectedPreviewHtmlFileName = "expectedPreview.html";
 const otherInputFileName = "other_input.txt";
 const expectedErrorHtmlFileName = "expectedError.html";
 
+const todo = (htmlPreviewJson, htmlExpectedJson) => {
+    const previewModelJson = parseStringSync(htmlPreviewJson.html.body[0].script[0].$.model);
+    const expectedModelJson = parseStringSync(htmlExpectedJson.html.body[0].script[0].$.model);
+    const expectedGraphicalJson = parseStringSync(htmlExpectedJson.html.body[0].script[0].$.graphical);
+    const previewGraphicalJson = parseStringSync(htmlPreviewJson.html.body[0].script[0].$.graphical);
+    deepEql(previewModelJson, expectedModelJson).should.equal(true);
+    deepEql(previewGraphicalJson, expectedGraphicalJson).should.equal(true);
+};
+
+const todoError = (htmlPreviewJson, htmlExpectedJson) => {
+    deepEql(htmlPreviewJson, htmlExpectedJson).should.equal(true);
+};
+
 describe("ComponentViewerProvider Tests", () => {
 
     const providerTests = [
-        { input: otherInputFileName, expected: expectedErrorHtmlFileName },
-        { input: cxmlFileName, expected: expectedPreviewHtmlFileName }
+        { input: otherInputFileName, expected: expectedErrorHtmlFileName, todo: todoError },
+        { input: cxmlFileName, expected: expectedPreviewHtmlFileName, todo: todo }
     ];
 
     providerTests.forEach(test => {
@@ -38,7 +48,9 @@ describe("ComponentViewerProvider Tests", () => {
                 extensionContextMock.setup(x => x.extensionPath).returns(() => "/test/extensionpath");
                 const provider = new ComponentViewerProvider(extensionContextMock.object);
                 const htmlPreview = provider.provideTextDocumentContent(null).replace(/\r/g, "");
-                htmlPreview.should.equal(expectedHtml);
+                const htmlPreviewJson = parseStringSync(htmlPreview);
+                const htmlExpectedJson = parseStringSync(expectedHtml);
+                test.todo(htmlPreviewJson, htmlExpectedJson);
             }, reason => {
                 should.fail(reason, undefined);
             });
