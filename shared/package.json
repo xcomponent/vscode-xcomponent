@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "es6-promisify": "^5.0.0",
+    "webpack-node-externals": "^1.6.0",
     "xml2js": "^0.4.17"
   },
   "devDependencies": {

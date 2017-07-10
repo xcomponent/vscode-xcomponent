@@ -3,7 +3,7 @@ import { DrawComponent } from "./drawComponent";
 import { DrawComponentData } from "gojsTemplates";
 import { CompositionModel } from "compositionModel";
 import { DrawComposition } from "drawComposition";
-import { CompositionData } from "compositionTypes";
+import { CompositionData } from "xcomponent-shared";
 
 const drawComposition = () => {
   const components = JSON.parse(document.currentScript.getAttribute("components"));

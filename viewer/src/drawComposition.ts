@@ -1,7 +1,7 @@
 import * as go from "gojs";
 import { parseString } from "xml2js";
 import * as promisify from "es6-promisify";
-import { CompositionData, LinkDataArrayElement, NodeDataArrayElement, Components, StateMachines } from "compositionTypes";
+import { CompositionData, LinkDataArrayElement, NodeDataArrayElement, Components, StateMachines } from "xcomponent-shared";
 
 export class DrawComposition {
     private $: any;

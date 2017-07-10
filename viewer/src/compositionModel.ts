@@ -1,6 +1,6 @@
 import { parseString } from "xml2js";
 import * as promisify from "es6-promisify";
-import { Composition, LinkedComponent, ApiPortCounter, LinkDataArrayElement, Components, CompositionData } from "compositionTypes";
+import { Composition, LinkedComponent, ApiPortCounter, LinkDataArrayElement, Components, CompositionData } from "xcomponent-shared";
 
 export class CompositionModel {
 
