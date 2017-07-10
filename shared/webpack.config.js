@@ -2,13 +2,12 @@ const path = require("path");
 const webpack = require("webpack");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const nodeExternals = require("webpack-node-externals");
 
 const BUILD_DIR = path.resolve(__dirname, "lib");
 const APP_DIR = path.resolve(__dirname, "src");
 
 const config = {
-    entry: ["babel-polyfill", APP_DIR + "/index.ts"],
+    entry: [APP_DIR + "/index.ts"],
     devtool: "cheap-module-source-map",
     output: {
         path: BUILD_DIR,
@@ -131,8 +130,7 @@ const config = {
                 use: 'json-loader'
             }
         ]
-    },
-    externals: [nodeExternals()]
+    }
 };
 
 module.exports = config;

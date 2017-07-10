@@ -37,8 +37,8 @@ describe("ComponentViewerProvider Tests", () => {
                 const extensionContextMock: TypeMoq.IMock<vscode.ExtensionContext> = TypeMoq.Mock.ofType<vscode.ExtensionContext>();
                 extensionContextMock.setup(x => x.extensionPath).returns(() => "/test/extensionpath");
                 const provider = new ComponentViewerProvider(extensionContextMock.object);
-                const htmlPreview = provider.provideTextDocumentContent(null);
-                htmlDiffer.isEqual(htmlPreview, expectedHtml).should.eql(true);
+                const htmlPreview = provider.provideTextDocumentContent(null).replace(/\r/g, "");
+                htmlPreview.should.equal(expectedHtml);
             }, reason => {
                 should.fail(reason, undefined);
             });
