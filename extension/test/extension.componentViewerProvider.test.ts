@@ -24,14 +24,14 @@ describe("ComponentViewerProvider Tests", () => {
 
     providerTests.forEach(test => {
         it(`Given ${test.input} as input file, should display ${test.expected} as html output`, () => {
-            const expectedHtml = fs.readFileSync(path.join(outputPath, expectedErrorHtmlFileName)).toString();
+            const expectedHtml = fs.readFileSync(path.join(outputPath, expectedErrorHtmlFileName)).toString().replace(/\r/g, "");
             return vscode.workspace.openTextDocument(path.join(inputPath, otherInputFileName)).then(document => {
                 return vscode.window.showTextDocument(document);
             }).then(editor => {
                 const extensionContextMock: TypeMoq.IMock<vscode.ExtensionContext> = TypeMoq.Mock.ofType<vscode.ExtensionContext>();
                 extensionContextMock.setup(x => x.extensionPath).returns(() => "/test/extensionpath");
                 const provider = new ComponentViewerProvider(extensionContextMock.object);
-                const htmlPreview = provider.provideTextDocumentContent(null);
+                const htmlPreview = provider.provideTextDocumentContent(null).replace(/\r/g, "");
                 htmlPreview.should.equal(expectedHtml);
             }, reason => {
                 should.fail(reason, undefined);
