@@ -4991,7 +4991,7 @@ wrappy@1:
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
 
 "xcomponent-shared@file:../shared/":
-  version "0.1.0"
+  version "0.1.1"
   dependencies:
     es6-promisify "^5.0.0"
     xml2js "^0.4.17"
