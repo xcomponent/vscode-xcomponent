@@ -1,0 +1,16 @@
+{
+    "HelloWorld": {
+        "1": {
+            "name": "HelloWorldManager",
+            "states": {
+                "1": "EntryPoint"
+            }
+        },
+        "2": {
+            "name": "HelloResponse",
+            "states": {
+                "2": "Done"
+            }
+        }
+    }
+}
