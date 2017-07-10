@@ -7,7 +7,7 @@ const BUILD_DIR = path.resolve(__dirname, "lib");
 const APP_DIR = path.resolve(__dirname, "src");
 console.error(APP_DIR);
 const config = {
-    entry: ["babel-polyfill", APP_DIR + "/index.ts"],
+    entry: [APP_DIR + "/index.ts"],
     devtool: "cheap-module-source-map",
     output: {
         path: BUILD_DIR,
