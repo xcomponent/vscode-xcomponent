@@ -8,5 +8,7 @@
 		"test": "cd shared && yarn run test && cd .. && cd viewer && yarn run test && cd .. && cd extension && yarn run test",
 		"tslint": "cd shared && yarn run tslint && cd .. && cd viewer && yarn run tslint && cd .. && cd extension && yarn run tslint"
 	},
-	"dependencies": {}
+	"dependencies": {
+		"deep-eql": "^2.0.2"
+	}
 }

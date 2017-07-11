@@ -5,7 +5,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const BUILD_DIR = path.resolve(__dirname, "lib");
 const APP_DIR = path.resolve(__dirname, "src");
-console.error(APP_DIR);
+
 const config = {
     entry: [APP_DIR + "/index.ts"],
     devtool: "cheap-module-source-map",

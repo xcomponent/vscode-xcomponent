@@ -6,6 +6,7 @@
   "publisher": "XComponent",
   "license": "Apache-2.0",
   "icon": "images/logo_xc.png",
+  "typings": "vscode.d.ts",
   "bugs": {
     "email": "dev@xcomponent.com",
     "url": "https://github.com/xcomponent/vscode-xcomponent/issues"
@@ -33,15 +34,20 @@
   "contributes": {
     "commands": [
       {
-        "command": "xcomponent.preview",
+        "command": "xcomponent.preview.component",
         "title": "XComponent: Preview Component",
+        "group": "navigation"
+      },
+      {
+        "command": "xcomponent.preview.composition",
+        "title": "XComponent: Preview Composition",
         "group": "navigation"
       }
     ],
     "menus": {
       "editor/title": [
         {
-          "command": "xcomponent.preview"
+          "command": "xcomponent.preview.component"
         }
       ]
     }
@@ -53,7 +59,10 @@
     "tslint": "tslint -c tslint.json src/**/*.ts*",
     "test": "node ./node_modules/vscode/bin/test"
   },
-  "dependencies": {},
+  "dependencies": {
+    "vscode": "^1.1.2",
+    "xml2js-parser": "^1.1.1"
+  },
   "devDependencies": {
     "@types/chai": "^4.0.0",
     "@types/fs-extra": "^3.0.3",
@@ -66,8 +75,7 @@
     "tslint": "^5.4.3",
     "tslint-loader": "^3.3.0",
     "typemoq": "^1.7.0",
-    "typescript": "^2.3.4",
-    "vscode": "^1.1.0"
+    "typescript": "^2.3.4"
   },
   "false": {}
 }

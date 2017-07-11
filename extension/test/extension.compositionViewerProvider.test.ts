@@ -3,39 +3,40 @@ import * as vscode from "vscode";
 import { ExtensionContext } from "vscode";
 import * as path from "path";
 import * as fs from "fs";
-import { ComponentViewerProvider } from "../src/componentViewerProvider";
 import * as chai from "chai";
+import { CompositionViewerProvider } from "../src/compositionViewerProvider";
 import { parseStringSync } from "xml2js-parser";
 import * as deepEql from "deep-eql";
 
 const should = chai.should();
 
+
 const inputPath = path.join(__dirname, "..", "..", "test", "inputs");
 const outputPath = path.join(__dirname, "..", "..", "test", "outputs");
 
-const cxmlFileName = "TechTest.cxml";
-const expectedPreviewHtmlFileName = "expectedPreview.html";
+const xcmlFileName = "helloworld_Model.xcml";
+const expectedPreviewHtmlFileName = "expectedCompositionPreview.html";
 const otherInputFileName = "other_input.txt";
 const expectedErrorHtmlFileName = "expectedError.html";
 
 const todo = (htmlPreviewJson, htmlExpectedJson) => {
-    const previewModelJson = parseStringSync(htmlPreviewJson.html.body[0].script[0].$.model);
-    const expectedModelJson = parseStringSync(htmlExpectedJson.html.body[0].script[0].$.model);
-    const expectedGraphicalJson = parseStringSync(htmlExpectedJson.html.body[0].script[0].$.graphical);
-    const previewGraphicalJson = parseStringSync(htmlPreviewJson.html.body[0].script[0].$.graphical);
-    deepEql(previewModelJson, expectedModelJson).should.equal(true);
-    deepEql(previewGraphicalJson, expectedGraphicalJson).should.equal(true);
+    const previewComponentsJson = JSON.parse(htmlPreviewJson.html.body[0].script[0].$.components);
+    const previewCompositionJson = parseStringSync(htmlPreviewJson.html.body[0].script[0].$.composition);
+    const expectedComponentsJson = JSON.parse(htmlExpectedJson.html.body[0].script[0].$.components);
+    const expectedCompositionJson = parseStringSync(htmlExpectedJson.html.body[0].script[0].$.composition);
+    deepEql(previewComponentsJson, expectedComponentsJson).should.equal(true);
+    deepEql(previewCompositionJson, expectedCompositionJson).should.equal(true);
 };
 
 const todoError = (htmlPreviewJson, htmlExpectedJson) => {
     deepEql(htmlPreviewJson, htmlExpectedJson).should.equal(true);
 };
 
-describe("ComponentViewerProvider Tests", () => {
+describe("CompositionViewerProvider Tests", () => {
 
     const providerTests = [
-        { input: otherInputFileName, expected: expectedErrorHtmlFileName, todo: todoError },
-        { input: cxmlFileName, expected: expectedPreviewHtmlFileName, todo: todo }
+        { input: xcmlFileName, expected: expectedPreviewHtmlFileName, todo: todo },
+        { input: otherInputFileName, expected: expectedErrorHtmlFileName, todo: todoError }
     ];
 
     providerTests.forEach(test => {
@@ -46,8 +47,8 @@ describe("ComponentViewerProvider Tests", () => {
             }).then(editor => {
                 const extensionContextMock: TypeMoq.IMock<vscode.ExtensionContext> = TypeMoq.Mock.ofType<vscode.ExtensionContext>();
                 extensionContextMock.setup(x => x.extensionPath).returns(() => "/test/extensionpath");
-                const provider = new ComponentViewerProvider(extensionContextMock.object);
-                const htmlPreview = provider.provideTextDocumentContent(null).replace(/\r/g, "");
+                const provider = new CompositionViewerProvider(extensionContextMock.object);
+                const htmlPreview = provider.provideTextDocumentContent(null);
                 const htmlPreviewJson = parseStringSync(htmlPreview);
                 const htmlExpectedJson = parseStringSync(expectedHtml);
                 test.todo(htmlPreviewJson, htmlExpectedJson);
