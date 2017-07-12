@@ -1,0 +1,24 @@
+{
+  "name": "xcomponent",
+  "displayName": "XComponent",
+  "description": "XComponent Viewer for Visual Studio Code",
+  "version": "0.4.0",
+  "publisher": "XComponent",
+  "license": "Apache-2.0",
+  "icon": "images/logo_xc.png",
+  "typings": "vscode.d.ts",
+  "bugs": {
+    "email": "dev@xcomponent.com",
+    "url": "https://github.com/xcomponent/vscode-xcomponent/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xcomponent/vscode-xcomponent"
+  },
+  "homepage": "https://github.com/xcomponent/vscode-xcomponent/blob/master/extension/README.md",
+  "dependencies": {
+    "compression": "^1.7.0",
+    "express": "^4.15.3",
+    "opn": "^5.1.0"
+  }
+}

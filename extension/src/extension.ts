@@ -3,6 +3,8 @@ import * as path from "path";
 import { ComponentViewerProvider } from "./componentViewerProvider";
 import { CompositionViewerProvider } from "./compositionViewerProvider";
 
+const execSync = require("child_process").execSync;
+
 const xcmlExtension = ".xcml";
 const cxmlExtension = ".cxml";
 
@@ -46,6 +48,12 @@ export function activate(context: vscode.ExtensionContext) {
         }, (reason) => {
             vscode.window.showErrorMessage(reason);
         });
+    });
+
+    vscode.commands.registerCommand("xcomponent.preview.spy", () => {
+        const dirPath = path.parse(context.extensionPath);
+        const serverPath = `${dirPath.dir}${path.sep}spy${path.sep}server.js`;
+        execSync(`node ${serverPath}`);
     });
 
     context.subscriptions.push(disposableComposition, compositionRegistration);

@@ -42,6 +42,11 @@
         "command": "xcomponent.preview.composition",
         "title": "XComponent: Preview Composition",
         "group": "navigation"
+      },
+      {
+        "command": "xcomponent.preview.spy",
+        "title": "XComponent: Launch Spy Web",
+        "group": "navigation"
       }
     ],
     "menus": {
@@ -60,6 +65,8 @@
     "test": "node ./node_modules/vscode/bin/test"
   },
   "dependencies": {
+    "compression": "^1.7.0",
+    "express": "^4.15.3",
     "vscode": "^1.1.2",
     "xml2js-parser": "^1.1.1"
   },
