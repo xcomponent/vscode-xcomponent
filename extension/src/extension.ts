@@ -6,7 +6,7 @@ import { exec, execSync } from "child_process";
 import * as promisify from "es6-promisify";
 import * as portscanner from "portscanner";
 import * as opn from "opn";
-import * as portfinder from "portfinder";
+import * as freeport from "freeport";
 
 const xcmlExtension = ".xcml";
 const cxmlExtension = ".cxml";
@@ -53,7 +53,7 @@ export function activate(context: vscode.ExtensionContext) {
         });
     });
 
-    portfinder.getPortPromise()
+    promisify(freeport)()
         .then((port: number) => {
             const disposableSpy = vscode.commands.registerCommand("xcomponent.preview.spy", () => {
                 const dirPath = path.parse(context.extensionPath);
