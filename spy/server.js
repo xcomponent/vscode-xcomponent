@@ -1,6 +1,6 @@
-const express = require("express")
-const path = require("path")
-const compression = require("compression")
+const express = require("express");
+const path = require("path");
+const compression = require("compression");
 const opn = require("opn");
 const app = express();
 
@@ -12,7 +12,7 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./dist/", "index.html"));
 });
 
-const port = process.env.PORT || 3000;
+const port = 8000;
 app.listen(port, () => {
   const serverUrl = "http://localhost:" + port;
   console.log("Production Express server running at " + serverUrl);
