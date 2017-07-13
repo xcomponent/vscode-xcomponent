@@ -17,6 +17,10 @@ To display a component *.cxml file, use the *"XComponent: Preview Component"* co
 
 To display a composition *.xcml file, use the *"XComponent: Preview Composition"* command.
 
+## XCSpy launch
+
+To launch the XCSpy web application, use the *"XComponent: Launch Spy Web" command.
+
 ![component preview](https://raw.githubusercontent.com/xcomponent/vscode-xcomponent/master/extension/images/cxml_preview.gif)
 
 ## Feedback & Contributing
