@@ -54,7 +54,7 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     portfinder.getPortPromise()
-        .then((port) => {
+        .then((port: number) => {
             const disposableSpy = vscode.commands.registerCommand("xcomponent.preview.spy", () => {
                 const dirPath = path.parse(context.extensionPath);
                 const serverPath = `${dirPath.dir}${path.sep}spy${path.sep}server.js`;
@@ -63,7 +63,7 @@ export function activate(context: vscode.ExtensionContext) {
                 const promiseCheckPortStatus = promisify(portscanner.checkPortStatus);
                 const localhost = "localhost";
                 promiseCheckPortStatus(port, localhost)
-                    .then((status) => {
+                    .then((status: string) => {
                         if (status === "closed") {
                             exec(runSpyServercommand);
                         } else if (status === "open") {
@@ -74,6 +74,7 @@ export function activate(context: vscode.ExtensionContext) {
             context.subscriptions.push(disposableSpy, registration);
         })
         .catch((err) => {
+            console.error(err);
         });
 
     context.subscriptions.push(disposableComposition, compositionRegistration);
