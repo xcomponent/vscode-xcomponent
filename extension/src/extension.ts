@@ -2,6 +2,11 @@ import * as vscode from "vscode";
 import * as path from "path";
 import { ComponentViewerProvider } from "./componentViewerProvider";
 import { CompositionViewerProvider } from "./compositionViewerProvider";
+import { exec, execSync } from "child_process";
+import * as promisify from "es6-promisify";
+import * as portscanner from "portscanner";
+import * as opn from "opn";
+import * as freeport from "freeport";
 
 const xcmlExtension = ".xcml";
 const cxmlExtension = ".cxml";
@@ -47,6 +52,29 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.window.showErrorMessage(reason);
         });
     });
+
+    promisify(freeport)()
+        .then((port: number) => {
+            const disposableSpy = vscode.commands.registerCommand("xcomponent.launch.spy", () => {
+                const dirPath = path.parse(context.extensionPath);
+                const serverPath = `${dirPath.dir}${path.sep}spy${path.sep}server.js`;
+                const runSpyServercommand = `node ${serverPath}`;
+                (<any>process.env.port) = port;
+                const promiseCheckPortStatus = promisify(portscanner.checkPortStatus);
+                promiseCheckPortStatus(port, "localhost")
+                    .then((status: string) => {
+                        if (status === "closed") {
+                            exec(runSpyServercommand);
+                        } else if (status === "open") {
+                            opn(`http://localhost:${port}`);
+                        }
+                    });
+            });
+            context.subscriptions.push(disposableSpy, registration);
+        })
+        .catch((err) => {
+            console.error(err);
+        });
 
     context.subscriptions.push(disposableComposition, compositionRegistration);
     context.subscriptions.push(disposable, registration);
