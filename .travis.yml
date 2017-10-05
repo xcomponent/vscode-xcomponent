@@ -8,6 +8,7 @@ branches:
 os:
 - linux
 dist: trusty
+cache: yarn
 addons:
   apt:
     sources:
@@ -15,6 +16,7 @@ addons:
         key_url: 'https://dl.yarnpkg.com/debian/pubkey.gpg'
     packages:
       - yarn
+      - libsecret-1-dev
 before_install:
 - if [ $TRAVIS_OS_NAME == "linux" ]; then export CXX="g++-4.9" CC="gcc-4.9" DISPLAY=:99.0;
   sh -e /etc/init.d/xvfb start; sleep 3; fi
