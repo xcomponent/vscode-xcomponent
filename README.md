@@ -26,6 +26,9 @@ To **run and develop** do the following:
 * Open in Visual Studio Code (`code ./extension/.`)
 * Press <kbd>F5</kbd> to debug
 
+> If you want to install your gojs license, compile with the following command:
+> `yarn run compile --define process.env.GOJS_KEY=\"my license key\"`
+
 To **test** do the following: `yarn run test` or <kbd>F5</kbd> in VS Code with the "Launch Tests" debug configuration.
 
 ## Feedback & Contributing
