@@ -8,7 +8,7 @@
     "compile:dev": "webpack -d --watch --progress",
     "compile": "webpack -p --define process.env.NODE_ENV='\"production\"' --progress --colors",
     "test": "jest --coverage",
-    "tslint": "tslint -c tslint.json src/**/*.ts*"
+    "tslint": "tslint -c tslint.json -e src/gojs/go.d.ts src/**/*.ts*"
   },
   "author": "XComponent <dev@xcomponent.com> (http://www.xcomponent.com)",
   "jest": {
@@ -37,7 +37,7 @@
     "testEnvironment": "jsdom"
   },
   "dependencies": {
-    "gojs": "^1.7.9",
+    "@types/node": "^8.0.32",
     "xcomponent-shared": "file:../shared/"
   },
   "devDependencies": {

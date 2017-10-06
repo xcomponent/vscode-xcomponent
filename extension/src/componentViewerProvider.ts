@@ -140,11 +140,17 @@ export class ComponentViewerProvider implements vscode.TextDocumentContentProvid
                         id ="error"></h1>
 					</div>`;
         const style = `<style type="text/css">
+                    .gshHeader {
+                        border-color: #eaba7e;
+                        font-size: 16;
+                        margin-bottom: 3;
+                    }
 					html, body {
 						height: 100%;
 						margin: 0;
 					}
-   				</style>`;
+                   </style>`;
+
         const script = `<script type="text/javascript" src="file:///${this.getBundlePath("out/viewer/bundle.js")}" model='${rawModel.model}' graphical='${rawModel.graphical}'></script>`;
         return `
 				${style}
