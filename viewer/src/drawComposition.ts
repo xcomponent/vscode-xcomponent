@@ -1,4 +1,4 @@
-import * as go from "gojs";
+import * as go from "./gojs/go";
 import { parseString } from "xml2js";
 import * as promisify from "es6-promisify";
 import { CompositionData, LinkDataArrayElement, NodeDataArrayElement, Components, StateMachines } from "xcomponent-shared";

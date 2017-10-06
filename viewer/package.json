@@ -37,7 +37,7 @@
     "testEnvironment": "jsdom"
   },
   "dependencies": {
-    "gojs": "^1.7.9",
+    "@types/node": "^8.0.32",
     "xcomponent-shared": "file:../shared/"
   },
   "devDependencies": {
