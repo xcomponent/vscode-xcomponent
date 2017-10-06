@@ -4,7 +4,8 @@
 		"target": "es5",
 		"outDir": "out",
 		"sourceMap": true,		
-        "baseUrl": "src"		
+		"baseUrl": "src",
+		"skipLibCheck": true		
 	},
     "include": [
         "./src"

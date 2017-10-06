@@ -34,6 +34,11 @@
   "contributes": {
     "commands": [
       {
+        "command": "xcomponent.create.transition",
+        "title": "XComponent: Create Transition",
+        "group": "navigation"
+      },
+      {
         "command": "xcomponent.preview.component",
         "title": "XComponent: Preview Component",
         "group": "navigation"
@@ -69,10 +74,16 @@
     "es6-promisify": "^5.0.0",
     "express": "^4.15.3",
     "freeport": "^1.0.5",
+    "json-xml-parser": "^1.0.5",
     "port-pid": "^0.0.6",
     "portscanner": "^2.1.1",
+    "string-argv": "^0.0.2",
+    "synchronize": "^2.0.0",
     "vscode": "^1.1.2",
-    "xml2js-parser": "^1.1.1"
+    "xml-formatter": "^1.0.1",
+    "xml2js": "^0.4.19",
+    "xml2js-parser": "^1.1.1",
+    "xmljson": "^0.2.0"
   },
   "devDependencies": {
     "@types/chai": "^4.0.0",
