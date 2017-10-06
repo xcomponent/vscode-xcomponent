@@ -31,48 +31,6 @@ export class DrawComponent {
                     "undoManager.isEnabled": true,
                     InitialLayoutCompleted: (e) => { thisObject.loadControls(e.diagram); }
                 });
-        // diagram.addDiagramListener("Modified",
-        //     (e: DiagramEvent) => {
-        //         // console.log(e.diagram.model.toJson());
-        //         console.log("Modified");
-        //         console.log("");
-        //     });
-        // diagram.addDiagramListener("TextEdited",
-        //     (e: DiagramEvent) => {
-        //         // console.log(e.name);
-        //         // console.log(e.parameter);
-        //         // console.log(e.subject);
-        //         // console.log(e.diagram.model.toJson());
-        //         // e.diagram.add
-        //         // e.parameter.
-        //         console.log("TextEdited");
-        //         console.log("");
-        //     });
-
-        // diagram.addDiagramListener("LinkDrawn",
-        //     (e: DiagramEvent) => {
-        //         // console.log(e.diagram.model.toJson());
-        //         console.log("LinkDrawn");
-        //         console.log("");
-        //     });
-        // diagram.addDiagramListener("SelectionDeleted",
-        //     (e: DiagramEvent) => {
-        //         // console.log(e.diagram.model.toJson());
-        //         console.log("SelectionDeleted");
-        //         console.log("");
-        //     });
-        diagram.addModelChangedListener((e) => {
-            console.log("e.modelChange");
-            console.log(e.modelChange);
-            console.log(e.model);
-            console.log(e.change);
-            console.log(e.newParam);
-            console.log(e.newValue);
-            console.log(e.oldParam);
-            console.log(e.oldValue);
-            if (e.diagram)
-                console.log(e.diagram.model.toJson());
-        });
         return diagram;
     }
 

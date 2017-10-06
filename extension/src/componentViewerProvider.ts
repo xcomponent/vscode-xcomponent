@@ -2,13 +2,10 @@ import * as vscode from "vscode";
 import * as path from "path";
 import * as fs from "fs";
 import { parseStringSync } from "xml2js-parser";
-// import * as X from "xml2js-parser";
-// import * as parser from "json-xml-parser";
 import { to_json as toJson, to_xml as toXml } from "xmljson";
 import * as promisify from "es6-promisify";
-import * as xmlFormatter from "xml-formatter";
-// import * as xml2js from "xml2js";
 import { ComponentModelProvider, ComponentRawModel, cxmlExtension } from "./componentModelProvider";
+import * as formattor from "formattor";
 
 interface TransitionParameter {
     name: string;
@@ -53,7 +50,7 @@ export class ComponentViewerProvider implements vscode.TextDocumentContentProvid
             }
         }
         if (stateMachineId === undefined) {
-            throw new Error(`StateMachine ${stateMachineName} not found`)
+            throw new Error(`StateMachine ${stateMachineName} not found`);
         }
         for (let i in states) {
             if (states[i].$.Name === stateName && states[i].$.SubGraphKey === `StateMachine${stateMachineId}`) {
@@ -62,7 +59,7 @@ export class ComponentViewerProvider implements vscode.TextDocumentContentProvid
             }
         }
         if (stateId === undefined) {
-            throw new Error(`State ${stateName} not found`)
+            throw new Error(`State ${stateName} not found`);
         }
         return stateId;
     }
@@ -112,8 +109,8 @@ export class ComponentViewerProvider implements vscode.TextDocumentContentProvid
                     return promisify(toXml)(JSON.stringify(componentModelJson));
                 })
                 .then((xml) => {
-                    const extra = '<data>';
-                    const xmlUpdate = xmlFormatter(xml.substring(extra.length, xml.length - extra.length - 1));
+                    const extra = "<data>";
+                    const xmlUpdate = formattor(xml.substring(extra.length, xml.length - extra.length - 1), { method: "xml" });
                     fs.writeFileSync(fileName, xmlUpdate, "utf8");
                     this.transitionToCreate = undefined;
                     this.update(this.uri);
