@@ -31,14 +31,11 @@ install:
 - yarn run compile
 script:
 - yarn test --silent
-- echo ">>debug"
-- git tag -l --points-at HEAD
 deploy:
   provider: script
-  script: cd extension && vsce publish -p $vscodekey
+  script: ./deploy.sh $vscodekey
   on:
-    tags: true
-    repo: xcomponent/vscode-xcomponent
+    branch: master
 notifications:
   slack:
     rooms:
