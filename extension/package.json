@@ -79,7 +79,6 @@
     "port-pid": "^0.0.6",
     "portscanner": "^2.1.1",
     "string-argv": "^0.0.2",
-    "synchronize": "^2.0.0",
     "vscode": "^1.1.2",
     "xml2js-parser": "^1.1.1",
     "xmljson": "^0.2.0"

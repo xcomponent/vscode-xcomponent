@@ -549,10 +549,6 @@ fd-slicer@~1.0.1:
   dependencies:
     pend "~1.2.0"
 
-fibers@1.0.x:
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/fibers/-/fibers-1.0.15.tgz#22f039c8f18b856190fbbe4decf056154c1eae9c"
-
 filename-regex@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/filename-regex/-/filename-regex-2.0.1.tgz#c1c4b9bee3e09725ddb106b75c1e301fe2f18b26"
@@ -1893,12 +1889,6 @@ supports-color@3.1.2:
 supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
-
-synchronize@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/synchronize/-/synchronize-2.0.0.tgz#b5eb89964c4bad6e42caa4143cad26cef1edf422"
-  dependencies:
-    fibers "1.0.x"
 
 tapable@^0.2.5:
   version "0.2.6"
