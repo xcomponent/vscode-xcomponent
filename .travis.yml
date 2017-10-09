@@ -5,6 +5,7 @@ sudo: false
 branches:
   only:
   - master
+  - /v\d+\.\d+[a-z]/
 os:
 - linux
 dist: trusty
@@ -36,7 +37,7 @@ deploy:
   script: cd extension && vsce publish -p $vscodekey
   on:
     tags: true
-    branch: master
+    all_branches: true
 notifications:
   slack:
     rooms:
