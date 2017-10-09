@@ -8,7 +8,6 @@ branches:
 os:
 - linux
 dist: trusty
-cache: yarn
 addons:
   apt:
     sources:
@@ -16,6 +15,7 @@ addons:
         key_url: 'https://dl.yarnpkg.com/debian/pubkey.gpg'
     packages:
       - yarn
+      - npm
       - libsecret-1-dev
 before_install:
 - if [ $TRAVIS_OS_NAME == "linux" ]; then export CXX="g++-4.9" CC="gcc-4.9" DISPLAY=:99.0;
@@ -25,13 +25,14 @@ before_install:
 - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.1.0
 - export PATH="$HOME/.yarn/bin:$PATH"
 install:
-- yarn global add vsce
+- npm install -g vsce
 - yarn install
 - yarn run tslint
 - cd shared && yarn run compile && cd .. && cd viewer && yarn run compile --define process.env.GOJS_KEY=\"$gojskey\" && cd .. && cd extension && yarn run vscode:prepublish && cd ..
 script:
 - yarn test --silent
-- ./deploy.sh $vscodekey
+- cd extension && vsce package
+#- ./deploy.sh $vscodekey
 notifications:
   slack:
     rooms:
