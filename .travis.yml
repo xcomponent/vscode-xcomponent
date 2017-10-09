@@ -25,11 +25,18 @@ before_install:
 - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.1.0
 - export PATH="$HOME/.yarn/bin:$PATH"
 install:
+- yarn global add vsce
 - yarn install
 - yarn run tslint
 - yarn run compile
 script:
 - yarn test --silent
+deploy:
+  provider: script
+  script: cd extension && vsce publish -p $vscodekey
+  on:
+    tags: true
+    branch: master
 notifications:
   slack:
     rooms:
