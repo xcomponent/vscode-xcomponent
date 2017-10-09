@@ -5,7 +5,6 @@ sudo: false
 branches:
   only:
   - master
-  - /v\d+\.\d+[a-z]/
 os:
 - linux
 dist: trusty
@@ -32,12 +31,13 @@ install:
 - yarn run compile
 script:
 - yarn test --silent
+- echo ">>debug"
+- echo $TRAVIS_TAG
 deploy:
   provider: script
   script: cd extension && vsce publish -p $vscodekey
   on:
     tags: true
-    all_branches: true
     repo: xcomponent/vscode-xcomponent
 notifications:
   slack:
