@@ -30,8 +30,12 @@ install:
 - cd shared && yarn run compile && cd .. && cd viewer && yarn run compile --define process.env.GOJS_KEY=\"$gojskey\" && cd .. && cd extension && yarn run vscode:prepublish && cd ..
 script:
 - yarn test --silent
-- cd extension && ls -lrt node_modules && vsce package
-#- ./deploy.sh $vscodekey
+deploy:
+    provider: script
+    skip_cleanup: true
+    script: ./deploy.sh $vscodekey
+    on:
+      branch: master
 notifications:
   slack:
     rooms:
