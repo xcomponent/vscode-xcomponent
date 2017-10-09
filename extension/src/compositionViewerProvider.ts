@@ -46,6 +46,11 @@ export class CompositionViewerProvider implements vscode.TextDocumentContentProv
                         id ="error"></h1>
 					</div>`;
         const style = `<style type="text/css">
+                    .gshHeader {
+                        border-color: #eaba7e;
+                        font-size: 16;
+                        margin-bottom: 3;
+                    }
 					html, body {
 						height: 100%;
 						margin: 0;
