@@ -3,7 +3,7 @@ import * as go from "./gojs/go";
 import { ComponentModel } from "./componentModel";
 import { stateMachineColor } from "./graphicColors";
 import { NodeDataArrayTemplate, LinkDataArrayTemplate, DrawComponentData } from "./gojsTemplates";
-import { DiagramEvent } from "gojs";
+import { DiagramEvent } from "./gojs/go";
 
 export class DrawComponent {
 
