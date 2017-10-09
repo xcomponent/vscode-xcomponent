@@ -38,6 +38,7 @@ deploy:
   on:
     tags: true
     all_branches: true
+    repo: xcomponent/vscode-xcomponent
 notifications:
   slack:
     rooms:
