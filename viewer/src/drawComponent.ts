@@ -3,6 +3,7 @@ import * as go from "./gojs/go";
 import { ComponentModel } from "./componentModel";
 import { stateMachineColor } from "./graphicColors";
 import { NodeDataArrayTemplate, LinkDataArrayTemplate, DrawComponentData } from "./gojsTemplates";
+import { DiagramEvent } from "./gojs/go";
 
 export class DrawComponent {
 
@@ -22,11 +23,12 @@ export class DrawComponent {
     private createDiagram(divId: string): go.Diagram {
         const $ = this.$;
         const thisObject = this;
-        const diagram =
+        const diagram: go.Diagram =
             $(go.Diagram, divId,
                 {
                     contentAlignment: go.Spot.Center,
                     "animationManager.isInitial": false,
+                    "undoManager.isEnabled": true,
                     InitialLayoutCompleted: (e) => { thisObject.loadControls(e.diagram); }
                 });
         return diagram;
@@ -64,10 +66,10 @@ export class DrawComponent {
         const $ = this.$;
         const linkLabelTemplate = $(go.Node,
             {
-                locationSpot: go.Spot.Center,  // Node.location is the center of the Shape
+                locationSpot: go.Spot.Center,
                 layerName: "Foreground"
-            },  // always have link label nodes in front of Links
-            $(go.TextBlock,                   // this is a Link label
+            },
+            $(go.TextBlock, { editable: true },
                 new go.Binding("text", "text"))
         );
         return linkLabelTemplate;
@@ -90,7 +92,13 @@ export class DrawComponent {
                         name: "SHAPE",
                         strokeWidth: 2,
                         desiredSize: new go.Size(30, 30),
-                        portId: ""
+                        portId: "",
+                        fromLinkable: true,
+                        toLinkable: true,
+                        fromLinkableSelfNode: true,
+                        toLinkableSelfNode: true,
+                        toLinkableDuplicates: true,
+                        fromLinkableDuplicates: true
                     },
                     new go.Binding("fill", "fill"), new go.Binding("stroke", "stroke")
                 ),
@@ -123,7 +131,7 @@ export class DrawComponent {
         const $ = this.$;
         const linkTemplate =
             $(go.Link,
-                { curve: go.Link.Bezier, adjusting: go.Link.Stretch, reshapable: true },
+                { curve: go.Link.Bezier, adjusting: go.Link.Stretch, reshapable: true, relinkableFrom: true, relinkableTo: true },
                 $(go.Shape, new go.Binding("stroke", "strokeLink"), new go.Binding("strokeDashArray", "dash")),
                 $(go.Shape, { toArrow: "Standard" }, new go.Binding("fill", "fillArrow"), new go.Binding("stroke", "strokeArrow")),
                 new go.Binding("strokeDashArray", "strokeDashArray")

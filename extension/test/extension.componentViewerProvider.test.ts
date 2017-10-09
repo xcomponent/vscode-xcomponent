@@ -46,7 +46,7 @@ describe("ComponentViewerProvider Tests", () => {
             }).then(editor => {
                 const extensionContextMock: TypeMoq.IMock<vscode.ExtensionContext> = TypeMoq.Mock.ofType<vscode.ExtensionContext>();
                 extensionContextMock.setup(x => x.extensionPath).returns(() => "/test/extensionpath");
-                const provider = new ComponentViewerProvider(extensionContextMock.object);
+                const provider = new ComponentViewerProvider(extensionContextMock.object, vscode.Uri.parse("xc-preview://xcomponent/component-preview"));
                 const htmlPreview = provider.provideTextDocumentContent(null).replace(/\r/g, "");
                 const htmlPreviewJson = parseStringSync(htmlPreview);
                 const htmlExpectedJson = parseStringSync(expectedHtml);

@@ -2,9 +2,9 @@ import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
 
-const cxmlExtension = ".cxml";
-const graphicalFileSuffix = "_Graphical";
-const graphicalFileExtension = ".xml";
+export const cxmlExtension = ".cxml";
+export const graphicalFileSuffix = "_Graphical";
+export const graphicalFileExtension = ".xml";
 
 export interface ComponentRawModel {
     model: string;
@@ -34,6 +34,13 @@ export class ComponentModelProvider {
             model: rawModel,
             graphical: this.getGraphicalRawModel()
         };
+    }
+
+    public getModelFilePath() {
+        if (!this.isCxmlDocument()) {
+            return undefined;
+        }
+        return this.editor.document.fileName;
     }
 
     private getGraphicalRawModel(): string | undefined {

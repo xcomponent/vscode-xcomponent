@@ -50,7 +50,7 @@ export class ComponentModel {
 
     public getLocationState(graphicalJson: Graphical): { [key: string]: Point } {
         const locations = {};
-        let stateGraphicalData: Array<Attribute<StateGraphicalDataElement>> = graphicalJson.ComponentViewModelGraphicalData.States[0].StateGraphicalData;
+        let stateGraphicalData: Array<Attribute<StateGraphicalDataElement>> = graphicalJson.ComponentGraphicalData.States[0].StateGraphicalData;
         for (let i = 0; i < stateGraphicalData.length; i++) {
             const id = stateGraphicalData[i].$.Id;
             locations[id] = {
@@ -59,7 +59,7 @@ export class ComponentModel {
             };
         }
 
-        stateGraphicalData = graphicalJson.ComponentViewModelGraphicalData.TransitionPatternStates[0].StateGraphicalData;
+        stateGraphicalData = graphicalJson.ComponentGraphicalData.TransitionPatternStates[0].StateGraphicalData;
         stateGraphicalData = (stateGraphicalData === undefined) ? [] : stateGraphicalData;
         for (let i = 0; i < stateGraphicalData.length; i++) {
             const id = stateGraphicalData[i].$.Id;
@@ -74,8 +74,8 @@ export class ComponentModel {
 
     private loadGraphical(graphicalJson: Graphical): void {
         this.locations = this.getLocationState(graphicalJson);
-        this.controlPointTransition = this.getControlPointTransition(graphicalJson.ComponentViewModelGraphicalData.Links[0].TransitionGraphicalData);
-        this.controlPointTriggerable = this.getControlPointTransition(graphicalJson.ComponentViewModelGraphicalData.TransversalLinks[0].TransitionGraphicalData);
+        this.controlPointTransition = this.getControlPointTransition(graphicalJson.ComponentGraphicalData.Links[0].TransitionGraphicalData);
+        this.controlPointTriggerable = this.getControlPointTransition(graphicalJson.ComponentGraphicalData.TransversalLinks[0].TransitionGraphicalData || []);
     }
 
     private loadModel(modelJson: Model): void {
@@ -93,7 +93,7 @@ export class ComponentModel {
     }
 
     public getComponentName(modelJson: Model): string {
-        return modelJson.ComponentViewModelData.$.Name;
+        return modelJson.ComponentData.$.Name;
     }
 
     public addControlPoint(): void {
@@ -213,7 +213,7 @@ export class ComponentModel {
     }
 
     public setLinks(modelJson: Model): void {
-        const linksJson = modelJson.ComponentViewModelData.Links[0].TransitionData;
+        const linksJson = modelJson.ComponentData.Links[0].TransitionData;
         this.linkDataArray = [];
         this.linksLabel = [];
         let key,
@@ -254,7 +254,7 @@ export class ComponentModel {
                 "text": text
             });
         }
-        const triggerableLinksJson = modelJson.ComponentViewModelData.TransversalLinks[0].TransversalTransitionData;
+        const triggerableLinksJson = modelJson.ComponentData.TransversalLinks[0].TransversalTransitionData || [];
         for (let j = 0; j < triggerableLinksJson.length; j++) {
             from = this.states[triggerableLinksJson[j].$.FromKey];
             if (!from)
@@ -274,7 +274,7 @@ export class ComponentModel {
     }
 
     public setStates(modelJson: Model): void {
-        const statesJson = modelJson.ComponentViewModelData.States[0].StateData;
+        const statesJson = modelJson.ComponentData.States[0].StateData;
         const states = {};
         let id,
             group,
@@ -300,7 +300,7 @@ export class ComponentModel {
         }
         // transition pattern state
         const transitionPatternStates = {};
-        let transitionPatternStateDataJson = modelJson.ComponentViewModelData.TransitionPatternStates[0].TransitionPatternStateData;
+        let transitionPatternStateDataJson = modelJson.ComponentData.TransitionPatternStates[0].TransitionPatternStateData;
         transitionPatternStateDataJson = (transitionPatternStateDataJson === undefined) ? [] : transitionPatternStateDataJson;
         for (let i = 0; i < transitionPatternStateDataJson.length; i++) {
             id = transitionPatternStateDataJson[i].$.SubGraphKey;
@@ -326,7 +326,7 @@ export class ComponentModel {
     }
 
     public setStateMachines(modelJson: Model): void {
-        const stateMachineJson = modelJson.ComponentViewModelData.StateMachines[0].StateMachineData;
+        const stateMachineJson = modelJson.ComponentData.StateMachines[0].StateMachineData;
         const stateMachines = {};
         let id, name;
         for (let i = 0; i < stateMachineJson.length; i++) {

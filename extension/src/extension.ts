@@ -7,6 +7,7 @@ import * as promisify from "es6-promisify";
 import * as portscanner from "portscanner";
 import * as opn from "opn";
 import * as freeport from "freeport";
+import * as stringArgv from "string-argv";
 
 const xcmlExtension = ".xcml";
 const cxmlExtension = ".cxml";
@@ -18,7 +19,7 @@ export function activate(context: vscode.ExtensionContext) {
     const compositionProvider = new CompositionViewerProvider(context);
     const compositionRegistration = vscode.workspace.registerTextDocumentContentProvider("xc-preview-composition", compositionProvider);
 
-    const componentProvider = new ComponentViewerProvider(context);
+    const componentProvider = new ComponentViewerProvider(context, previewUri);
     const registration = vscode.workspace.registerTextDocumentContentProvider("xc-preview", componentProvider);
 
     const update = (e) => {
@@ -37,6 +38,27 @@ export function activate(context: vscode.ExtensionContext) {
 
     vscode.window.onDidChangeActiveTextEditor((e: vscode.TextEditor) => {
         update(e);
+    });
+
+    const disposableCreateTransition = vscode.commands.registerCommand("xcomponent.create.transition", () => {
+        return vscode.window.showInputBox().then((success) => {
+            const args = stringArgv(success);
+            // newTransition XComponent.UserObject HelloWorld EntryPoint HelloWorldManager EntryPoint HelloWorldManager
+            // transitionName transitionType ComponentName StateSource StateMachineSource StateTarget StateMachineTarget
+            if (args.length === 7) {
+                vscode.commands.executeCommand("vscode.previewHtml", previewUri, vscode.ViewColumn.Two, "Component preview").then((success) => {
+                    componentProvider.createTransition(args);
+                    componentProvider.update(previewUri);
+                }, (reason) => {
+                    console.error(reason);
+                    vscode.window.showErrorMessage(reason);
+                });
+            } else {
+                vscode.window.showErrorMessage("Incorrect arguments");
+            }
+        }, (reason) => {
+            vscode.window.showErrorMessage(reason);
+        });
     });
 
     const disposable = vscode.commands.registerCommand("xcomponent.preview.component", () => {

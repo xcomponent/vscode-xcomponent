@@ -601,6 +601,10 @@ form-data@~2.1.1:
     combined-stream "^1.0.5"
     mime-types "^2.1.12"
 
+formattor@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/formattor/-/formattor-0.0.2.tgz#71c8f863b8e46e84b1d6d1179e5df31df939dded"
+
 forwarded@~0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.0.tgz#19ef9874c4ae1c297bcf078fde63a09b66a84363"
@@ -1062,6 +1066,13 @@ json-stringify-safe@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
 
+json-xml-parser@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/json-xml-parser/-/json-xml-parser-1.0.5.tgz#1199b4f5f5c48190b49ecebd7f83bf3d44cffd5a"
+  dependencies:
+    linq "^3.0.5"
+    xmlbuilder "^2.6.4"
+
 json3@3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/json3/-/json3-3.3.2.tgz#3c0434743df93e2f5c42aee7b19bcb483575f4e1"
@@ -1104,6 +1115,10 @@ lazystream@^1.0.0:
   resolved "https://registry.yarnpkg.com/lazystream/-/lazystream-1.0.0.tgz#f6995fe0f820392f61396be89462407bb77168e4"
   dependencies:
     readable-stream "^2.0.5"
+
+linq@^3.0.5:
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/linq/-/linq-3.0.9.tgz#962b4d56b3f4b84ea2abd2774cf171b5adb703ef"
 
 loader-utils@^1.0.2:
   version "1.1.0"
@@ -1222,6 +1237,10 @@ lodash.templatesettings@^3.0.0:
   dependencies:
     lodash._reinterpolate "^3.0.0"
     lodash.escape "^3.0.0"
+
+lodash@^3.5.0:
+  version "3.10.1"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
 lodash@^4.16.4:
   version "4.17.4"
@@ -1703,6 +1722,10 @@ safe-buffer@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.0.1.tgz#d263ca54696cd8a306b5ca6551e92de57918fbe7"
 
+sax@0.5.x:
+  version "0.5.8"
+  resolved "https://registry.yarnpkg.com/sax/-/sax-0.5.8.tgz#d472db228eb331c2506b0e8c15524adb939d12c1"
+
 sax@^1.2.1:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
@@ -1819,6 +1842,10 @@ streamfilter@^1.0.5:
 streamifier@~0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/streamifier/-/streamifier-0.1.1.tgz#97e98d8fa4d105d62a2691d1dc07e820db8dfc4f"
+
+string-argv@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/string-argv/-/string-argv-0.0.2.tgz#dac30408690c21f3c3630a3ff3a05877bdcbd736"
 
 string_decoder@~0.10.x:
   version "0.10.31"
@@ -2139,6 +2166,29 @@ xml2js-parser@^1.1.1:
   resolved "https://registry.yarnpkg.com/xml2js-parser/-/xml2js-parser-1.1.1.tgz#90dc39f9d84d036ae10f41e6e766a91550444d44"
   dependencies:
     sax "^1.2.1"
+
+xml2js@~0.2.6:
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/xml2js/-/xml2js-0.2.8.tgz#9b81690931631ff09d1957549faf54f4f980b3c2"
+  dependencies:
+    sax "0.5.x"
+
+xmlbuilder@^2.6.4:
+  version "2.6.5"
+  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-2.6.5.tgz#6ff7ad60fb72d22764f007a164b77f2bf1400526"
+  dependencies:
+    lodash "^3.5.0"
+
+xmlbuilder@~0.4.2:
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-0.4.3.tgz#c4614ba74e0ad196e609c9272cd9e1ddb28a8a58"
+
+xmljson@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/xmljson/-/xmljson-0.2.0.tgz#e2d121d13c682c6964f6ae9c1a0be8a3cce8866c"
+  dependencies:
+    xml2js "~0.2.6"
+    xmlbuilder "~0.4.2"
 
 "xtend@>=4.0.0 <4.1.0-0", xtend@^4.0.0, xtend@~4.0.0, xtend@~4.0.1:
   version "4.0.1"
