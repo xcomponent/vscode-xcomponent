@@ -32,7 +32,7 @@ install:
 script:
 - yarn test --silent
 - echo ">>debug"
-- echo $TRAVIS_TAG
+- git tag -l --points-at HEAD
 deploy:
   provider: script
   script: cd extension && vsce publish -p $vscodekey
