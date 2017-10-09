@@ -33,6 +33,7 @@ script:
 - yarn test --silent
 deploy:
   provider: script
+  skip_cleanup: true
   script: ./deploy.sh $vscodekey
   on:
     branch: master
