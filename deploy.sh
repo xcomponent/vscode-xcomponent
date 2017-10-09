@@ -4,7 +4,7 @@ echo $version
 
 if [ ! -z "$version" ]; then
 	echo "Deploying..."
-    cd extension && vsce publish -p $1
+    cd extension && yarn install && vsce publish -p $1
 else
 	echo "Nothing to deploy - not a release version"
 fi
