@@ -67,7 +67,6 @@
   "dependencies": {
     "compression": "^1.7.0",
     "es6-promisify": "^5.0.0",
-    "express": "^4.15.3",
     "freeport": "^1.0.5",
     "opn": "^5.1.0",
     "port-pid": "^0.0.6",
