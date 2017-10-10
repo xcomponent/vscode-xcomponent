@@ -6,6 +6,8 @@
 		"sourceMap": true,		
         "baseUrl": "src",
 		"declarationDir": "types",
+		"lib": ["es6"],
+		"skipLibCheck": true,
 		"declaration": true
 	},
     "include": [

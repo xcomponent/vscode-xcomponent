@@ -3,7 +3,9 @@
 		"module": "commonjs",
 		"target": "es5",
 		"outDir": "out",
-		"sourceMap": true,		
+		"sourceMap": true,
+		"lib": ["es6", "dom"],
+		"skipLibCheck": true,	
         "baseUrl": "src"		
 	},
     "include": [

@@ -1,7 +1,7 @@
 {
   "name": "xcomponent-viewer",
   "description": "XComponent Viewer",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "license": "Apache-2.0",
   "scripts": {
     "preinstall": "cd ../shared && yarn install && yarn compile",
@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@types/node": "^8.0.32",
-    "xcomponent-shared": "file:../shared/"
+    "xcomponent-shared": "file:../shared"
   },
   "devDependencies": {
     "@types/chai": "^4.0.0",
