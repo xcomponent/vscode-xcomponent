@@ -2,7 +2,7 @@
   "name": "xcomponent",
   "displayName": "XComponent",
   "description": "XComponent Viewer for Visual Studio Code",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "publisher": "XComponent",
   "license": "Apache-2.0",
   "icon": "images/logo_xc.png",
@@ -25,7 +25,7 @@
     "xcomponent"
   ],
   "engines": {
-    "vscode": "^1.11.0"
+    "vscode": "^1.16.0"
   },
   "activationEvents": [
     "*"
@@ -69,9 +69,9 @@
     "es6-promisify": "^5.0.0",
     "express": "^4.15.3",
     "freeport": "^1.0.5",
+    "opn": "^5.1.0",
     "port-pid": "^0.0.6",
     "portscanner": "^2.1.1",
-    "vscode": "^1.1.2",
     "xml2js-parser": "^1.1.1"
   },
   "devDependencies": {
@@ -86,7 +86,8 @@
     "tslint": "^5.4.3",
     "tslint-loader": "^3.3.0",
     "typemoq": "^1.7.0",
-    "typescript": "^2.3.4"
+    "typescript": "^2.3.4",
+    "vscode": "^1.1.2"
   },
   "false": {}
 }
