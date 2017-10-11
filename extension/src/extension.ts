@@ -53,12 +53,23 @@ export function activate(context: vscode.ExtensionContext) {
         });
     });
 
+    const getCommandToRunSpy = (serverPath) => {
+        const os = execSync("uname -s").toString().toLowerCase();
+        if (os.indexOf("darwin") !== -1) {
+            return `osascript -e 'tell application "Terminal" to do script "node ${serverPath}"'`;
+        } else if (os.indexOf("linux") !== -1) {
+            return `xterm -e node ${serverPath}`;
+        } else {
+            return `START cmd.exe /K node ${serverPath}`;            
+        }
+    };
+
     promisify(freeport)()
         .then((port: number) => {
             const disposableSpy = vscode.commands.registerCommand("xcomponent.launch.spy", () => {
                 const dirPath = path.parse(context.extensionPath);
                 const serverPath = `${dirPath.dir}${path.sep}spy${path.sep}server.js`;
-                const runSpyServercommand = `node ${serverPath}`;
+                const runSpyServercommand = getCommandToRunSpy(serverPath);
                 (<any>process.env.port) = port;
                 const promiseCheckPortStatus = promisify(portscanner.checkPortStatus);
                 promiseCheckPortStatus(port, "localhost")
