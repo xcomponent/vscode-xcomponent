@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ComponentViewModelData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="TechTest" Version="426">
+<ComponentData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="TechTest" Version="426">
   <StateMachines>
     <StateMachineData Id="1" Name="TechTestManger" PublicMember="XComponent.TechTest.UserObject.InputData" />
     <StateMachineData Id="2" Name="TestSpec" PublicMember="XComponent.TechTest.UserObject.TestSpec" InternalMember="XComponent.TechTest.UserObject.InputData" />
@@ -150,4 +150,4 @@
     <AssemblyData Name="Authentication" Path="..\Authentication\generated\UserObject\XComponent.Authentication.UserObject.dll" />
   </PublicAssemblies>
   <ExternalAssemblies />
-</ComponentViewModelData>
+</ComponentData>

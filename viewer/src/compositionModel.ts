@@ -124,11 +124,11 @@ export class CompositionModel {
 
 
 interface Model {
-    ComponentViewModelData: ComponentViewModelData;
+    ComponentData: ComponentData;
 }
 
-interface ComponentViewModelData {
-    ComponentViewModelData: ComponentViewModelData;
+interface ComponentData {
+    ComponentData: ComponentData;
     $: ModelProperties;
     Links: Array<ModelLinks>;
     StateMachines: Array<StateMachines>;

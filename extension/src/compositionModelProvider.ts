@@ -37,15 +37,15 @@ export class CompositionModelProvider {
             let modelJson;
             modelJson = parseStringSync(model);
             const stateMachines = {};
-            modelJson.ComponentViewModelData.$.Name;
-            modelJson.ComponentViewModelData.StateMachines[0].StateMachineData.forEach(stateMachine => {
+            modelJson.ComponentData.$.Name;
+            modelJson.ComponentData.StateMachines[0].StateMachineData.forEach(stateMachine => {
                 stateMachines[stateMachine.$.Id] = { name: stateMachine.$.Name, states: {} };
             });
-            modelJson.ComponentViewModelData.States[0].StateData.forEach(state => {
+            modelJson.ComponentData.States[0].StateData.forEach(state => {
                 const stateMachineId = state.$.SubGraphKey.substring("StateMachine".length, state.$.SubGraphKey.length);
                 stateMachines[stateMachineId].states[state.$.Id] = state.$.Name;
             });
-            components[modelJson.ComponentViewModelData.$.Name] = stateMachines;
+            components[modelJson.ComponentData.$.Name] = stateMachines;
         });
         return components;
     }
