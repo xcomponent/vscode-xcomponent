@@ -7,9 +7,15 @@ import * as promisify from "es6-promisify";
 import * as portscanner from "portscanner";
 import * as opn from "opn";
 import * as freeport from "freeport";
+import xcomponentapi from "reactivexcomponent.js";
 
 const xcmlExtension = ".xcml";
 const cxmlExtension = ".cxml";
+
+interface DataUrl {
+    componentName: string;
+    api: string;
+}
 
 export function activate(context: vscode.ExtensionContext) {
     const previewUri = vscode.Uri.parse("xc-preview://xcomponent/component-preview");
@@ -60,7 +66,7 @@ export function activate(context: vscode.ExtensionContext) {
         } else if (os.indexOf("linux") !== -1) {
             return `xterm -e node ${serverPath}`;
         } else {
-            return `START cmd.exe /K node ${serverPath}`;            
+            return `START cmd.exe /K node ${serverPath}`;
         }
     };
 
@@ -72,13 +78,35 @@ export function activate(context: vscode.ExtensionContext) {
                 const runSpyServercommand = getCommandToRunSpy(serverPath);
                 (<any>process.env.port) = port;
                 const promiseCheckPortStatus = promisify(portscanner.checkPortStatus);
-                promiseCheckPortStatus(port, "localhost")
-                    .then((status: string) => {
-                        if (status === "closed") {
-                            exec(runSpyServercommand);
-                        } else if (status === "open") {
-                            opn(`http://localhost:${port}`);
-                        }
+                const webSocketUrl = "wss://localhost:443";
+                const getXcApiListPromise = new Promise((resolve, reject) =>
+                    xcomponentapi.getXcApiList(webSocketUrl, (err, apiList) => (err) ? reject(err) : resolve(apiList))
+                );
+                getXcApiListPromise
+                    .then(apiList =>
+                        new Promise((resolve, reject) =>
+                            xcomponentapi.getModel(apiList[0], webSocketUrl, (err, model) =>
+                                (err)
+                                    ? reject(err)
+                                    : resolve({ componentName: model.components[0].name, api: apiList[0] }))
+                        ))
+                    .catch(err => {
+                        console.error(err);
+                        return undefined;
+                    })
+                    .then((data: DataUrl) => {
+                        const url = (data === undefined)
+                            ? `http://localhost:${port}`
+                            : `http://localhost:${port}/app?serverUrl=${webSocketUrl}&api=${data.api}&currentComponent=${data.componentName}`;
+                        (<any>process.env.url) = url;
+                        promiseCheckPortStatus(port, "localhost")
+                            .then((status: string) => {
+                                if (status === "closed") {
+                                    exec(runSpyServercommand);
+                                } else if (status === "open") {
+                                    opn(url);
+                                }
+                            });
                     });
             });
             context.subscriptions.push(disposableSpy, registration);

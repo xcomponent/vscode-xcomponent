@@ -15,8 +15,8 @@ app.get("*", (req, res) => {
 const port = process.env.port || 3000;
 app.listen(port, () => {
   const serverUrl = "http://localhost:" + port;
-  console.log("Production Express server running at " + serverUrl);
-  opn(serverUrl)
+  console.log("SpyWeb server running at " + serverUrl);
+  opn(process.env.url || serverUrl)
   .then(() => {
     console.log("Browser successfully opened");
   }).catch(e => {
