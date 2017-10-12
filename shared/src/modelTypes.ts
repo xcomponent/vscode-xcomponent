@@ -1,9 +1,9 @@
 export interface Model {
-    ComponentViewModelData: ComponentViewModelData;
+    ComponentData: ComponentData;
 }
 
-export interface ComponentViewModelData {
-    ComponentViewModelData: ComponentViewModelData;
+export interface ComponentData {
+    ComponentData: ComponentData;
     $: ModelProperties;
     Links: Array<ModelLinks>;
     StateMachines: Array<StateMachines>;

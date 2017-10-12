@@ -1,8 +1,8 @@
 export interface Graphical {
-    ComponentViewModelGraphicalData: ComponentViewModelGraphicalData;
+    ComponentGraphicalData: ComponentGraphicalData;
 }
 
-export interface ComponentViewModelGraphicalData {
+export interface ComponentGraphicalData {
     Links: Array<Links>;
     States: States;
     TransitionPatternStates: Array<TransitionPatternStates>;

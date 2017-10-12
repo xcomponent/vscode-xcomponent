@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ComponentViewModelData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="WorldHello" Version="75">
+<ComponentData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="WorldHello" Version="75">
   <StateMachines>
     <StateMachineData Id="1" Name="Manager" />
     <StateMachineData Id="2" Name="Reponse" PublicMember="XComponent.WorldHello.UserObject.Reponse" />
@@ -72,4 +72,4 @@
   </TransversalLinks>
   <PublicAssemblies />
   <ExternalAssemblies />
-</ComponentViewModelData>
+</ComponentData>
