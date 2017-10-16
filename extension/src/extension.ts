@@ -7,7 +7,9 @@ import * as promisify from "es6-promisify";
 import * as portscanner from "portscanner";
 import * as opn from "opn";
 import * as freeport from "freeport";
-import xcomponentapi from "reactivexcomponent.js";
+import { OutputChannel } from "vscode";
+import * as fs from "fs";
+import { parseStringSync } from "xml2js-parser";
 
 const xcmlExtension = ".xcml";
 const cxmlExtension = ".cxml";
@@ -59,54 +61,44 @@ export function activate(context: vscode.ExtensionContext) {
         });
     });
 
-    const getCommandToRunSpy = (serverPath) => {
-        const os = execSync("uname -s").toString().toLowerCase();
-        if (os.indexOf("darwin") !== -1) {
-            return `osascript -e 'tell application "Terminal" to do script "node ${serverPath}"'`;
-        } else if (os.indexOf("linux") !== -1) {
-            return `xterm -e node ${serverPath}`;
+    const getServerUrl = () => {
+        const baseName = path.basename(vscode.workspace.rootPath);
+        const configurationFile = `${vscode.workspace.rootPath}${path.sep}Configuration.${baseName}${path.sep}Dev${path.sep}${baseName}_Deployment_Configuration.xml`
+        let serverUrl = undefined;
+        if (fs.existsSync(configurationFile)) {
+            const json = parseStringSync(fs.readFileSync(configurationFile).toString());
+            const websocketConfig = json.deployment.configuration[0].gateways[0].websocket[0];
+            const s = (websocketConfig.$.type === "Secure") ? "s" : ""; 
+            serverUrl = `ws${s}://${websocketConfig.$.host}:${websocketConfig.$.bridgeport}`;
         } else {
-            return `START cmd.exe /K node ${serverPath}`;
+            vscode.window.showWarningMessage(`File ${configurationFile} not found`);
         }
+        return serverUrl;
     };
 
     promisify(freeport)()
         .then((port: number) => {
             const disposableSpy = vscode.commands.registerCommand("xcomponent.launch.spy", () => {
+                const serverUrl = getServerUrl();
                 const dirPath = path.parse(context.extensionPath);
-                const serverPath = `${dirPath.dir}${path.sep}spy${path.sep}server.js`;
-                const runSpyServercommand = getCommandToRunSpy(serverPath);
-                (<any>process.env.port) = port;
+                const spyPath = `${dirPath.dir}${path.sep}spy`;
+                const binPath = `${dirPath.dir}${path.sep}spy${path.sep}bin`;
+                const runSpyServercommand = `webpack-dev-server --content-base ${binPath} --port ${port}`;
                 const promiseCheckPortStatus = promisify(portscanner.checkPortStatus);
-                const webSocketUrl = "wss://localhost:443";
-                const getXcApiListPromise = new Promise((resolve, reject) =>
-                    xcomponentapi.getXcApiList(webSocketUrl, (err, apiList) => (err) ? reject(err) : resolve(apiList))
-                );
-                getXcApiListPromise
-                    .then(apiList =>
-                        new Promise((resolve, reject) =>
-                            xcomponentapi.getModel(apiList[0], webSocketUrl, (err, model) =>
-                                (err)
-                                    ? reject(err)
-                                    : resolve({ componentName: model.components[0].name, api: apiList[0] }))
-                        ))
-                    .catch(err => {
-                        console.error(err);
-                        return undefined;
-                    })
-                    .then((data: DataUrl) => {
-                        const url = (data === undefined)
-                            ? `http://localhost:${port}`
-                            : `http://localhost:${port}/app?serverUrl=${webSocketUrl}&api=${data.api}&currentComponent=${data.componentName}`;
-                        (<any>process.env.url) = url;
-                        promiseCheckPortStatus(port, "localhost")
-                            .then((status: string) => {
-                                if (status === "closed") {
-                                    exec(runSpyServercommand);
-                                } else if (status === "open") {
-                                    opn(url);
-                                }
-                            });
+                const urlParams = (serverUrl === undefined)? "":`/form?serverUrl=${serverUrl}`;
+                const url = `http://localhost:${port}${urlParams}`;
+                promiseCheckPortStatus(port, "localhost")
+                    .then((status: string) => {
+                        if (status === "closed") {
+                            const terminal = vscode.window.createTerminal("xcomponent");
+                            context.subscriptions.push(terminal);
+                            terminal.show();
+                            terminal.sendText(`cd ${spyPath}`);
+                            terminal.sendText(runSpyServercommand);
+                            opn(url);
+                        } else if (status === "open") {
+                            opn(url);
+                        }
                     });
             });
             context.subscriptions.push(disposableSpy, registration);
