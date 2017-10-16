@@ -63,12 +63,12 @@ export function activate(context: vscode.ExtensionContext) {
 
     const getServerUrl = () => {
         const baseName = path.basename(vscode.workspace.rootPath);
-        const configurationFile = `${vscode.workspace.rootPath}${path.sep}Configuration.${baseName}${path.sep}Dev${path.sep}${baseName}_Deployment_Configuration.xml`
+        const configurationFile = `${vscode.workspace.rootPath}${path.sep}Configuration.${baseName}${path.sep}Dev${path.sep}${baseName}_Deployment_Configuration.xml`;
         let serverUrl = undefined;
         if (fs.existsSync(configurationFile)) {
             const json = parseStringSync(fs.readFileSync(configurationFile).toString());
             const websocketConfig = json.deployment.configuration[0].gateways[0].websocket[0];
-            const s = (websocketConfig.$.type === "Secure") ? "s" : ""; 
+            const s = (websocketConfig.$.type === "Secure") ? "s" : "";
             serverUrl = `ws${s}://${websocketConfig.$.host}:${websocketConfig.$.bridgeport}`;
         } else {
             vscode.window.showWarningMessage(`File ${configurationFile} not found`);
@@ -85,7 +85,7 @@ export function activate(context: vscode.ExtensionContext) {
                 const binPath = `${dirPath.dir}${path.sep}spy${path.sep}bin`;
                 const runSpyServercommand = `webpack-dev-server --content-base ${binPath} --port ${port}`;
                 const promiseCheckPortStatus = promisify(portscanner.checkPortStatus);
-                const urlParams = (serverUrl === undefined)? "":`/form?serverUrl=${serverUrl}`;
+                const urlParams = (serverUrl === undefined) ? "" : `/form?serverUrl=${serverUrl}`;
                 const url = `http://localhost:${port}${urlParams}`;
                 promiseCheckPortStatus(port, "localhost")
                     .then((status: string) => {
