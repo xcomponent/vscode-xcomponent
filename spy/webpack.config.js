@@ -1,10 +1,15 @@
-var path = require("path");
+const path = require("path");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const BUILD_DIR = path.resolve(__dirname, "../extension/out/spy");
+
 module.exports = {
-    devServer: {
-        historyApiFallback: true
-    },
     output: {
-        path: path.resolve(__dirname, "bin"),
+        path: BUILD_DIR,
         filename: "bundle.js"
-    }
+    },
+    plugins: [
+        new CopyWebpackPlugin([
+            { from: 'bin/*' }
+        ])
+    ]
 };

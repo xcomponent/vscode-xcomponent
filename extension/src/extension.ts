@@ -80,9 +80,7 @@ export function activate(context: vscode.ExtensionContext) {
         .then((port: number) => {
             const disposableSpy = vscode.commands.registerCommand("xcomponent.launch.spy", () => {
                 const serverUrl = getServerUrl();
-                const dirPath = path.parse(context.extensionPath);
-                const spyPath = `${dirPath.dir}${path.sep}spy`;
-                const binPath = `${dirPath.dir}${path.sep}spy${path.sep}bin`;
+                const binPath = path.join(context.extensionPath, "out/spy/bin");
                 const runSpyServercommand = `webpack-dev-server --content-base ${binPath} --port ${port}`;
                 const promiseCheckPortStatus = promisify(portscanner.checkPortStatus);
                 const urlParams = (serverUrl === undefined) ? "" : `/form?serverUrl=${serverUrl}`;
@@ -93,7 +91,7 @@ export function activate(context: vscode.ExtensionContext) {
                             const terminal = vscode.window.createTerminal("xcomponent");
                             context.subscriptions.push(terminal);
                             terminal.show();
-                            terminal.sendText(`cd ${spyPath}`);
+                            terminal.sendText(`cd ${binPath}`);
                             terminal.sendText(runSpyServercommand);
                             opn(url);
                         } else if (status === "open") {
