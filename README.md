@@ -15,9 +15,6 @@ More features yet to come...
 
 ## [Getting started](https://github.com/xcomponent/vscode-xcomponent/blob/master/extension/README.md)
 
-## Requirement
-
-
 ## Development
 
 First install:
