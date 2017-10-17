@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<deployment environment="Dev" version="1.0" debugType="Debug" frameworkType="Framework452" visualstudioVersion="VS2013" defaultExportPath="" extractConfig="false" generateWebSocketApi="true" embedUserObjects="false" defaultDeployPath="" logsDirectory="$(installdir)" logsPattern="pid-${processid}-${component}-${shortdate}" runtimesLogs="True" logsLevel="TRACE" logsMaxSize="50" reactiveApiName="" reactiveApiVersion="">
+  <!--
+	THREADING IMPLEMENTATION VALUES = AKKA - ->
+	<!- - THREADING TYPE VALUES = ONEBYSTM, ONEBYINSTANCE, INHERITFROMPARENT, INHERITFROMLINKING - ->
+	<!- - SERIALIZATION TYPE VALUES = BINARY, XML, JSON - ->
+	<!- - MESSAGE QUEUE VALUES = ONEBYSTM, ONEBYINSTANCE, INHERITFROMPARENT-->
+  <buildEvents>
+    <preBuildEvent></preBuildEvent>
+    <postBuildEvent></postBuildEvent>
+    <exportFolders />
+    <exportRuntimeFolders />
+  </buildEvents>
+  <components>
+    <component name="HelloWorld" alias="HelloWorld" deploymentTarget="microservice1">
+      <communication name="rabbitmq" type="BUS" messageQueue="SEQUENTIAL">
+        <input>{topicType}.{version}.{runtime}.{component}.{std}</input>
+        <output>{topicType}.{version}.{runtime}.{component}.{std}</output>
+      </communication>
+      <threading impl="Akka" type="SEQUENTIAL" />
+      <stateMachines>
+        <stateMachine id="1" poolSize="100">
+          <communication name="rabbitmq" type="BUS" messageQueue="SEQUENTIAL">
+            <input>{topicType}.{version}.{runtime}.{component}.{std}</input>
+            <output>{topicType}.{version}.{runtime}.{component}.{std}</output>
+          </communication>
+          <threading impl="Akka" type="INHERITFROMPARENT" />
+        </stateMachine>
+        <stateMachine id="2" poolSize="100">
+          <communication name="rabbitmq" type="BUS" messageQueue="SEQUENTIAL">
+            <input>{topicType}.{version}.{runtime}.{component}.{std}</input>
+            <output>{topicType}.{version}.{runtime}.{component}.{std}</output>
+          </communication>
+          <threading impl="Akka" type="INHERITFROMPARENT" />
+        </stateMachine>
+      </stateMachines>
+    </component>
+  </components>
+  <clientAPIs>
+    <clientAPI name="HelloWorldApi" messageQueue="INHERITFROMPARENT">
+      <component name="HelloWorld" messageQueue="INHERITFROMPARENT">
+        <update from="2" state="-1" messageQueue="INHERITFROMPARENT" />
+      </component>
+    </clientAPI>
+  </clientAPIs>
+  <configuration serialization="Json">
+    <communication>
+      <bus name="rabbitmq" host="localhost" port="5672" user="guest" password="guest" type="RABBIT_MQ" />
+    </communication>
+    <gateways>
+      <websocket name="WebSocket" host="localhost" port="443" bridgeport="443" type="Secure" user="" password="">
+        <loggedTopics><![CDATA[]]></loggedTopics>
+      </websocket>
+    </gateways>
+    <runtimes>
+      <runtime name="microservice1" platform="AnyCpu" />
+    </runtimes>
+  </configuration>
+</deployment>

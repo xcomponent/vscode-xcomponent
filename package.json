@@ -4,7 +4,7 @@
 	"version": "0.4.1",
 	"scripts": {
 		"postinstall": "node .build/postinstall.js",
-		"compile": "cd shared && yarn run compile && cd ..&& cd viewer && yarn run compile && cd .. && cd extension && yarn run vscode:prepublish && cd .. && cd spy && yarn run compile",
+		"compile": "cd shared && yarn run compile && cd ..&& cd viewer && yarn run compile && cd .. && cd spy && yarn run compile && cd .. && cd extension && yarn run vscode:prepublish",
 		"test": "cd shared && yarn run test && cd .. && cd viewer && yarn run test && cd .. && cd extension && yarn run test",
 		"tslint": "cd shared && yarn run tslint && cd .. && cd viewer && yarn run tslint && cd .. && cd extension && yarn run tslint"
 	},

@@ -10,9 +10,11 @@ import * as freeport from "freeport";
 import { OutputChannel } from "vscode";
 import * as fs from "fs";
 import { parseStringSync } from "xml2js-parser";
+import { getServerUrl } from "./webSocketConfigParser";
 
 const xcmlExtension = ".xcml";
 const cxmlExtension = ".cxml";
+const openBrowserTimeOut = 2000;
 
 interface DataUrl {
     componentName: string;
@@ -61,27 +63,15 @@ export function activate(context: vscode.ExtensionContext) {
         });
     });
 
-    const getServerUrl = () => {
-        const baseName = path.basename(vscode.workspace.rootPath);
-        const configurationFile = `${vscode.workspace.rootPath}${path.sep}Configuration.${baseName}${path.sep}Dev${path.sep}${baseName}_Deployment_Configuration.xml`;
-        let serverUrl = undefined;
-        if (fs.existsSync(configurationFile)) {
-            const json = parseStringSync(fs.readFileSync(configurationFile).toString());
-            const websocketConfig = json.deployment.configuration[0].gateways[0].websocket[0];
-            const s = (websocketConfig.$.type === "Secure") ? "s" : "";
-            serverUrl = `ws${s}://${websocketConfig.$.host}:${websocketConfig.$.bridgeport}`;
-        } else {
-            vscode.window.showWarningMessage(`File ${configurationFile} not found`);
-        }
-        return serverUrl;
-    };
-
     promisify(freeport)()
         .then((port: number) => {
             const disposableSpy = vscode.commands.registerCommand("xcomponent.launch.spy", () => {
-                const serverUrl = getServerUrl();
+                const rootPath = vscode.workspace.rootPath;
+                const baseName = path.basename(rootPath);
+                const configurationFilePath = `${rootPath}${path.sep}Configuration.${baseName}${path.sep}Dev${path.sep}${baseName}_Deployment_Configuration.xml`;
+                const serverUrl = getServerUrl(configurationFilePath);
                 const binPath = path.join(context.extensionPath, "out/spy/bin");
-                const runSpyServercommand = `webpack-dev-server --content-base ${binPath} --port ${port}`;
+                const runSpyServercommand = `serve --single --port ${port} ${binPath}`;
                 const promiseCheckPortStatus = promisify(portscanner.checkPortStatus);
                 const urlParams = (serverUrl === undefined) ? "" : `/form?serverUrl=${serverUrl}`;
                 const url = `http://localhost:${port}${urlParams}`;
@@ -91,11 +81,10 @@ export function activate(context: vscode.ExtensionContext) {
                             const terminal = vscode.window.createTerminal("xcomponent");
                             context.subscriptions.push(terminal);
                             terminal.show();
-                            terminal.sendText(`cd ${binPath}`);
                             terminal.sendText(runSpyServercommand);
-                            opn(url);
+                            setTimeout(() => opn(url), openBrowserTimeOut);
                         } else if (status === "open") {
-                            opn(url);
+                            setTimeout(() => opn(url), openBrowserTimeOut);
                         }
                     });
             });
