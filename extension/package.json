@@ -47,6 +47,11 @@
         "command": "xcomponent.launch.spy",
         "title": "XComponent: Launch Spy Web",
         "group": "navigation"
+      },
+      {
+        "command": "xcomponent.build.project",
+        "title": "XComponent: Build project",
+        "group": "navigation"
       }
     ],
     "menus": {

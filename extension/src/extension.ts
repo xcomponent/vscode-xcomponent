@@ -31,6 +31,9 @@ export function activate(context: vscode.ExtensionContext) {
     const componentProvider = new ComponentViewerProvider(context);
     const registration = vscode.workspace.registerTextDocumentContentProvider("xc-preview", componentProvider);
 
+    const terminal = vscode.window.createTerminal("xcomponent");
+    context.subscriptions.push(terminal);
+
     const update = (e) => {
         if (e && e.document === vscode.window.activeTextEditor.document) {
             if (e.document.fileName.endsWith(cxmlExtension)) {
@@ -63,6 +66,20 @@ export function activate(context: vscode.ExtensionContext) {
         });
     });
 
+    const disposableBuild = vscode.commands.registerCommand("xcomponent.build.project", () => {
+        const rootPath = vscode.workspace.rootPath;
+        const baseName = path.basename(rootPath);
+        const xcmlPath = `${rootPath}${path.sep}${baseName}_Model.xcml`;
+        const buildCommand = `xcbuild --compilationmode=Debug --build --env=Dev --vs=VS2015 --project=${xcmlPath}`;
+        if (fs.existsSync(xcmlPath)) {
+            terminal.show();
+            terminal.sendText(buildCommand);    
+        } else {
+            vscode.window.showErrorMessage(`Build error. File ${xcmlPath} not found`);            
+        }
+    });
+
+
     promisify(freeport)()
         .then((port: number) => {
             const disposableSpy = vscode.commands.registerCommand("xcomponent.launch.spy", () => {
@@ -78,8 +95,6 @@ export function activate(context: vscode.ExtensionContext) {
                 promiseCheckPortStatus(port, "localhost")
                     .then((status: string) => {
                         if (status === "closed") {
-                            const terminal = vscode.window.createTerminal("xcomponent");
-                            context.subscriptions.push(terminal);
                             terminal.show();
                             terminal.sendText(runSpyServercommand);
                             setTimeout(() => opn(url), openBrowserTimeOut);
