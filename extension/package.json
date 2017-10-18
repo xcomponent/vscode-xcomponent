@@ -55,7 +55,13 @@
           "command": "xcomponent.preview.component"
         }
       ]
-    }
+    },
+    "snippets": [
+      {
+          "language": "xml",
+          "path": "./snippets/xcomponent.json"
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "tsc -p ./",

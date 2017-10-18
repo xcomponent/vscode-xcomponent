@@ -31,6 +31,15 @@ To display a composition *.xcml file, use the *"XComponent: Preview Composition"
 
 To start the XCSpy web application, use the *"XComponent: Launch Spy Web" command.
 
+## VS Code XComponent Snippets
+
+Following below the available snippets
+---
+
+| Command     | Description |
+| :---------- | :---------- |
+| `xcstate`   | Create a simple XComponent state |
+
 ## Feedback & Contributing
 
  * This is a relatively **new** extension, _so_ there will likely still be a few "rough edges"\.
