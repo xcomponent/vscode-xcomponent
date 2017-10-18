@@ -73,9 +73,9 @@ export function activate(context: vscode.ExtensionContext) {
         const buildCommand = `xcbuild --compilationmode=Debug --build --env=Dev --vs=VS2015 --project=${xcmlPath}`;
         if (fs.existsSync(xcmlPath)) {
             terminal.show();
-            terminal.sendText(buildCommand);    
+            terminal.sendText(buildCommand);
         } else {
-            vscode.window.showErrorMessage(`Build error. File ${xcmlPath} not found`);            
+            vscode.window.showErrorMessage(`Build error. File ${xcmlPath} not found`);
         }
     });
 
