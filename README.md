@@ -8,6 +8,8 @@ XComponent is a platform to easily create, monitor and share **microservices**. 
 
 This extension makes it easy to work with [XComponent](http://www.xcomponent.com/) projects. It includes the following features:
 * Component preview
+* Composition preview
+* XCSpy web application
 
 More features yet to come...
 
@@ -18,6 +20,7 @@ More features yet to come...
 First install:
 * Node.js (newer than 8.0)
 * Yarn
+* serve (npm install -g serve)
 
 To **run and develop** do the following:
 

@@ -7,9 +7,19 @@ import * as promisify from "es6-promisify";
 import * as portscanner from "portscanner";
 import * as opn from "opn";
 import * as freeport from "freeport";
+import { OutputChannel } from "vscode";
+import * as fs from "fs";
+import { parseStringSync } from "xml2js-parser";
+import { getServerUrl } from "./webSocketConfigParser";
 
 const xcmlExtension = ".xcml";
 const cxmlExtension = ".cxml";
+const openBrowserTimeOut = 2000;
+
+interface DataUrl {
+    componentName: string;
+    api: string;
+}
 
 export function activate(context: vscode.ExtensionContext) {
     const previewUri = vscode.Uri.parse("xc-preview://xcomponent/component-preview");
@@ -56,17 +66,25 @@ export function activate(context: vscode.ExtensionContext) {
     promisify(freeport)()
         .then((port: number) => {
             const disposableSpy = vscode.commands.registerCommand("xcomponent.launch.spy", () => {
-                const dirPath = path.parse(context.extensionPath);
-                const serverPath = `${dirPath.dir}${path.sep}spy${path.sep}server.js`;
-                const runSpyServercommand = `node ${serverPath}`;
-                (<any>process.env.port) = port;
+                const rootPath = vscode.workspace.rootPath;
+                const baseName = path.basename(rootPath);
+                const configurationFilePath = `${rootPath}${path.sep}Configuration.${baseName}${path.sep}Dev${path.sep}${baseName}_Deployment_Configuration.xml`;
+                const serverUrl = getServerUrl(configurationFilePath);
+                const binPath = path.join(context.extensionPath, "out/spy/bin");
+                const runSpyServercommand = `serve --single --port ${port} ${binPath}`;
                 const promiseCheckPortStatus = promisify(portscanner.checkPortStatus);
+                const urlParams = (serverUrl === undefined) ? "" : `/form?serverUrl=${serverUrl}`;
+                const url = `http://localhost:${port}${urlParams}`;
                 promiseCheckPortStatus(port, "localhost")
                     .then((status: string) => {
                         if (status === "closed") {
-                            exec(runSpyServercommand);
+                            const terminal = vscode.window.createTerminal("xcomponent");
+                            context.subscriptions.push(terminal);
+                            terminal.show();
+                            terminal.sendText(runSpyServercommand);
+                            setTimeout(() => opn(url), openBrowserTimeOut);
                         } else if (status === "open") {
-                            opn(`http://localhost:${port}`);
+                            setTimeout(() => opn(url), openBrowserTimeOut);
                         }
                     });
             });

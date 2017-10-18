@@ -11,14 +11,15 @@
     "email": "dev@xcomponent.com",
     "url": "https://github.com/xcomponent/vscode-xcomponent/issues"
   },
+  "scripts": {
+    "compile": "webpack"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/xcomponent/vscode-xcomponent"
   },
   "homepage": "https://github.com/xcomponent/vscode-xcomponent/blob/master/extension/README.md",
   "dependencies": {
-    "compression": "^1.7.0",
-    "express": "^4.15.3",
-    "opn": "^5.1.0"
+    "copy-webpack-plugin": "^4.1.1"
   }
 }
