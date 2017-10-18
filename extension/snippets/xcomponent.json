@@ -1,0 +1,11 @@
+{
+	"Create a XComponent state": {
+		"prefix": "xcstate",
+		"description": "Create a XComponent state",
+    	"body": [
+            "<StateData Id=\"${1:index}\" Name=\"${2:state name}\" IsEntryPoint=\"${3|false,true|}\" SubGraphKey=\"${4:StateMachine + Id}\">",
+            "\t<TriggeredMethods />",
+            "</StateData>"
+		]
+	}
+}
