@@ -9,21 +9,27 @@ This extension makes it easy to work with [XComponent](http://www.xcomponent.com
 
 More features yet to come...
 
+## Requirements
+
+If you want to start XCSpy web from visual studio code, you need to install nodejs and serve locally.
+
+* serve (npm install -g serve)
+
 ## Feature details
 
 ## Component preview
 
 To display a component *.cxml file, use the *"XComponent: Preview Component"* command.
 
+![component preview](https://raw.githubusercontent.com/xcomponent/vscode-xcomponent/master/extension/images/cxml_preview.gif)
+
 ## Composition preview
 
 To display a composition *.xcml file, use the *"XComponent: Preview Composition"* command.
 
-## XCSpy launch
+## XCSpy Web
 
-To launch the XCSpy web application, use the *"XComponent: Launch Spy Web" command.
-
-![component preview](https://raw.githubusercontent.com/xcomponent/vscode-xcomponent/master/extension/images/cxml_preview.gif)
+To start the XCSpy web application, use the *"XComponent: Launch Spy Web" command.
 
 ## Feedback & Contributing
 
