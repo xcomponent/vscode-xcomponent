@@ -36,9 +36,11 @@ To start the XCSpy web application, use the *"XComponent: Launch Spy Web" comman
 Following below the available snippets
 ---
 
-| Command     | Description |
-| :---------- | :---------- |
-| `xcstate`   | Create a simple XComponent state |
+| Command         | Description |
+| :----------     | :---------- |
+| `xcstate`       | Create a simple XComponent state |
+| `xctransition`  | Create a simple XComponent transition |
+
 
 ## Feedback & Contributing
 
