@@ -21,7 +21,7 @@ export const build = (terminal: vscode.Terminal): void => {
     }
     const monoFacadesPath = config.mono.facades.path;
     if (!fs.existsSync(monoFacadesPath)) {
-        vscode.window.showErrorMessage(`mono facades path not found. Please specify mono path in vscode settings`);
+        vscode.window.showErrorMessage(`mono facades path not found. Please specify mono facades path in vscode settings`);
         return;
     }
     const buildCommand = `mono ${xcbuildPath} --compilationmode=Release --build --framework=Framework452 --env=Dev --vs=VS2015 --monoPath=“${monoFacadesPath}” --project=“${xcmlPath}”`;
