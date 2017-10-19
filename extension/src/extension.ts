@@ -120,7 +120,7 @@ export function activate(context: vscode.ExtensionContext) {
                         }
                     });
             });
-            context.subscriptions.push(disposableSpy, registration);
+            context.subscriptions.push(disposableSpy);
         })
         .catch((err) => {
             console.error(err);
@@ -128,4 +128,5 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(disposableComposition, compositionRegistration);
     context.subscriptions.push(disposable, registration);
+    context.subscriptions.push(disposableBuild);
 }
