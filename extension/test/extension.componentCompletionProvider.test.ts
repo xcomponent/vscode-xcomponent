@@ -3,7 +3,7 @@ import * as vscode from "vscode";
 import { ExtensionContext } from "vscode";
 import * as path from "path";
 import * as fs from "fs";
-import { ComponentCompletionItemProvider } from "../src/completion/ComponentCompletionItemProvider";
+import { ComponentCompletionItemProvider } from "../src/completion/componentCompletionItemProvider";
 import * as chai from "chai";
 import { parseStringSync } from "xml2js-parser";
 import * as deepEql from "deep-eql";
