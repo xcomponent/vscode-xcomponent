@@ -58,15 +58,15 @@
       "type": "object",
       "title": "XComponent Configuration",
       "properties": {
-        "xcbuild": {
+        "xcbuild.path": {
 					"type": "string",
 					"default": "",
-					"description": "Path to xcBuild"
+					"description": "Path to xcbuild"
         },
-        "mono": {
+        "mono.facades.path": {
 					"type": "string",
 					"default": "",
-					"description": "Path to mono"
+					"description": "Path to mono facades"
 				}
       }
     },

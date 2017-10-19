@@ -30,7 +30,8 @@ To display a composition *.xcml file, use the *"XComponent: Preview Composition"
 ## Project build
 
 To build a xcomponent project, use the *"XComponent: Build project"* command.
-Also, don't forget to specify xcbuild.exe path and mono path in vscode settings.
+Don't forget to specify xcbuild.exe path in vscode settings. Otherwise, xcbuild.exe specified in the environnement path will be used.
+Also, don't forget to specify mono facades path in vscode settings when working on linux or macOs environnement.
 
 ## XCSpy Web
 

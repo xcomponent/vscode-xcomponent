@@ -3,11 +3,8 @@ import * as fs from "fs";
 import * as path from "path";
 
 export const build = (terminal: vscode.Terminal): void => {
-    const xcbuildPath = vscode.workspace.getConfiguration()["xcbuild"];
-    if (!fs.existsSync(xcbuildPath)) {
-        vscode.window.showErrorMessage(`xcbuild.exe not found. Please specify xcbuild path in vscode settings`);
-        return;
-    }
+    const config = vscode.workspace.getConfiguration();
+    const xcbuildPath = (fs.existsSync(config.xcbuild.path)) ? config.xcbuild.path : "xcbuild.exe";
     const rootPath = vscode.workspace.rootPath;
     const baseName = path.basename(rootPath);
     const xcmlPath = `${rootPath}${path.sep}${baseName}_Model.xcml`;
@@ -22,7 +19,7 @@ export const build = (terminal: vscode.Terminal): void => {
         terminal.sendText(buildCommand);
         return;
     }
-    const monoPath = vscode.workspace.getConfiguration()["mono"];
+    const monoPath = config.mono.facades.path;
     if (!fs.existsSync(monoPath)) {
         vscode.window.showErrorMessage(`mono not found. Please specify mono path in vscode settings`);
         return;
