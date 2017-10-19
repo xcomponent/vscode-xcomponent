@@ -2,20 +2,16 @@ import * as vscode from "vscode";
 import * as path from "path";
 import { ComponentViewerProvider } from "./componentViewerProvider";
 import { CompositionViewerProvider } from "./compositionViewerProvider";
-import { exec, execSync } from "child_process";
 import * as promisify from "es6-promisify";
-import * as portscanner from "portscanner";
-import * as opn from "opn";
 import * as freeport from "freeport";
 import { OutputChannel } from "vscode";
 import * as fs from "fs";
-import { parseStringSync } from "xml2js-parser";
-import { getServerUrl } from "./webSocketConfigParser";
+import { build } from "./projectBuilder";
+import { spyExec } from "./spyExec";
 import { ComponentCompletionItemProvider } from "./completion/componentCompletionItemProvider";
 
 const xcmlExtension = ".xcml";
 const cxmlExtension = ".cxml";
-const openBrowserTimeOut = 2000;
 
 interface DataUrl {
     componentName: string;
@@ -31,6 +27,9 @@ export function activate(context: vscode.ExtensionContext) {
 
     const componentProvider = new ComponentViewerProvider(context);
     const registration = vscode.workspace.registerTextDocumentContentProvider("xc-preview", componentProvider);
+
+    const terminal = vscode.window.createTerminal("xcomponent");
+    context.subscriptions.push(terminal);
 
     const update = (e) => {
         if (e && e.document === vscode.window.activeTextEditor.document) {
@@ -67,32 +66,16 @@ export function activate(context: vscode.ExtensionContext) {
         });
     });
 
+    const disposableBuild = vscode.commands.registerCommand("xcomponent.build.project", () => {
+        build(terminal);
+    });
+
     promisify(freeport)()
         .then((port: number) => {
             const disposableSpy = vscode.commands.registerCommand("xcomponent.launch.spy", () => {
-                const rootPath = vscode.workspace.rootPath;
-                const baseName = path.basename(rootPath);
-                const configurationFilePath = `${rootPath}${path.sep}Configuration.${baseName}${path.sep}Dev${path.sep}${baseName}_Deployment_Configuration.xml`;
-                const serverUrl = getServerUrl(configurationFilePath);
-                const binPath = path.join(context.extensionPath, "out/spy/bin");
-                const runSpyServercommand = `serve --single --port ${port} ${binPath}`;
-                const promiseCheckPortStatus = promisify(portscanner.checkPortStatus);
-                const urlParams = (serverUrl === undefined) ? "" : `/form?serverUrl=${serverUrl}`;
-                const url = `http://localhost:${port}${urlParams}`;
-                promiseCheckPortStatus(port, "localhost")
-                    .then((status: string) => {
-                        if (status === "closed") {
-                            const terminal = vscode.window.createTerminal("xcomponent");
-                            context.subscriptions.push(terminal);
-                            terminal.show();
-                            terminal.sendText(runSpyServercommand);
-                            setTimeout(() => opn(url), openBrowserTimeOut);
-                        } else if (status === "open") {
-                            setTimeout(() => opn(url), openBrowserTimeOut);
-                        }
-                    });
+                spyExec(terminal, port, context.extensionPath);
             });
-            context.subscriptions.push(disposableSpy, registration);
+            context.subscriptions.push(disposableSpy);
         })
         .catch((err) => {
             console.error(err);
@@ -101,4 +84,5 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(disposableComposition, compositionRegistration);
     context.subscriptions.push(disposable, registration);
     context.subscriptions.push(completionRegistration);
+    context.subscriptions.push(disposableBuild);
 }
