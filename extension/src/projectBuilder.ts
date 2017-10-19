@@ -19,12 +19,12 @@ export const build = (terminal: vscode.Terminal): void => {
         terminal.sendText(buildCommand);
         return;
     }
-    const monoPath = config.mono.facades.path;
-    if (!fs.existsSync(monoPath)) {
-        vscode.window.showErrorMessage(`mono not found. Please specify mono path in vscode settings`);
+    const monoFacadesPath = config.mono.facades.path;
+    if (!fs.existsSync(monoFacadesPath)) {
+        vscode.window.showErrorMessage(`mono facades path not found. Please specify mono path in vscode settings`);
         return;
     }
-    const buildCommand = `mono ${xcbuildPath}--compilationmode=Release --build --framework=Framework452 --env=Dev --vs=VS2015 --monoPath=“${monoPath}” --project=“${xcmlPath}”`;
+    const buildCommand = `mono ${xcbuildPath} --compilationmode=Release --build --framework=Framework452 --env=Dev --vs=VS2015 --monoPath=“${monoPath}” --project=“${xcmlPath}”`;
     terminal.show();
     terminal.sendText(buildCommand);
 };
