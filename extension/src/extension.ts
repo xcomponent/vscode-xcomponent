@@ -11,6 +11,7 @@ import { OutputChannel } from "vscode";
 import * as fs from "fs";
 import { parseStringSync } from "xml2js-parser";
 import { getServerUrl } from "./webSocketConfigParser";
+import { ComponentCompletionItemProvider } from "./completion/componentCompletionItemProvider";
 
 const xcmlExtension = ".xcml";
 const cxmlExtension = ".cxml";
@@ -48,6 +49,9 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.window.onDidChangeActiveTextEditor((e: vscode.TextEditor) => {
         update(e);
     });
+
+    const completionRegistration = vscode.languages.registerCompletionItemProvider([{ pattern: "**/*.cxml", scheme: "file" }],
+        new ComponentCompletionItemProvider(), "\"");
 
     const disposable = vscode.commands.registerCommand("xcomponent.preview.component", () => {
         return vscode.commands.executeCommand("vscode.previewHtml", previewUri, vscode.ViewColumn.Two, "Component preview").then((success) => {
@@ -96,4 +100,5 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(disposableComposition, compositionRegistration);
     context.subscriptions.push(disposable, registration);
+    context.subscriptions.push(completionRegistration);
 }
