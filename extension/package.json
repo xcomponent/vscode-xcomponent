@@ -54,6 +54,22 @@
         "group": "navigation"
       }
     ],
+    "configuration": {
+      "type": "object",
+      "title": "XComponent Configuration",
+      "properties": {
+        "xcbuild": {
+					"type": "string",
+					"default": "",
+					"description": "Path to xcBuild"
+        },
+        "mono": {
+					"type": "string",
+					"default": "",
+					"description": "Path to mono"
+				}
+      }
+    },
     "menus": {
       "editor/title": [
         {
@@ -63,8 +79,8 @@
     },
     "snippets": [
       {
-          "language": "xml",
-          "path": "./snippets/xcomponent.json"
+        "language": "xml",
+        "path": "./snippets/xcomponent.json"
       }
     ]
   },
