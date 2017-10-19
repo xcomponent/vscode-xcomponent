@@ -27,6 +27,12 @@ To display a component *.cxml file, use the *"XComponent: Preview Component"* co
 
 To display a composition *.xcml file, use the *"XComponent: Preview Composition"* command.
 
+## Project build
+
+To build a xcomponent project, use the *"XComponent: Build project"* command.
+Don't forget to specify xcbuild.exe path in vscode settings. Otherwise, xcbuild.exe specified in the environnement path will be used.
+Also, don't forget to specify mono facades path in vscode settings when working on linux or macOs environnement.
+
 ## XCSpy Web
 
 To start the XCSpy web application, use the *"XComponent: Launch Spy Web" command.

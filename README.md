@@ -10,6 +10,7 @@ This extension makes it easy to work with [XComponent](http://www.xcomponent.com
 * Component preview
 * Composition preview
 * XCSpy web application
+* Build a xcomponent project
 
 More features yet to come...
 

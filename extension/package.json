@@ -47,8 +47,29 @@
         "command": "xcomponent.launch.spy",
         "title": "XComponent: Launch Spy Web",
         "group": "navigation"
+      },
+      {
+        "command": "xcomponent.build.project",
+        "title": "XComponent: Build project",
+        "group": "navigation"
       }
     ],
+    "configuration": {
+      "type": "object",
+      "title": "XComponent Configuration",
+      "properties": {
+        "xcbuild.path": {
+					"type": "string",
+					"default": "",
+					"description": "Path to xcbuild"
+        },
+        "mono.facades.path": {
+					"type": "string",
+					"default": "",
+					"description": "Path to mono facades"
+				}
+      }
+    },
     "menus": {
       "editor/title": [
         {
@@ -58,8 +79,8 @@
     },
     "snippets": [
       {
-          "language": "xml",
-          "path": "./snippets/xcomponent.json"
+        "language": "xml",
+        "path": "./snippets/xcomponent.json"
       }
     ]
   },
