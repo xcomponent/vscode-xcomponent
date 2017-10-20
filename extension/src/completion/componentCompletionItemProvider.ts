@@ -13,7 +13,7 @@ export class ComponentCompletionItemProvider implements vscode.CompletionItemPro
             const documentTextRange = new vscode.Range(new vscode.Position(position.line, 0), position);
             const textBeforeCursor = document.getText(documentTextRange);
             const tagName = this.getTagName(textBeforeCursor);
-            const attribute = this.getAttributegName(textBeforeCursor);
+            const attribute = this.getAttributeName(textBeforeCursor);
 
             if (tagName && attribute) {
                 const providerDetail = this.completionProviders.find(e => e.tag === tagName && e.attribute === attribute);
@@ -41,7 +41,7 @@ export class ComponentCompletionItemProvider implements vscode.CompletionItemPro
         return undefined;
     }
 
-    private getAttributegName(textBeforeCursor: string): string {
+    private getAttributeName(textBeforeCursor: string): string {
         const regex: RegExp = /\s(\S*?)="/g;
         let match = regex.exec(textBeforeCursor);
         let attribute = undefined;
