@@ -12,7 +12,7 @@ export const spyExec = (terminal: vscode.Terminal, port: number, extensionPath: 
     const baseName = path.basename(rootPath);
     const configurationFilePath = `${rootPath}${path.sep}Configuration.${baseName}${path.sep}Dev${path.sep}${baseName}_Deployment_Configuration.xml`;
     const serverUrl = getServerUrl(configurationFilePath);
-    const binPath = path.join(extensionPath, "out/spy/bin");
+    const binPath = path.join(extensionPath, "spy");
     const runSpyServercommand = `serve --single --port ${port} ${binPath}`;
     const promiseCheckPortStatus = promisify(portscanner.checkPortStatus);
     const urlParams = (serverUrl === undefined) ? "" : `/form?serverUrl=${serverUrl}`;
