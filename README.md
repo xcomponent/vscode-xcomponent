@@ -9,6 +9,8 @@ XComponent is a platform to easily create, monitor and share **microservices**. 
 This extension makes it easy to work with [XComponent](http://www.xcomponent.com/) projects. It includes the following features:
 * Component preview
 * Composition preview
+* Snippets
+* Intellisense
 * XCSpy web application
 * Build a xcomponent project
 
