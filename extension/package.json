@@ -2,7 +2,7 @@
   "name": "xcomponent",
   "displayName": "XComponent",
   "description": "XComponent Viewer for Visual Studio Code",
-  "version": "0.4.1",
+  "version": "1.0.0",
   "publisher": "XComponent",
   "license": "Apache-2.0",
   "icon": "images/logo_xc.png",
@@ -59,15 +59,15 @@
       "title": "XComponent Configuration",
       "properties": {
         "xcbuild.path": {
-					"type": "string",
-					"default": "",
-					"description": "Path to xcbuild"
+          "type": "string",
+          "default": "",
+          "description": "Path to xcbuild"
         },
         "mono.facades.path": {
-					"type": "string",
-					"default": "",
-					"description": "Path to mono facades"
-				}
+          "type": "string",
+          "default": "",
+          "description": "Path to mono facades"
+        }
       }
     },
     "menus": {
@@ -112,7 +112,7 @@
     "tslint": "^5.4.3",
     "tslint-loader": "^3.3.0",
     "typemoq": "^1.7.0",
-    "typescript": "^2.3.4",
+    "typescript": "2.5.3",
     "vscode": "^1.1.2"
   },
   "false": {}

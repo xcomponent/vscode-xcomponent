@@ -1,7 +1,7 @@
 {
   "name": "xcomponent-viewer",
   "description": "XComponent Viewer",
-  "version": "0.4.1",
+  "version": "1.0.0",
   "license": "Apache-2.0",
   "scripts": {
     "preinstall": "cd ../shared && yarn install && yarn compile",

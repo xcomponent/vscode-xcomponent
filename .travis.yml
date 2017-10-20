@@ -27,7 +27,7 @@ install:
 - npm install -g vsce
 - yarn install
 - yarn run tslint
-- cd shared && yarn run compile && cd .. && cd viewer && yarn run compile --define process.env.GOJS_KEY=\"$gojskey\" && cd .. && cd extension && yarn run vscode:prepublish && cd ..
+- yarn run compile
 script:
 - yarn test --silent
 deploy:

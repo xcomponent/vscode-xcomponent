@@ -6,8 +6,6 @@ import { DrawComposition } from "drawComposition";
 import { CompositionData } from "xcomponent-shared";
 import * as go from "./gojs/go";
 
-(go as any).licenseKey = process.env.GOJS_KEY;
-
 const drawComposition = () => {
   const components = JSON.parse(document.currentScript.getAttribute("components"));
   const compositionString = document.currentScript.getAttribute("composition");
