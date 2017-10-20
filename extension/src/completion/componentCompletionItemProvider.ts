@@ -1,9 +1,11 @@
 import { IdCompletionProvider } from "./IdCompletionProvider";
 import * as vscode from "vscode";
+import { SubGraphKeyCompletionProvider } from "./SubGraphKeyCompletionProvider";
 export class ComponentCompletionItemProvider implements vscode.CompletionItemProvider {
 
     private completionProviders = [
-        { tag: "StateData", attribute: "Id", provider: new IdCompletionProvider("StateData") }
+        { tag: "StateData", attribute: "Id", provider: new IdCompletionProvider("StateData") },
+        { tag: "StateData", attribute: "SubGraphKey", provider: new SubGraphKeyCompletionProvider() }
     ];
 
     public provideCompletionItems(

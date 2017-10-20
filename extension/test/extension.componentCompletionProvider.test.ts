@@ -17,8 +17,8 @@ const cxmlFileName = "TechTest.cxml";
 describe("ComponentCompletionItemProvider Tests", () => {
 
     const stateIdCompletionTests = [
-        { position: new vscode.Position(18, 20), hasSuggestion: true, expectedId: 18 },
-        { position: new vscode.Position(19, 25), hasSuggestion: false }
+        { position: new vscode.Position(19, 20), hasSuggestion: true, expectedId: 18 },
+        { position: new vscode.Position(20, 25), hasSuggestion: false }
     ];
 
     stateIdCompletionTests.forEach(test => {
@@ -44,5 +44,22 @@ describe("ComponentCompletionItemProvider Tests", () => {
                     }
                 });
         });
+    });
+
+    it(`should provide statemachine key suggestion when autocomplete is triggered on SubGraphKey (state attribute)`, () => {
+        return vscode.workspace.openTextDocument(path.join(inputPath, cxmlFileName)).then(document => {
+            return vscode.window.showTextDocument(document);
+        })
+            .then(editor => {
+                const completionProvider = new ComponentCompletionItemProvider();
+                return completionProvider.provideCompletionItems(editor.document, new vscode.Position(12, 67), null);
+            }).then(completionItems => {
+                completionItems.length.should.eql(2);
+                completionItems[0].label.should.eql("StateMachine2");
+                completionItems[1].label.should.eql("StateMachine1");
+            }, reason => {
+                console.error(reason);
+                should.fail(reason, undefined);
+            });
     });
 });
