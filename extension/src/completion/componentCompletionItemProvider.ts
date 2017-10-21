@@ -12,10 +12,12 @@ export class ComponentCompletionItemProvider implements vscode.CompletionItemPro
         document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken):
         Thenable<vscode.CompletionItem[]> {
         return new Promise<vscode.CompletionItem[]>((resolve, reject) => {
-            const documentTextRange = new vscode.Range(new vscode.Position(position.line, 0), position);
-            const textBeforeCursor = document.getText(documentTextRange);
-            const tagName = this.getTagName(textBeforeCursor);
-            const attribute = this.getAttributeName(textBeforeCursor);
+            const currentLineTextRange = new vscode.Range(new vscode.Position(position.line, 0), position);
+            const allTextRange = new vscode.Range(new vscode.Position(0, 0), position);
+            const textLineBeforeCursor = document.getText(currentLineTextRange);
+            const allTextBeforeCursor = document.getText(allTextRange);
+            const tagName = this.getTagName(allTextBeforeCursor);
+            const attribute = this.getAttributeName(textLineBeforeCursor);
 
             if (tagName && attribute) {
                 const providerDetail = this.completionProviders.find(e => e.tag === tagName && e.attribute === attribute);
@@ -34,13 +36,15 @@ export class ComponentCompletionItemProvider implements vscode.CompletionItemPro
         });
     }
 
-    private getTagName(textBeforeCursor: string): string {
-        const regex: RegExp = /<(\S*?)[\s|>]/;
-        const matches = textBeforeCursor.match(regex);
-        if (matches && matches.length > 1) {
-            return matches[1];
+    private getTagName(allTextBeforeCursor: string): string {
+        const regex: RegExp = /<([^/]\S*?)[\s|>]/g;
+        let match = regex.exec(allTextBeforeCursor);
+        let tag = undefined;
+        while (match !== null) {
+            tag = match[1];
+            match = regex.exec(allTextBeforeCursor);
         }
-        return undefined;
+        return tag;
     }
 
     private getAttributeName(textBeforeCursor: string): string {
@@ -52,7 +56,19 @@ export class ComponentCompletionItemProvider implements vscode.CompletionItemPro
             match = regex.exec(textBeforeCursor);
         }
 
-        return attribute;
+        return this.checkIfEditingAttribute(textBeforeCursor, attribute) ? attribute : undefined;
+    }
+
+    private checkIfEditingAttribute(textBeforeCursor: string, attribute: string): boolean {
+        if (attribute) {
+            const regexContext: RegExp = new RegExp(`${attribute}="[^"]*"`);
+            const contextMatch = textBeforeCursor.match(regexContext);
+            if (contextMatch !== null && contextMatch.length > 0) {
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
 
 }

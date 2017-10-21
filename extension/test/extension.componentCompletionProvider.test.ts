@@ -17,7 +17,9 @@ const cxmlFileName = "TechTest.cxml";
 describe("ComponentCompletionItemProvider Tests", () => {
 
     const stateIdCompletionTests = [
-        { position: new vscode.Position(19, 20), hasSuggestion: true, expectedId: 18 },
+        { position: new vscode.Position(19, 19), hasSuggestion: true, expectedId: 18 },
+        { position: new vscode.Position(26, 10), hasSuggestion: true, expectedId: 18 },
+        { position: new vscode.Position(19, 21), hasSuggestion: false },
         { position: new vscode.Position(20, 25), hasSuggestion: false }
     ];
 
