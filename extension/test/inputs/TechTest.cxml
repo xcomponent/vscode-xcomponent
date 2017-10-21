@@ -23,7 +23,12 @@
         <TriggeredMethodData IsNodeInitializer="false" IsSelected="true" TransitionName="ChooseTestTech" TriggeringEvent="XComponent.TechTest.UserObject.InputData" />
       </TriggeredMethods>
     </StateData>
-    <StateData Id="4" Name="Uploading" IsEntryPoint="false" SubGraphKey="StateMachine2">
+    <StateData 
+      Id="4" 
+      Name="Uploading" 
+      IsEntryPoint="false" 
+      SubGraphKey="StateMachine2"
+    >
       <Comment />
       <TriggeredMethods>
         <TriggeredMethodData IsNodeInitializer="false" IsSelected="true" TransitionName="UploadTest" TriggeringEvent="XComponent.Common.Event.DefaultEvent" />
