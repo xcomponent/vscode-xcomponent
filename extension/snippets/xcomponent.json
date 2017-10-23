@@ -3,7 +3,7 @@
 		"prefix": "xcstate",
 		"description": "Create a XComponent state",
 		"body": [
-			"<StateData Id=\"${1}\" Name=\"${2:State name}\" IsEntryPoint=\"${3|false,true|}\" SubGraphKey=\"${4}\">",
+			"<StateData Id=\"${1}\" Name=\"${2:State name}\" SubGraphKey=\"${3}\">",
 			"\t<TriggeredMethods />",
 			"</StateData>"
 		]

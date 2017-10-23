@@ -1,11 +1,27 @@
+import { CompletionProvider } from "./completionProvider";
 import { IdCompletionProvider } from "./IdCompletionProvider";
 import * as vscode from "vscode";
 import { SubGraphKeyCompletionProvider } from "./SubGraphKeyCompletionProvider";
+import { BasicCompletionProvider } from "./BasicCompletionProvider";
+
+interface CompletionProviderDetail {
+    tag: string;
+    attribute?: string;
+    provider: CompletionProvider;
+}
 export class ComponentCompletionItemProvider implements vscode.CompletionItemProvider {
 
-    private completionProviders = [
+    private completionProviders: CompletionProviderDetail[] = [
         { tag: "StateData", attribute: "Id", provider: new IdCompletionProvider("StateData") },
-        { tag: "StateData", attribute: "SubGraphKey", provider: new SubGraphKeyCompletionProvider() }
+        { tag: "StateData", attribute: "SubGraphKey", provider: new SubGraphKeyCompletionProvider() },
+        {
+            tag: "StateData", provider: new BasicCompletionProvider([
+                { value: "Id", description: "State Id" },
+                { value: "Name", description: "State Name" },
+                { value: "IsEntryPoint", description: "Property used to define an entry point state" },
+                { value: "SubGraphKey", description: "Key (StateMachine + Id) of the state machine that contains this state" }
+            ])
+        }
     ];
 
     public provideCompletionItems(
@@ -19,8 +35,9 @@ export class ComponentCompletionItemProvider implements vscode.CompletionItemPro
             const tagName = this.getTagName(allTextBeforeCursor);
             const attribute = this.getAttributeName(textLineBeforeCursor);
 
-            if (tagName && attribute) {
-                const providerDetail = this.completionProviders.find(e => e.tag === tagName && e.attribute === attribute);
+            if (tagName) {
+                const providerDetail = attribute ? this.completionProviders.find(e => e.tag === tagName && e.attribute === attribute)
+                    : this.completionProviders.find(e => e.tag === tagName && e.attribute === undefined);
                 if (providerDetail) {
                     const suggestions = providerDetail.provider.createSuggestion(document);
                     if (suggestions.length === 0) {
