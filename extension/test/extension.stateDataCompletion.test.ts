@@ -82,4 +82,5 @@ describe("ComponentCompletionItemProvider Tests", () => {
                 should.fail(reason, undefined);
             });
     });
+
 });

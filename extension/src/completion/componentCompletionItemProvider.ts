@@ -3,6 +3,7 @@ import { IdCompletionProvider } from "./IdCompletionProvider";
 import * as vscode from "vscode";
 import { SubGraphKeyCompletionProvider } from "./SubGraphKeyCompletionProvider";
 import { BasicCompletionProvider } from "./BasicCompletionProvider";
+import { AttributeBasedCompletionProvider } from "./AttributeBasedCompletionProvider";
 
 interface CompletionProviderDetail {
     tag: string;
@@ -21,7 +22,17 @@ export class ComponentCompletionItemProvider implements vscode.CompletionItemPro
                 { value: "IsEntryPoint", description: "Property used to define an entry point state" },
                 { value: "SubGraphKey", description: "Key (StateMachine + Id) of the state machine that contains this state" }
             ])
-        }
+        },
+        { tag: "TriggeredMethodData", attribute: "TransitionName", provider: new AttributeBasedCompletionProvider("TransitionData", "Name") },
+        { tag: "TriggeredMethodData", attribute: "TriggeringEvent", provider: new AttributeBasedCompletionProvider("TransitionData", "TriggeringEvent") },
+        {
+            tag: "TriggeredMethodData", provider: new BasicCompletionProvider([
+                { value: "IsNodeInitializer" },
+                { value: "IsSelected" },
+                { value: "TransitionName", description: "Transition name" },
+                { value: "TriggeringEvent", description: "Triggering event" }
+            ])
+        },
     ];
 
     public provideCompletionItems(
