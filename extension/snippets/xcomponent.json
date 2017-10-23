@@ -8,6 +8,13 @@
 			"</StateData>"
 		]
 	},
+	"Create a triggered method": {
+		"prefix": "xctriggeredmethod",
+		"description": "Create a triggered method",
+		"body": [
+			"<TriggeredMethodData IsNodeInitializer=\"${1|false,true|}\" IsSelected=\"${2|true,false|}\" TransitionName=\"${2}\" TriggeringEvent=\"${3}\" />"
+		]
+	},
 	"Create a XComponent transition": {
 		"prefix": "xctransition",
 		"description": "Create a XComponent transition",

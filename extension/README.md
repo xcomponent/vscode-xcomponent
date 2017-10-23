@@ -25,6 +25,7 @@ Following below the available snippets
 | Command         | Description |
 | :----------     | :---------- |
 | `xcstate`       | Create a simple XComponent state |
+| `xctriggeredmethod`  | Create a triggered method |
 | `xctransition`  | Create a simple XComponent transition |
 
 ## Component Edit
