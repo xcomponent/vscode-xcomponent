@@ -24,9 +24,10 @@ Following below the available snippets
 
 | Command         | Description |
 | :----------     | :---------- |
-| `xcstate`       | Create a simple XComponent state |
+| `xcstate`       | Create a XComponent state |
 | `xctriggeredmethod`  | Create a triggered method |
-| `xctransition`  | Create a simple XComponent transition |
+| `xctransition`  | Create a XComponent transition |
+| `xcstatemachine`  | Create a XComponent state machine |
 
 ## Component Edit
 
