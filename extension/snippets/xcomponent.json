@@ -3,9 +3,16 @@
 		"prefix": "xcstate",
 		"description": "Create a XComponent state",
 		"body": [
-			"<StateData Id=\"${1:Index}\" Name=\"${2:State name}\" IsEntryPoint=\"${3|false,true|}\" SubGraphKey=\"${4:StateMachine + Id}\">",
+			"<StateData Id=\"${1}\" Name=\"${2:State name}\" SubGraphKey=\"${3}\">",
 			"\t<TriggeredMethods />",
 			"</StateData>"
+		]
+	},
+	"Create a triggered method": {
+		"prefix": "xctriggeredmethod",
+		"description": "Create a triggered method",
+		"body": [
+			"<TriggeredMethodData IsNodeInitializer=\"${1|false,true|}\" IsSelected=\"${2|true,false|}\" TransitionName=\"${3}\" TriggeringEvent=\"${4}\" />"
 		]
 	},
 	"Create a XComponent transition": {

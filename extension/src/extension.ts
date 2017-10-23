@@ -10,6 +10,7 @@ import { build } from "./projectBuilder";
 import { spyExec } from "./spyExec";
 import { launchRuntime } from "./runtime";
 import { launchBridge } from "./bridge";
+import { ComponentCompletionItemProvider } from "./completion/componentCompletionItemProvider";
 
 const xcmlExtension = ".xcml";
 const cxmlExtension = ".cxml";
@@ -67,6 +68,9 @@ export function activate(context: vscode.ExtensionContext) {
         update(e);
     });
 
+    const completionRegistration = vscode.languages.registerCompletionItemProvider([{ pattern: "**/*.cxml", scheme: "file" }],
+        new ComponentCompletionItemProvider(), "\"");
+
     const disposable = vscode.commands.registerCommand("xcomponent.preview.component", () => {
         return vscode.commands.executeCommand("vscode.previewHtml", previewUri, vscode.ViewColumn.Two, "Component preview").then((success) => {
         }, (reason) => {
@@ -109,5 +113,6 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(disposableComposition, compositionRegistration);
     context.subscriptions.push(disposable, registration);
+    context.subscriptions.push(completionRegistration);
     context.subscriptions.push(disposableBuild);
 }
