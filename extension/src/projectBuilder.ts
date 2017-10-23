@@ -13,10 +13,17 @@ export const build = (terminal: vscode.Terminal): void => {
         return;
     }
     const isWindowsPlatform = /^win/.test(process.platform);
+    const mono = (isWindowsPlatform) ? "" : "mono";
+
+    let buildCommand = `${xcbuildPath} --compilationmode=Debug --build --env=Dev --vs=VS2015 --project=${xcmlPath}`;
+    let exportXCRCommand = `${xcbuildPath} --exportRuntimes --compilationmode=Debug --env=Dev --output="${rootPath}${path.sep}XCR" --project=${xcmlPath}`;
+    let generateXCAssembliesCommand = `${xcbuildPath} --compilationmode=Debug --exportInterface --env=Dev --output="${rootPath}${path.sep}output" --project=${xcmlPath}`;
+
     if (isWindowsPlatform) {
-        const buildCommand = `${xcbuildPath} --compilationmode=Debug --build --env=Dev --vs=VS2015 --project=${xcmlPath}`;
         terminal.show();
         terminal.sendText(buildCommand);
+        terminal.sendText(exportXCRCommand);
+        terminal.sendText(generateXCAssembliesCommand);
         return;
     }
     const monoFacadesPath = config.mono.facades.path;
@@ -24,7 +31,25 @@ export const build = (terminal: vscode.Terminal): void => {
         vscode.window.showErrorMessage(`mono facades path not found. Please specify mono facades path in vscode settings`);
         return;
     }
-    const buildCommand = `mono ${xcbuildPath} --compilationmode=Release --build --framework=Framework452 --env=Dev --vs=VS2015 --monoPath=“${monoFacadesPath}” --project=“${xcmlPath}”`;
+    buildCommand = `mono ${buildCommand} --monoPath=“${monoFacadesPath}” --framework=Framework452 `;
+    exportXCRCommand = `mono ${exportXCRCommand}`;
+    generateXCAssembliesCommand = `mono ${generateXCAssembliesCommand}`;
+
     terminal.show();
     terminal.sendText(buildCommand);
+    terminal.sendText(exportXCRCommand);
+    terminal.sendText(generateXCAssembliesCommand);
 };
+
+/**
+ * xcbuild.exe --compilationmode=Debug --build --env=Dev --vs=VS2015 --project=c:\XComponentProjects\HelloWorld\HelloWorld_Model.xcml
+
+xcbuild.exe --exportRuntimes --compilationmode=Debug --env=Dev --output="C:\XComponentProjects\HelloWorld\ABC" --project="c:\XComponentProjects\HelloWorld\
+"
+
+xcruntime.exe "C:\XComponentProjects\HelloWorld\ABC\xcassemblies\HelloWorld-microservice1.xcr"
+
+xcbuild.exe --compilationmode=Debug --exportInterface --env=Dev --output="C:\XComponentProjects\HelloWorld\output" --project="c:\XComponentProjects\HelloWorld\HelloWorld_Model.xcml"
+
+start XCWebSocketBridge --apiPath="C:\XComponentProjects\HelloWorld\output\xcassemblies" --port=9443
+ */
