@@ -12,7 +12,7 @@
 		"prefix": "xctriggeredmethod",
 		"description": "Create a triggered method",
 		"body": [
-			"<TriggeredMethodData IsNodeInitializer=\"${1|false,true|}\" IsSelected=\"${2|true,false|}\" TransitionName=\"${2}\" TriggeringEvent=\"${3}\" />"
+			"<TriggeredMethodData IsNodeInitializer=\"${1|false,true|}\" IsSelected=\"${2|true,false|}\" TransitionName=\"${3}\" TriggeringEvent=\"${4}\" />"
 		]
 	},
 	"Create a XComponent transition": {
