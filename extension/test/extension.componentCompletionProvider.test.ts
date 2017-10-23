@@ -19,7 +19,6 @@ describe("ComponentCompletionItemProvider Tests", () => {
     const stateIdCompletionTests = [
         { position: new vscode.Position(19, 19), hasSuggestion: true, expectedId: 18 },
         { position: new vscode.Position(26, 10), hasSuggestion: true, expectedId: 18 },
-        { position: new vscode.Position(19, 21), hasSuggestion: false },
         { position: new vscode.Position(20, 25), hasSuggestion: false }
     ];
 
@@ -46,6 +45,25 @@ describe("ComponentCompletionItemProvider Tests", () => {
                     }
                 });
         });
+    });
+
+    it(`should provide StateData property suggestion when autocomplete is triggered in a StateData tag`, () => {
+        return vscode.workspace.openTextDocument(path.join(inputPath, cxmlFileName)).then(document => {
+            return vscode.window.showTextDocument(document);
+        })
+            .then(editor => {
+                const completionProvider = new ComponentCompletionItemProvider();
+                return completionProvider.provideCompletionItems(editor.document, new vscode.Position(12, 53), null);
+            }).then(completionItems => {
+                completionItems.length.should.eql(4);
+                completionItems[0].label.should.eql("Id");
+                completionItems[1].label.should.eql("Name");
+                completionItems[2].label.should.eql("IsEntryPoint");
+                completionItems[3].label.should.eql("SubGraphKey");
+            }, reason => {
+                console.error(reason);
+                should.fail(reason, undefined);
+            });
     });
 
     it(`should provide statemachine key suggestion when autocomplete is triggered on SubGraphKey (state attribute)`, () => {
