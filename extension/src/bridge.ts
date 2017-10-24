@@ -10,6 +10,6 @@ export const launchBridge = (terminal: vscode.Terminal): void => {
     const mono = (isWindowsPlatform) ? "" : "mono";
     const bridge = (fs.existsSync(config.xcwebsocketbridge.path)) ? config.xcwebsocketbridge.path : "XCWebSocketBridge.exe";
     terminal.show();
-    const launchRuntimeCommand = `${mono} ${bridge} --apiPath="${rootPath}${path.sep}output${path.sep}xcassemblies" --port=${config.xcwebsocketbridge.port}`;
+    const launchRuntimeCommand = `${mono} ${bridge} --unsecure --apiPath="${rootPath}${path.sep}output${path.sep}xcassemblies" --port=${config.xcwebsocketbridge.port}`;
     terminal.sendText(launchRuntimeCommand);
 };

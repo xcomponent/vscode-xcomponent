@@ -60,7 +60,7 @@
       },
       {
         "command": "xcomponent.launch.webSocketBridge",
-        "title": "XComponent: Launch webSocketBridge",
+        "title": "XComponent: Launch WebSocketBridge",
         "group": "navigation"
       }
     ],

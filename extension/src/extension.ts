@@ -35,7 +35,7 @@ export function activate(context: vscode.ExtensionContext) {
     const webSocketBridgeTerminal = "webSocketBridge";
     const spyTerminal = "spy";
     const terminalNames = [buildTerminal, webSocketBridgeTerminal, spyTerminal];
-    const terminals: { [key: string]: vscode.Terminal } = {};
+    const terminals: Map<string, vscode.Terminal> = new Map<string, vscode.Terminal>();
 
     terminalNames.forEach(name => {
         terminals[name] = undefined;

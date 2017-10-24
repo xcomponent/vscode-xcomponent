@@ -4,27 +4,30 @@ import * as path from "path";
 
 const xcrExtension = ".xcr";
 
-export const launchRuntime = (terminals: { [key: string]: vscode.Terminal }): void => {
+export const launchRuntime = (terminals: Map<string, vscode.Terminal>): void => {
     const rootPath = vscode.workspace.rootPath;
     const config = vscode.workspace.getConfiguration();
     const xcruntimePath = (fs.existsSync(config.xcruntime.path)) ? config.xcruntime.path : "xcruntime.exe";
     const isWindowsPlatform = /^win/.test(process.platform);
     const mono = (isWindowsPlatform) ? "" : "mono";
     const xcassemblies = `${rootPath}${path.sep}XCR${path.sep}xcassemblies`;
-    let xcrFileFound = false;
+    const xcrFiles = [];
+
     fs.readdirSync(xcassemblies).forEach(file => {
-        const basename = path.basename(file);
-        if (basename.endsWith(xcrExtension)) {
-            if (terminals[basename] === undefined) {
-                terminals[basename] = vscode.window.createTerminal(basename);
-            }
-            terminals[basename].show();
-            terminals[basename].sendText(`${mono} ${xcruntimePath} ${xcassemblies}${path.sep}${file}`);
-            xcrFileFound = true;
+        if (file.endsWith(xcrExtension)) {
+            xcrFiles.push(file);
         }
     });
-    if (!xcrFileFound) {
+
+    xcrFiles.forEach(file => {
+        if (terminals[file] === undefined) {
+            terminals[file] = vscode.window.createTerminal(file);
+        }
+        terminals[file].show();
+        terminals[file].sendText(`${mono} ${xcruntimePath} ${xcassemblies}${path.sep}${file}`);
+    });
+
+    if (xcrFiles.length === 0) {
         vscode.window.showWarningMessage("No .xcr file has been found");
-        return;
     }
 };
