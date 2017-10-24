@@ -71,10 +71,12 @@ describe("TransitionDataCompletionItemProvider Tests", () => {
                     return completionProvider.provideCompletionItems(editor.document, new vscode.Position(71, 58), null);
                 }).then(completionItems => {
                     completionItems.length.should.eql(10);
-                    completionItems[0].label.should.eql("State1");
-                    completionItems[0].documentation.should.eql("EntryPoint");
-                    completionItems[9].label.should.eql("State7");
-                    completionItems[9].documentation.should.eql("SendingEmails");
+                    completionItems[0].insertText.should.eql("State1");
+                    completionItems[0].filterText.should.eql("State1");
+                    completionItems[0].label.should.eql("EntryPoint");
+                    completionItems[9].insertText.should.eql("State7");
+                    completionItems[9].filterText.should.eql("State7");
+                    completionItems[9].label.should.eql("SendingEmails");
                 }, reason => {
                     console.error(reason);
                     should.fail(reason, undefined);

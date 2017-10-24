@@ -20,7 +20,7 @@
 		"description": "Create a standard transition",
 		"body": [
 			"<TransitionData Id=\"${1}\" Name=\"${2:Transition name}\" FromKey=\"${3}\" ToKey=\"${4}\" Type=\"Standard\" TriggeringEvent=\"${5:Triggering event}\" >",
-			"\t</MatchingRules>",
+			"\t<MatchingRules/>",
 			"</TransitionData>"
 		]
 	},
@@ -29,7 +29,7 @@
 		"description": "Create a timeout transition",
 		"body": [
 			"<TransitionData Id=\"${1}\" Name=\"${2:Transition name}\" FromKey=\"${3}\" ToKey=\"${4}\" Type=\"TimeOut\" ExecutionDelay=\"${5:0}\" SetCustomTimeout=\"${6|false,true|}\" TriggeringEvent=\"${7:Triggering event}\" >",
-			"\t</MatchingRules>",
+			"\t<MatchingRules/>",
 			"</TransitionData>"
 		]
 	},
@@ -38,7 +38,7 @@
 		"description": "Create a X transition",
 		"body": [
 			"<TransitionData Id=\"${1}\" Name=\"${2:Transition name}\" FromKey=\"${3}\" ToKey=\"${4}\" Type=\"X\" TriggeringEvent=\"${5:Triggering event}\" >",
-			"\t</MatchingRules>",
+			"\t<MatchingRules/>",
 			"</TransitionData>"
 		]
 	},
@@ -47,6 +47,24 @@
 		"description": "Create a XComponent state machine",
 		"body": [
 			"<StateMachineData Id=\"${1}\" Name=\"${2:StateMachine Name}\" PublicMember=\"${3:Public Member Type}\" InternalMember=\"${4:Internal Member Type}\" />"
+		]
+	},
+	"Create a triggerable transversal transition": {
+		"prefix": "xctriggerable",
+		"description": "Create a triggerable transversal transition",
+		"body": [
+			"<TransversalTransitionData Id=\"${1}\" Name=\"\" FromKey=\"${2}\" ToId=\"${3}\" SelectAllTransitions=\"true\" Type=\"Triggerable\">",
+			"\t<SelectedTransitions/>",
+			"</TransversalTransitionData>"
+		]
+	},
+	"Create an internal transition": {
+		"prefix": "xcinternal",
+		"description": "Create an internal transition",
+		"body": [
+			"<TransversalTransitionData Id=\"${1}\" Name=\"\" FromKey=\"${2}\" ToId=\"${3}\" SelectAllTransitions=\"true\" Type=\"Internal\">",
+			"\t<SelectedTransitions/>",
+			"</TransversalTransitionData>"
 		]
 	}
 }
