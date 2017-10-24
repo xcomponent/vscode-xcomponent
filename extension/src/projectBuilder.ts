@@ -23,7 +23,7 @@ export const getCommands = (xcbuildPath, rootPath, xcmlPath, monoFacadesPath, pl
         vscode.window.showErrorMessage(`mono facades path not found. Please specify mono facades path in vscode settings`);
         return undefined;
     }
-    
+
     buildCommand = `mono ${buildCommand} --monoPath=“${monoFacadesPath}” --framework=Framework452 `;
     exportRuntimesCommand = `mono ${exportRuntimesCommand}`;
     exportInterfaceCommand = `mono ${exportInterfaceCommand}`;
@@ -33,7 +33,7 @@ export const getCommands = (xcbuildPath, rootPath, xcmlPath, monoFacadesPath, pl
 
 export const build = (terminal: vscode.Terminal): void => {
     const rootPath = vscode.workspace.rootPath;
-    const baseName = path.basename(rootPath);    
+    const baseName = path.basename(rootPath);
     const xcmlPath = `${rootPath}${path.sep}${baseName}_Model.xcml`;
     const config = vscode.workspace.getConfiguration();
     const xcbuildPath = (fs.existsSync(config.xcbuild.path)) ? config.xcbuild.path : "xcbuild.exe";
@@ -47,4 +47,4 @@ export const build = (terminal: vscode.Terminal): void => {
     commands.forEach(command => {
         terminal.sendText(command);
     });
-}
+};
