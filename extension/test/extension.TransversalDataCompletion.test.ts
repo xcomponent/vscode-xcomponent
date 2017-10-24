@@ -62,10 +62,12 @@ describe("TransversalTransitionDataCompletionItemProvider Tests", () => {
                 return completionProvider.provideCompletionItems(editor.document, new vscode.Position(112, 56), null);
             }).then(completionItems => {
                 completionItems.length.should.eql(10);
-                completionItems[0].label.should.eql("State1");
-                completionItems[0].documentation.should.eql("EntryPoint");
-                completionItems[9].label.should.eql("State7");
-                completionItems[9].documentation.should.eql("SendingEmails");
+                completionItems[0].insertText.should.eql("State1");
+                completionItems[0].filterText.should.eql("State1");
+                completionItems[0].label.should.eql("EntryPoint");
+                completionItems[9].insertText.should.eql("State7");
+                completionItems[9].filterText.should.eql("State7");
+                completionItems[9].label.should.eql("SendingEmails");
             }, reason => {
                 console.error(reason);
                 should.fail(reason, undefined);
@@ -81,10 +83,12 @@ describe("TransversalTransitionDataCompletionItemProvider Tests", () => {
                 return completionProvider.provideCompletionItems(editor.document, new vscode.Position(112, 70), null);
             }).then(completionItems => {
                 completionItems.length.should.eql(13);
-                completionItems[0].label.should.eql("2");
-                completionItems[0].documentation.should.eql("ChooseTestTech");
-                completionItems[12].label.should.eql("10");
-                completionItems[12].documentation.should.eql("TranferInterviewInfos");
+                completionItems[0].insertText.should.eql("2");
+                completionItems[0].filterText.should.eql("2");
+                completionItems[0].label.should.eql("ChooseTestTech");
+                completionItems[12].insertText.should.eql("10");
+                completionItems[12].filterText.should.eql("10");
+                completionItems[12].label.should.eql("TranferInterviewInfos");
             }, reason => {
                 console.error(reason);
                 should.fail(reason, undefined);

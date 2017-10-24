@@ -23,8 +23,9 @@ export class KeyCompletionProvider implements CompletionProvider {
     public createSuggestion(document: vscode.TextDocument): vscode.CompletionItem[] {
         return this.getStateMachineDetails(document)
             .map(details => {
-                const item = new vscode.CompletionItem(`${this.keyPrefix}${details.id}`);
-                item.documentation = details.name;
+                const item = new vscode.CompletionItem(details.name);
+                item.insertText = `${this.keyPrefix}${details.id}`;
+                item.filterText = item.insertText;
                 return item;
             });
     }
