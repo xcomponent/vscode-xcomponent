@@ -19,7 +19,7 @@
 		"prefix": "xctransition",
 		"description": "Create a XComponent transition",
 		"body": [
-			"<TransitionData Id=\"${1:Index}\" Name=\"${2:Transition name}\" FromKey=\"${3:State + Id}\" ToKey=\"${4:State + Id}\" Type=\"${5|X,TimeOut,Standard|}\" ExecutionDelay=\"${6:0}\" SetCustomTimeout=\"${7|false,true|}\" TriggeringEvent=\"${8:Document Triggering event}\" UserSpecificRule=\"${9|false,true|}\">",
+			"<TransitionData Id=\"${1}\" Name=\"${2:Transition name}\" FromKey=\"${3:State + Id}\" ToKey=\"${4:State + Id}\" Type=\"${5|X,TimeOut,Standard|}\" ExecutionDelay=\"${6:0}\" SetCustomTimeout=\"${7|false,true|}\" TriggeringEvent=\"${8:Document Triggering event}\" UserSpecificRule=\"${9|false,true|}\">",
 			"\t</MatchingRules>",
 			"</TransitionData>"
 		]

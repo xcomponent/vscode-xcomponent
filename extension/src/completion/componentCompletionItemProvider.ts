@@ -43,6 +43,20 @@ export class ComponentCompletionItemProvider implements vscode.CompletionItemPro
                 { value: "InternalMember" }
             ])
         },
+        { tag: "TransitionData", attribute: "Id", provider: new IdCompletionProvider("TransitionData") },
+        {
+            tag: "TransitionData", provider: new BasicCompletionProvider([
+                { value: "Id" },
+                { value: "Name" },
+                { value: "FromKey" },
+                { value: "ToKey" },
+                { value: "Type" },
+                { value: "ExecutionDelay" },
+                { value: "SetCustomTimeout" },
+                { value: "TriggeringEvent" },
+                { value: "UserSpecificRule" }
+            ])
+        },
     ];
 
     public provideCompletionItems(
@@ -53,6 +67,7 @@ export class ComponentCompletionItemProvider implements vscode.CompletionItemPro
             const allTextRange = new vscode.Range(new vscode.Position(0, 0), position);
             const textLineBeforeCursor = document.getText(currentLineTextRange);
             const allTextBeforeCursor = document.getText(allTextRange);
+            console.error(textLineBeforeCursor);
             const tagName = this.getTagName(allTextBeforeCursor);
             const attribute = this.getAttributeName(textLineBeforeCursor);
 
