@@ -1,7 +1,7 @@
 import { CompletionProvider } from "./completionProvider";
 import { IdCompletionProvider } from "./IdCompletionProvider";
 import * as vscode from "vscode";
-import { SubGraphKeyCompletionProvider } from "./SubGraphKeyCompletionProvider";
+import { KeyCompletionProvider } from "./KeyCompletionProvider";
 import { BasicCompletionProvider } from "./BasicCompletionProvider";
 import { AttributeBasedCompletionProvider } from "./AttributeBasedCompletionProvider";
 
@@ -14,7 +14,7 @@ export class ComponentCompletionItemProvider implements vscode.CompletionItemPro
 
     private completionProviders: CompletionProviderDetail[] = [
         { tag: "StateData", attribute: "Id", provider: new IdCompletionProvider("StateData") },
-        { tag: "StateData", attribute: "SubGraphKey", provider: new SubGraphKeyCompletionProvider() },
+        { tag: "StateData", attribute: "SubGraphKey", provider: new KeyCompletionProvider("StateMachineData", "Id", "Name", "StateMachine") },
         {
             tag: "StateData", provider: new BasicCompletionProvider([
                 { value: "Id", description: "State Id" },
@@ -30,9 +30,48 @@ export class ComponentCompletionItemProvider implements vscode.CompletionItemPro
                 { value: "IsNodeInitializer" },
                 { value: "IsSelected" },
                 { value: "TransitionName", description: "Transition name" },
-                { value: "TriggeringEvent", description: "Triggering event" }
+                { value: "TriggeringEvent", description: "Triggering event" },
+                { value: "IsExternal" }
             ])
         },
+        { tag: "StateMachineData", attribute: "Id", provider: new IdCompletionProvider("StateMachineData") },
+        {
+            tag: "StateMachineData", provider: new BasicCompletionProvider([
+                { value: "Id" },
+                { value: "Name" },
+                { value: "PublicMember" },
+                { value: "InternalMember" }
+            ])
+        },
+        { tag: "TransitionData", attribute: "Id", provider: new IdCompletionProvider("TransitionData") },
+        {
+            tag: "TransitionData", provider: new BasicCompletionProvider([
+                { value: "Id" },
+                { value: "Name" },
+                { value: "FromKey", description: "Key = State + Id" },
+                { value: "ToKey", description: "Key = State + Id" },
+                { value: "Type" },
+                { value: "ExecutionDelay" },
+                { value: "SetCustomTimeout" },
+                { value: "TriggeringEvent" },
+                { value: "UserSpecificRule" }
+            ])
+        },
+        { tag: "TransitionData", attribute: "FromKey", provider: new KeyCompletionProvider("StateData", "Id", "Name", "State") },
+        { tag: "TransitionData", attribute: "ToKey", provider: new KeyCompletionProvider("StateData", "Id", "Name", "State") },
+        { tag: "TransversalTransitionData", attribute: "Id", provider: new IdCompletionProvider("TransversalTransitionData") },
+        {
+            tag: "TransversalTransitionData", provider: new BasicCompletionProvider([
+                { value: "Id" },
+                { value: "Name" },
+                { value: "FromKey", description: "From state key(State + Id)" },
+                { value: "ToId", description: "To transition id" },
+                { value: "SelectAllTransitions" },
+                { value: "Type" }
+            ])
+        },
+        { tag: "TransversalTransitionData", attribute: "FromKey", provider: new KeyCompletionProvider("StateData", "Id", "Name", "State") },
+        { tag: "TransversalTransitionData", attribute: "ToId", provider: new KeyCompletionProvider("TransitionData", "Id", "Name", "") }
     ];
 
     public provideCompletionItems(

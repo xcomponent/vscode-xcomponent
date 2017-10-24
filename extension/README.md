@@ -24,9 +24,14 @@ Following below the available snippets
 
 | Command         | Description |
 | :----------     | :---------- |
-| `xcstate`       | Create a simple XComponent state |
+| `xcstate`       | Create a state |
 | `xctriggeredmethod`  | Create a triggered method |
-| `xctransition`  | Create a simple XComponent transition |
+| `xctransition`  | Create a standard transition |
+| `xctimeouttransition`  | Create a timeout transition |
+| `xcxtransition`  | Create a X transition |
+| `xcstatemachine`  | Create a state machine |
+| `xctriggerable`  | Create a triggerable transversal transition |
+| `xcinternal`  | Create an internal transition |
 
 ## Component Edit
 

@@ -14,7 +14,7 @@ const inputPath = path.join(__dirname, "..", "..", "test", "inputs");
 
 const cxmlFileName = "TechTest.cxml";
 
-describe("ComponentCompletionItemProvider Tests", () => {
+describe("TriggeredMethodCompletionItemProvider Tests", () => {
 
     it(`should provide transition name suggestion when autocomplete is triggered on TransitionName (TriggeredMethodData attribute)`, () => {
         return vscode.workspace.openTextDocument(path.join(inputPath, cxmlFileName)).then(document => {
@@ -56,11 +56,12 @@ describe("ComponentCompletionItemProvider Tests", () => {
                 const completionProvider = new ComponentCompletionItemProvider();
                 return completionProvider.provideCompletionItems(editor.document, new vscode.Position(16, 112), null);
             }).then(completionItems => {
-                completionItems.length.should.eql(4);
+                completionItems.length.should.eql(5);
                 completionItems[0].label.should.eql("IsNodeInitializer");
                 completionItems[1].label.should.eql("IsSelected");
                 completionItems[2].label.should.eql("TransitionName");
                 completionItems[3].label.should.eql("TriggeringEvent");
+                completionItems[4].label.should.eql("IsExternal");
             }, reason => {
                 console.error(reason);
                 should.fail(reason, undefined);
