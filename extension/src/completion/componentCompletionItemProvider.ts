@@ -58,7 +58,20 @@ export class ComponentCompletionItemProvider implements vscode.CompletionItemPro
             ])
         },
         { tag: "TransitionData", attribute: "FromKey", provider: new KeyCompletionProvider("StateData", "Id", "Name", "State") },
-        { tag: "TransitionData", attribute: "ToKey", provider: new KeyCompletionProvider("StateData", "Id", "Name", "State") }
+        { tag: "TransitionData", attribute: "ToKey", provider: new KeyCompletionProvider("StateData", "Id", "Name", "State") },
+        { tag: "TransversalTransitionData", attribute: "Id", provider: new IdCompletionProvider("TransversalTransitionData") },
+        {
+            tag: "TransversalTransitionData", provider: new BasicCompletionProvider([
+                { value: "Id" },
+                { value: "Name" },
+                { value: "FromKey", description: "From state key(State + Id)" },
+                { value: "ToId", description: "To transition id" },
+                { value: "SelectAllTransitions" },
+                { value: "Type" }
+            ])
+        },
+        { tag: "TransversalTransitionData", attribute: "FromKey", provider: new KeyCompletionProvider("StateData", "Id", "Name", "State") },
+        { tag: "TransversalTransitionData", attribute: "ToId", provider: new KeyCompletionProvider("TransitionData", "Id", "Name", "") }
     ];
 
     public provideCompletionItems(

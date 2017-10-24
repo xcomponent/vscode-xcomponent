@@ -30,6 +30,8 @@ Following below the available snippets
 | `xctimeouttransition`  | Create a timeout transition |
 | `xcxtransition`  | Create a X transition |
 | `xcstatemachine`  | Create a state machine |
+| `xctriggerable`  | Create a triggerable transversal transition |
+| `xcinternal`  | Create an internal transition |
 
 ## Component Edit
 
