@@ -15,11 +15,29 @@
 			"<TriggeredMethodData IsNodeInitializer=\"${1|false,true|}\" IsSelected=\"${2|true,false|}\" TransitionName=\"${3}\" TriggeringEvent=\"${4}\" />"
 		]
 	},
-	"Create a XComponent transition": {
+	"Create a standard transition": {
 		"prefix": "xctransition",
-		"description": "Create a XComponent transition",
+		"description": "Create a standard transition",
 		"body": [
-			"<TransitionData Id=\"${1:Index}\" Name=\"${2:Transition name}\" FromKey=\"${3:State + Id}\" ToKey=\"${4:State + Id}\" Type=\"${5|X,TimeOut,Standard|}\" ExecutionDelay=\"${6:0}\" SetCustomTimeout=\"${7|false,true|}\" TriggeringEvent=\"${8:Document Triggering event}\" UserSpecificRule=\"${9|false,true|}\">",
+			"<TransitionData Id=\"${1}\" Name=\"${2:Transition name}\" FromKey=\"${3}\" ToKey=\"${4}\" Type=\"Standard\" TriggeringEvent=\"${5:Triggering event}\" >",
+			"\t</MatchingRules>",
+			"</TransitionData>"
+		]
+	},
+	"Create a timeout transition": {
+		"prefix": "xctimeouttransition",
+		"description": "Create a timeout transition",
+		"body": [
+			"<TransitionData Id=\"${1}\" Name=\"${2:Transition name}\" FromKey=\"${3}\" ToKey=\"${4}\" Type=\"TimeOut\" ExecutionDelay=\"${5:0}\" SetCustomTimeout=\"${6|false,true|}\" TriggeringEvent=\"${7:Triggering event}\" >",
+			"\t</MatchingRules>",
+			"</TransitionData>"
+		]
+	},
+	"Create a X transition": {
+		"prefix": "xcxtransition",
+		"description": "Create a X transition",
+		"body": [
+			"<TransitionData Id=\"${1}\" Name=\"${2:Transition name}\" FromKey=\"${3}\" ToKey=\"${4}\" Type=\"X\" TriggeringEvent=\"${5:Triggering event}\" >",
 			"\t</MatchingRules>",
 			"</TransitionData>"
 		]

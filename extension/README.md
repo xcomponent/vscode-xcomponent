@@ -24,10 +24,12 @@ Following below the available snippets
 
 | Command         | Description |
 | :----------     | :---------- |
-| `xcstate`       | Create a XComponent state |
+| `xcstate`       | Create a state |
 | `xctriggeredmethod`  | Create a triggered method |
-| `xctransition`  | Create a XComponent transition |
-| `xcstatemachine`  | Create a XComponent state machine |
+| `xctransition`  | Create a standard transition |
+| `xctimeouttransition`  | Create a timeout transition |
+| `xcxtransition`  | Create a X transition |
+| `xcstatemachine`  | Create a state machine |
 
 ## Component Edit
 

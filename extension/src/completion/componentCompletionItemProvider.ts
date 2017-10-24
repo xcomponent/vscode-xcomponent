@@ -1,7 +1,7 @@
 import { CompletionProvider } from "./completionProvider";
 import { IdCompletionProvider } from "./IdCompletionProvider";
 import * as vscode from "vscode";
-import { SubGraphKeyCompletionProvider } from "./SubGraphKeyCompletionProvider";
+import { KeyCompletionProvider } from "./KeyCompletionProvider";
 import { BasicCompletionProvider } from "./BasicCompletionProvider";
 import { AttributeBasedCompletionProvider } from "./AttributeBasedCompletionProvider";
 
@@ -14,7 +14,7 @@ export class ComponentCompletionItemProvider implements vscode.CompletionItemPro
 
     private completionProviders: CompletionProviderDetail[] = [
         { tag: "StateData", attribute: "Id", provider: new IdCompletionProvider("StateData") },
-        { tag: "StateData", attribute: "SubGraphKey", provider: new SubGraphKeyCompletionProvider() },
+        { tag: "StateData", attribute: "SubGraphKey", provider: new KeyCompletionProvider("StateMachineData", "Id", "Name", "StateMachine") },
         {
             tag: "StateData", provider: new BasicCompletionProvider([
                 { value: "Id", description: "State Id" },
@@ -43,6 +43,22 @@ export class ComponentCompletionItemProvider implements vscode.CompletionItemPro
                 { value: "InternalMember" }
             ])
         },
+        { tag: "TransitionData", attribute: "Id", provider: new IdCompletionProvider("TransitionData") },
+        {
+            tag: "TransitionData", provider: new BasicCompletionProvider([
+                { value: "Id" },
+                { value: "Name" },
+                { value: "FromKey", description: "Key = State + Id" },
+                { value: "ToKey", description: "Key = State + Id" },
+                { value: "Type" },
+                { value: "ExecutionDelay" },
+                { value: "SetCustomTimeout" },
+                { value: "TriggeringEvent" },
+                { value: "UserSpecificRule" }
+            ])
+        },
+        { tag: "TransitionData", attribute: "FromKey", provider: new KeyCompletionProvider("StateData", "Id", "Name", "State") },
+        { tag: "TransitionData", attribute: "ToKey", provider: new KeyCompletionProvider("StateData", "Id", "Name", "State") }
     ];
 
     public provideCompletionItems(
