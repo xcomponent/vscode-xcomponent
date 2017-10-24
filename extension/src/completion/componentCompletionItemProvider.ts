@@ -1,7 +1,7 @@
 import { CompletionProvider } from "./completionProvider";
 import { IdCompletionProvider } from "./IdCompletionProvider";
 import * as vscode from "vscode";
-import { SubGraphKeyCompletionProvider } from "./SubGraphKeyCompletionProvider";
+import { KeyCompletionProvider } from "./KeyCompletionProvider";
 import { BasicCompletionProvider } from "./BasicCompletionProvider";
 import { AttributeBasedCompletionProvider } from "./AttributeBasedCompletionProvider";
 
@@ -14,7 +14,7 @@ export class ComponentCompletionItemProvider implements vscode.CompletionItemPro
 
     private completionProviders: CompletionProviderDetail[] = [
         { tag: "StateData", attribute: "Id", provider: new IdCompletionProvider("StateData") },
-        { tag: "StateData", attribute: "SubGraphKey", provider: new SubGraphKeyCompletionProvider() },
+        { tag: "StateData", attribute: "SubGraphKey", provider: new KeyCompletionProvider("StateMachineData", "Id", "Name", "StateMachine") },
         {
             tag: "StateData", provider: new BasicCompletionProvider([
                 { value: "Id", description: "State Id" },
@@ -48,8 +48,8 @@ export class ComponentCompletionItemProvider implements vscode.CompletionItemPro
             tag: "TransitionData", provider: new BasicCompletionProvider([
                 { value: "Id" },
                 { value: "Name" },
-                { value: "FromKey" },
-                { value: "ToKey" },
+                { value: "FromKey", description: "Key = State + Id" },
+                { value: "ToKey", description: "Key = State + Id" },
                 { value: "Type" },
                 { value: "ExecutionDelay" },
                 { value: "SetCustomTimeout" },
@@ -57,6 +57,8 @@ export class ComponentCompletionItemProvider implements vscode.CompletionItemPro
                 { value: "UserSpecificRule" }
             ])
         },
+        { tag: "TransitionData", attribute: "FromKey", provider: new KeyCompletionProvider("StateData", "Id", "Name", "State") },
+        { tag: "TransitionData", attribute: "ToKey", provider: new KeyCompletionProvider("StateData", "Id", "Name", "State") }
     ];
 
     public provideCompletionItems(
@@ -67,7 +69,6 @@ export class ComponentCompletionItemProvider implements vscode.CompletionItemPro
             const allTextRange = new vscode.Range(new vscode.Position(0, 0), position);
             const textLineBeforeCursor = document.getText(currentLineTextRange);
             const allTextBeforeCursor = document.getText(allTextRange);
-            console.error(textLineBeforeCursor);
             const tagName = this.getTagName(allTextBeforeCursor);
             const attribute = this.getAttributeName(textLineBeforeCursor);
 

@@ -56,4 +56,30 @@ describe("TransitionDataCompletionItemProvider Tests", () => {
             });
     });
 
+    const keyTests = [
+        { input: new vscode.Position(71, 58) },
+        { input: new vscode.Position(71, 73) }
+    ];
+
+    keyTests.forEach(test => {
+        it(`should provide FromKey/ToKey suggestion with state description when autocomplete is triggered in FromKey/ToKey attribute`, () => {
+            return vscode.workspace.openTextDocument(path.join(inputPath, cxmlFileName)).then(document => {
+                return vscode.window.showTextDocument(document);
+            })
+                .then(editor => {
+                    const completionProvider = new ComponentCompletionItemProvider();
+                    return completionProvider.provideCompletionItems(editor.document, new vscode.Position(71, 58), null);
+                }).then(completionItems => {
+                    completionItems.length.should.eql(10);
+                    completionItems[0].label.should.eql("State1");
+                    completionItems[0].documentation.should.eql("EntryPoint");
+                    completionItems[9].label.should.eql("State7");
+                    completionItems[9].documentation.should.eql("SendingEmails");
+                }, reason => {
+                    console.error(reason);
+                    should.fail(reason, undefined);
+                });
+        });
+    });
+
 });
