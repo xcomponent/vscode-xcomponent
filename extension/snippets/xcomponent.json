@@ -23,5 +23,12 @@
 			"\t</MatchingRules>",
 			"</TransitionData>"
 		]
+	},
+	"Create a XComponent state machine": {
+		"prefix": "xcstatemachine",
+		"description": "Create a XComponent state machine",
+		"body": [
+			"<StateMachineData Id=\"${1}\" Name=\"${2:StateMachine Name}\" PublicMember=\"${3:Public Member Type}\" InternalMember=\"${4:Internal Member Type}\" />"
+		]
 	}
 }

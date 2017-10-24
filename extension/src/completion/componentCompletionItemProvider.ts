@@ -30,7 +30,17 @@ export class ComponentCompletionItemProvider implements vscode.CompletionItemPro
                 { value: "IsNodeInitializer" },
                 { value: "IsSelected" },
                 { value: "TransitionName", description: "Transition name" },
-                { value: "TriggeringEvent", description: "Triggering event" }
+                { value: "TriggeringEvent", description: "Triggering event" },
+                { value: "IsExternal" }
+            ])
+        },
+        { tag: "StateMachineData", attribute: "Id", provider: new IdCompletionProvider("StateMachineData") },
+        {
+            tag: "StateMachineData", provider: new BasicCompletionProvider([
+                { value: "Id" },
+                { value: "Name" },
+                { value: "PublicMember" },
+                { value: "InternalMember" }
             ])
         },
     ];
