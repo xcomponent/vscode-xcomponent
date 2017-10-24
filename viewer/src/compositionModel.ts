@@ -84,7 +84,7 @@ export class CompositionModel {
     private getApiToXCLinks(compositionJson: Composition, apiPortCounter: ApiPortCounter, linkDataArray: Array<LinkDataArrayElement>, components: Components): void {
         const linkedClientApis = compositionJson.LinkingSchema.LinkedClientApis[0].LinkedClientApi;
         linkedClientApis.forEach(linkedClientApi => {
-            const apiToXCLinks = linkedClientApi.ApiToXCLinks[0].ApiToXCLink;
+            const apiToXCLinks = linkedClientApi.ApiToXCLinks[0].ApiToXCLink || [];
             apiToXCLinks.forEach(apiToXCLink => {
                 const apiName = linkedClientApi.$.name;
                 if (apiPortCounter[apiName] === undefined) {
