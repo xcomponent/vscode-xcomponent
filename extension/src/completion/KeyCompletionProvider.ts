@@ -26,6 +26,8 @@ export class KeyCompletionProvider implements CompletionProvider {
                 const item = new vscode.CompletionItem(details.name);
                 item.insertText = `${this.keyPrefix}${details.id}`;
                 item.filterText = item.insertText;
+                item.detail = "Key value:";
+                item.documentation = item.insertText;
                 return item;
             });
     }
