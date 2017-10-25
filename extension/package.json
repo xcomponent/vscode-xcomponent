@@ -52,6 +52,16 @@
         "command": "xcomponent.build.project",
         "title": "XComponent: Build project",
         "group": "navigation"
+      },
+      {
+        "command": "xcomponent.launch.runtime",
+        "title": "XComponent: Launch Runtime",
+        "group": "navigation"
+      },
+      {
+        "command": "xcomponent.launch.webSocketBridge",
+        "title": "XComponent: Launch WebSocketBridge",
+        "group": "navigation"
       }
     ],
     "configuration": {
@@ -67,6 +77,21 @@
           "type": "string",
           "default": "",
           "description": "Path to mono facades"
+        },
+        "xcruntime.path": {
+          "type": "string",
+          "default": "",
+          "description": "Path to xcruntime"
+        },
+        "xcwebsocketbridge.path": {
+          "type": "string",
+          "default": "",
+          "description": "Path to xcwebsocketbridge"
+        },
+        "xcwebsocketbridge.port": {
+          "type": "number",
+          "default": 443,
+          "description": "Port of xcwebsocketbridge"
         }
       }
     },

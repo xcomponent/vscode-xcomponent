@@ -8,6 +8,8 @@ import { OutputChannel } from "vscode";
 import * as fs from "fs";
 import { build } from "./projectBuilder";
 import { spyExec } from "./spyExec";
+import { launchRuntime } from "./runtime";
+import { launchBridge } from "./bridge";
 import { ComponentCompletionItemProvider } from "./completion/componentCompletionItemProvider";
 
 const xcmlExtension = ".xcml";
@@ -17,6 +19,7 @@ interface DataUrl {
     componentName: string;
     api: string;
 }
+
 
 export function activate(context: vscode.ExtensionContext) {
     const previewUri = vscode.Uri.parse("xc-preview://xcomponent/component-preview");
@@ -28,8 +31,24 @@ export function activate(context: vscode.ExtensionContext) {
     const componentProvider = new ComponentViewerProvider(context);
     const registration = vscode.workspace.registerTextDocumentContentProvider("xc-preview", componentProvider);
 
-    const terminal = vscode.window.createTerminal("xcomponent");
-    context.subscriptions.push(terminal);
+    const buildTerminal = "build";
+    const webSocketBridgeTerminal = "webSocketBridge";
+    const spyTerminal = "spy";
+    const terminalNames = [buildTerminal, webSocketBridgeTerminal, spyTerminal];
+    const terminals: Map<string, vscode.Terminal> = new Map<string, vscode.Terminal>();
+
+    terminalNames.forEach(name => {
+        terminals[name] = undefined;
+    });
+    vscode.window.onDidCloseTerminal(e => {
+        terminals[e.name] = undefined;
+    });
+    const createTerminal = (name: string): void => {
+        if (!terminals.has(name)) {
+            terminals[name] = vscode.window.createTerminal(name);
+            context.subscriptions.push(terminals[name]);
+        }
+    };
 
     const update = (e) => {
         if (e && e.document === vscode.window.activeTextEditor.document) {
@@ -67,13 +86,24 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     const disposableBuild = vscode.commands.registerCommand("xcomponent.build.project", () => {
-        build(terminal);
+        createTerminal(buildTerminal);
+        build(terminals[buildTerminal]);
+    });
+
+    const disposableRuntime = vscode.commands.registerCommand("xcomponent.launch.runtime", () => {
+        launchRuntime(terminals);
+    });
+
+    const disposableBridge = vscode.commands.registerCommand("xcomponent.launch.webSocketBridge", () => {
+        createTerminal(webSocketBridgeTerminal);
+        launchBridge(terminals[webSocketBridgeTerminal]);
     });
 
     promisify(freeport)()
         .then((port: number) => {
             const disposableSpy = vscode.commands.registerCommand("xcomponent.launch.spy", () => {
-                spyExec(terminal, port, context.extensionPath);
+                createTerminal(spyTerminal);
+                spyExec(terminals[spyTerminal], port, context.extensionPath);
             });
             context.subscriptions.push(disposableSpy);
         })

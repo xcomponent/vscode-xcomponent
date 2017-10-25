@@ -11,8 +11,10 @@ This extension makes it easy to work with [XComponent](http://www.xcomponent.com
 * Composition preview
 * Snippets
 * Intellisense
-* XCSpy web application
 * Build a xcomponent project
+* Launch a websocket bridge
+* Launch a xcomponent runtime
+* XCSpy web application
 
 More features yet to come...
 

@@ -61,6 +61,15 @@ To build a xcomponent project, use the *"XComponent: Build project"* command.
 Don't forget to specify xcbuild.exe path in vscode settings. Otherwise, xcbuild.exe specified in the environnement path will be used.
 Also, don't forget to specify mono facades path in vscode settings when working on linux or macOs environnement.
 
+## WebSocketBridge
+
+To launch the bridge of a xcomponent project, use the *"XComponent: Launch WebSocketBridge"* command.
+To use a specific port, edit the parameter xcwebsocketbridge.port in vscode settings. The default port used is 443. 
+
+## XCRuntime
+
+To launch a xcomponent runtime, use the *"XComponent: Launch Runtime"* command.
+
 ## XCSpy Web
 
 To start the XCSpy web application, use the *"XComponent: Launch Spy Web" command.
