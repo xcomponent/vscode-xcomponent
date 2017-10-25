@@ -66,5 +66,19 @@
 			"\t<SelectedTransitions/>",
 			"</TransversalTransitionData>"
 		]
+	},
+	"Create a matching rule": {
+		"prefix": "xcmatchingrule",
+		"description": "Create a matching rule",
+		"body": [
+			"<MatchingRuleData EventProperty=\"${1:Event Property}\" IsInternalMemberProperty=\"${1|false,true|}\" MemberProperty=\"${3:Member Property}\" />"
+		]
+	},
+	"Add a reference to an assembly data": {
+		"prefix": "xcassemblydata",
+		"description": "Add a reference to an assembly data",
+		"body": [
+			"<AssemblyData Name=\"${1:Name}\" Path=\"${2:Assembly Relative Path}\" />"
+		]
 	}
 }

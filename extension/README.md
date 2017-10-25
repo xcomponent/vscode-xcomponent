@@ -32,6 +32,8 @@ Following below the available snippets
 | `xcstatemachine`  | Create a state machine |
 | `xctriggerable`  | Create a triggerable transversal transition |
 | `xcinternal`  | Create an internal transition |
+| `xcmatchingrule`  | Create a matching rule |
+| `xcassemblydata`  | Add a reference to an assembly data |
 
 ## Component Edit
 

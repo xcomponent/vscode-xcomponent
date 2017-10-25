@@ -106,7 +106,9 @@
       <MatchingRules />
     </TransitionData>
     <TransitionData Id="10" Name="TranferInterviewInfos" FromKey="State2" ToKey="State2" Type="Standard" ExecutionDelay="0" SetCustomTimeout="false" TriggeringEvent="XComponent.Authentication.UserObject.Interview" UserSpecificRule="false">
-      <MatchingRules />
+      <MatchingRules>
+        <MatchingRuleData EventProperty="TaskInstanceId" IsInternalMemberProperty="false" MemberProperty="Id" />
+      </MatchingRules>
     </TransitionData>
   </Links>
   <TransversalLinks>

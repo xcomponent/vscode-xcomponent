@@ -22,7 +22,7 @@ describe("TransversalTransitionDataCompletionItemProvider Tests", () => {
         })
             .then(editor => {
                 const completionProvider = new ComponentCompletionItemProvider();
-                return completionProvider.provideCompletionItems(editor.document, new vscode.Position(112, 35), null);
+                return completionProvider.provideCompletionItems(editor.document, new vscode.Position(114, 35), null);
             }).then(completionItems => {
                 completionItems.length.should.eql(1);
                 completionItems[0].label.should.eql("100");
@@ -38,7 +38,7 @@ describe("TransversalTransitionDataCompletionItemProvider Tests", () => {
         })
             .then(editor => {
                 const completionProvider = new ComponentCompletionItemProvider();
-                return completionProvider.provideCompletionItems(editor.document, new vscode.Position(112, 39), null);
+                return completionProvider.provideCompletionItems(editor.document, new vscode.Position(114, 39), null);
             }).then(completionItems => {
                 completionItems.length.should.eql(6);
                 completionItems[0].label.should.eql("Id");
@@ -59,7 +59,7 @@ describe("TransversalTransitionDataCompletionItemProvider Tests", () => {
         })
             .then(editor => {
                 const completionProvider = new ComponentCompletionItemProvider();
-                return completionProvider.provideCompletionItems(editor.document, new vscode.Position(112, 56), null);
+                return completionProvider.provideCompletionItems(editor.document, new vscode.Position(114, 56), null);
             }).then(completionItems => {
                 completionItems.length.should.eql(10);
                 completionItems[0].insertText.should.eql("State1");
@@ -80,7 +80,7 @@ describe("TransversalTransitionDataCompletionItemProvider Tests", () => {
         })
             .then(editor => {
                 const completionProvider = new ComponentCompletionItemProvider();
-                return completionProvider.provideCompletionItems(editor.document, new vscode.Position(112, 70), null);
+                return completionProvider.provideCompletionItems(editor.document, new vscode.Position(114, 70), null);
             }).then(completionItems => {
                 completionItems.length.should.eql(13);
                 completionItems[0].insertText.should.eql("2");
