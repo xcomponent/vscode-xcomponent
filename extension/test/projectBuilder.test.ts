@@ -11,18 +11,24 @@ const monoFacadesPath = path.join(inputPath, "other_input.txt");
 const windowsPlaform = "win";
 const linuxPlaform = "linux";
 
-const expectedCommands = {
-    windows: [
-        `${xcbuildPath} --compilationmode=Debug --build --env=Dev --vs=VS2015 --project=${xcmlPath}`,
-        `${xcbuildPath} --exportRuntimes --compilationmode=Debug --env=Dev --output="${rootPath}${path.sep}XCR" --project=${xcmlPath}`,
-        `${xcbuildPath} --compilationmode=Debug --exportInterface --env=Dev --output="${rootPath}${path.sep}output" --project=${xcmlPath}`
-    ],
-    linux: [
-        `mono ${xcbuildPath} --compilationmode=Debug --build --env=Dev --vs=VS2015 --project=${xcmlPath} --monoPath=“${monoFacadesPath}” --framework=Framework452 `,
-        `mono ${xcbuildPath} --exportRuntimes --compilationmode=Debug --env=Dev --output="${rootPath}${path.sep}XCR" --project=${xcmlPath}`,
-        `mono ${xcbuildPath} --compilationmode=Debug --exportInterface --env=Dev --output="${rootPath}${path.sep}output" --project=${xcmlPath}`
-    ]
-};
+const expectedCommands = [
+    {
+        platform: "windows",
+        commands: [
+            `${xcbuildPath} --compilationmode=Debug --build --env=Dev --vs=VS2015 --project=${xcmlPath}`,
+            `${xcbuildPath} --exportRuntimes --compilationmode=Debug --env=Dev --output="${rootPath}${path.sep}XCR" --project=${xcmlPath}`,
+            `${xcbuildPath} --compilationmode=Debug --exportInterface --env=Dev --output="${rootPath}${path.sep}output" --project=${xcmlPath}`
+        ]
+    },
+    {
+        platform: "linux",
+        commands: [
+            `mono ${xcbuildPath} --compilationmode=Debug --build --env=Dev --vs=VS2015 --project=${xcmlPath} --monoPath=“${monoFacadesPath}” --framework=Framework452 `,
+            `mono ${xcbuildPath} --exportRuntimes --compilationmode=Debug --env=Dev --output="${rootPath}${path.sep}XCR" --project=${xcmlPath}`,
+            `mono ${xcbuildPath} --compilationmode=Debug --exportInterface --env=Dev --output="${rootPath}${path.sep}output" --project=${xcmlPath}`
+        ]
+    }
+];
 
 describe("projectBuilder test", () => {
     it(`Given a wrongCxmlPath, getCommands should return undefined`, () => {
@@ -31,12 +37,12 @@ describe("projectBuilder test", () => {
         deepEql(commands, undefined).should.equal(true);
     });
 
-    Object.keys(expectedCommands).forEach(platform => {
-        it(`Given a the right arguments in a ${platform} platform, getCommands should return the right commands`, () => {
-            const commands = getCommands(xcbuildPath, rootPath, xcmlPath, monoFacadesPath, platform);
-            deepEql(commands, expectedCommands[platform]).should.equal(true);
+    expectedCommands.forEach(test => {
+        it(`Given a the right arguments in a ${test.platform} platform, getCommands should return the right commands`, () => {
+            const commands = getCommands(xcbuildPath, rootPath, xcmlPath, monoFacadesPath, test.platform);
+            deepEql(commands, test.commands).should.equal(true);
         });
-    
+
     });
 
 });
