@@ -16,7 +16,7 @@ export const getServerUrl = (configurationFilePath: string): string => {
     return serverUrl;
 };
 
-export const isSecure = (configurationFilePath: string) : boolean => {
+export const isSecure = (configurationFilePath: string): boolean => {
     if (fs.existsSync(configurationFilePath)) {
         const json = parseStringSync(fs.readFileSync(configurationFilePath).toString());
         const websocketConfig = json.deployment.configuration[0].gateways[0].websocket[0];

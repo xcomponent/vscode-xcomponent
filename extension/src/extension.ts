@@ -44,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
         terminals[e.name] = undefined;
     });
     const createTerminal = (name: string): void => {
-        if (terminals[name] === undefined) {
+        if (!terminals.has(name)) {
             terminals[name] = vscode.window.createTerminal(name);
             context.subscriptions.push(terminals[name]);
         }

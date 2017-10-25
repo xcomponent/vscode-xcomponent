@@ -14,6 +14,6 @@ export const launchBridge = (terminal: vscode.Terminal): void => {
     const configurationFilePath = `${rootPath}${path.sep}Configuration.${baseName}${path.sep}Dev${path.sep}${baseName}_Deployment_Configuration.xml`;
     const unsecure = isSecure(configurationFilePath) ? "" : "--unsecure";
     const launchRuntimeCommand = `${mono} ${bridge} --apiPath="${rootPath}${path.sep}output${path.sep}xcassemblies" --port=${config.xcwebsocketbridge.port} ${unsecure}`;
-    terminal.show();    
+    terminal.show();
     terminal.sendText(launchRuntimeCommand);
 };
