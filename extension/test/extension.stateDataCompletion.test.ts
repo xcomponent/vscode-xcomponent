@@ -77,9 +77,11 @@ describe("StateCompletionItemProvider Tests", () => {
                 completionItems.length.should.eql(2);
                 completionItems[0].insertText.should.eql("StateMachine2");
                 completionItems[0].filterText.should.eql("StateMachine2");
+                completionItems[0].documentation.should.eql("StateMachine2");
                 completionItems[0].label.should.eql("TestSpec");
                 completionItems[1].insertText.should.eql("StateMachine1");
                 completionItems[1].filterText.should.eql("StateMachine1");
+                completionItems[1].documentation.should.eql("StateMachine1");
                 completionItems[1].label.should.eql("TechTestManger");
             }, reason => {
                 console.error(reason);
