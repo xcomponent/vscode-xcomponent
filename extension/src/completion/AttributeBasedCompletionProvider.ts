@@ -20,7 +20,7 @@ export class AttributeBasedCompletionProvider implements CompletionProvider {
         const regexToGetValues = new RegExp(`<${this.tagName}[\\s\\S]*?${this.attributeName}="(.*?)"[\\s\\S]*?>`, "g");
         const content = document.getText();
         let match = regexToGetValues.exec(content);
-        const values = new Set();
+        const values = new Set<string>();
         while (match !== null) {
             values.add(match[1]);
             match = regexToGetValues.exec(content);
