@@ -123,6 +123,7 @@
     "opn": "^5.1.0",
     "port-pid": "^0.0.6",
     "portscanner": "^2.1.1",
+    "spyxcomponent": "^1.0.1",
     "xml2js-parser": "^1.1.1"
   },
   "devDependencies": {
