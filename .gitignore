@@ -13,3 +13,4 @@ out/
 dist/
 .vscode-test
 *.vsix
+extension/spyxcomponent
