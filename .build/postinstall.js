@@ -1,4 +1,5 @@
 const fs = require('fs');
+const fs_extra = require('fs-extra');
 const path = require('path');
 const cp = require('child_process');
 const yarn = process.platform === 'win32' ? 'yarn.cmd' : 'yarn';
@@ -22,3 +23,11 @@ for (const element of fs.readdirSync(cwd)) {
 		yarnInstall(path.join(cwd, element));
 	}
 }
+
+const sourceSpyPath = path.join(cwd, 'node_modules', 'spyxcomponent');
+const destinationSpypath = path.join(cwd, 'extension', 'spyxcomponent');
+fs_extra.copy(sourceSpyPath, destinationSpypath, (err) => {
+	if (err) {
+		return console.error(err);
+	}
+});

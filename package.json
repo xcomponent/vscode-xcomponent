@@ -9,7 +9,10 @@
 		"tslint": "cd shared && yarn run tslint && cd .. && cd viewer && yarn run tslint && cd .. && cd extension && yarn run tslint"
 	},
 	"dependencies": {
-		"deep-eql": "^2.0.2",
-		"opn": "^5.1.0"
+		"child_process": "^1.0.2",
+		"fs": "^0.0.1-security",
+		"fs-extra": "^4.0.2",
+		"path": "^0.12.7",
+		"spyxcomponent": "^1.0.1"
 	}
 }
