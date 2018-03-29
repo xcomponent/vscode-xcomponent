@@ -59,7 +59,7 @@ To display a composition *.xcml file, use the *"XComponent: Preview Composition"
 
 To build a xcomponent project, use the *"XComponent: Build project"* command.
 Don't forget to specify xcbuild.exe path in vscode settings. Otherwise, xcbuild.exe specified in the environnement path will be used.
-Also, don't forget to specify mono facades path in vscode settings when working on linux or macOs environnement.
+Also, don't forget to specify mono facades path in vscode settings when working on linux or macOS environnement.
 
 ## WebSocketBridge
 
