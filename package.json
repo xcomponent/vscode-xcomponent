@@ -11,7 +11,7 @@
 	"dependencies": {
 		"child_process": "^1.0.2",
 		"fs": "^0.0.1-security",
-		"fs-extra": "^4.0.2",
+		"fs-extra": "^5.0.0",
 		"path": "^0.12.7",
 		"spyxcomponent": "^1.0.1"
 	}
