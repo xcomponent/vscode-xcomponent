@@ -259,7 +259,14 @@ export class ComponentModel {
                 "text": text
             });
         }
-        let triggerableLinksJson = modelJson.ComponentData.TransversalLinks === undefined ? [] : modelJson.ComponentData.TransversalLinks[0].TransversalTransitionData;
+
+        // let triggerableLinksJson = modelJson.ComponentData.TransversalLinks === undefined ? [] : modelJson.ComponentData.TransversalLinks[0].TransversalTransitionData;
+        let triggerableLinksJson;
+        if (modelJson.ComponentData.TransversalLinks === undefined) {
+            triggerableLinksJson = [];
+        } else if (modelJson.ComponentData.TransversalLinks.length > 0) {
+            triggerableLinksJson = modelJson.ComponentData.TransversalLinks[0].TransversalTransitionData;
+        }
         triggerableLinksJson = (triggerableLinksJson === undefined) ? [] : triggerableLinksJson;
         for (let j = 0; j < triggerableLinksJson.length; j++) {
             from = this.states[triggerableLinksJson[j].$.FromKey];
@@ -307,6 +314,11 @@ export class ComponentModel {
         // transition pattern state
         const transitionPatternStates = {};
         let transitionPatternStateDataJson = modelJson.ComponentData.TransitionPatternStates === undefined ? [] : modelJson.ComponentData.TransitionPatternStates[0].TransitionPatternStateData;
+        if (modelJson.ComponentData.TransitionPatternStates === undefined) {
+            transitionPatternStateDataJson = [];
+        } else if (modelJson.ComponentData.TransitionPatternStates.length > 0) {
+            transitionPatternStateDataJson = modelJson.ComponentData.TransitionPatternStates[0].TransitionPatternStateData;
+        }
         transitionPatternStateDataJson = (transitionPatternStateDataJson === undefined) ? [] : transitionPatternStateDataJson;
         for (let i = 0; i < transitionPatternStateDataJson.length; i++) {
             id = transitionPatternStateDataJson[i].$.SubGraphKey;
