@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ComponentData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="LightManager" Version="57">
+  <StateMachines>
+    <StateMachineData Id="1" Name="LightManager" />
+    <StateMachineData Id="2" Name="Light" PublicMember="XComponent.LightManager.UserObject.Light" StateCopyProperty="CurrentColor" />
+  </StateMachines>
+  <States>
+    <StateData Id="1" Name="EntryPoint" IsEntryPoint="true" SubGraphKey="StateMachine1" />
+    <StateData Id="7" Name="Up" SubGraphKey="StateMachine1" />
+    <StateData Id="2" Name="Red" SubGraphKey="StateMachine2">
+      <TriggeredMethods>
+        <TriggeredMethodData TransitionName="CreateLight" TriggeringEvent="XComponent.LightManager.UserObject.CreateLight" />
+        <TriggeredMethodData TransitionName="UpdatePeriods" TriggeringEvent="XComponent.LightManager.UserObject.UpdatePeriods" />
+      </TriggeredMethods>
+    </StateData>
+    <StateData Id="3" Name="Green" SubGraphKey="StateMachine2">
+      <TriggeredMethods>
+        <TriggeredMethodData TransitionName="UpdatePeriods" TriggeringEvent="XComponent.LightManager.UserObject.UpdatePeriods" />
+      </TriggeredMethods>
+    </StateData>
+    <StateData Id="4" Name="Orange" SubGraphKey="StateMachine2">
+      <TriggeredMethods>
+        <TriggeredMethodData TransitionName="UpdatePeriods" TriggeringEvent="XComponent.LightManager.UserObject.UpdatePeriods" />
+      </TriggeredMethods>
+    </StateData>
+    <StateData Id="5" Name="Paused" SubGraphKey="StateMachine2" />
+  </States>
+  <Links>
+    <TransitionData Id="17" Name="Init" FromKey="State1" ToKey="State7" Type="TimeOut" TriggeringEvent="XComponent.Common.Event.DefaultEvent" />
+    <TransitionData Id="18" Name="CreateLight" FromKey="State7" ToKey="State2" Type="X" TriggeringEvent="XComponent.LightManager.UserObject.CreateLight" />
+    <TransitionData Id="1" Name="FromRedToGreen" FromKey="State2" ToKey="State3" Type="TimeOut" ExecutionDelay="2" SetCustomTimeout="true" TriggeringEvent="XComponent.Common.Event.DefaultEvent" />
+    <TransitionData Id="5" Name="Pause" FromKey="State2" ToKey="State5" Type="Standard" TriggeringEvent="XComponent.LightManager.UserObject.Pause" />
+    <TransitionData Id="9" Name="UpdatePeriods" FromKey="State2" ToKey="State2" Type="Standard" TriggeringEvent="XComponent.LightManager.UserObject.UpdatePeriods">
+      <MatchingRules>
+        <MatchingRuleData EventProperty="Id" IsInternalMemberProperty="false" MemberProperty="Id" />
+      </MatchingRules>
+    </TransitionData>
+    <TransitionData Id="2" Name="FromGreenToOrange" FromKey="State3" ToKey="State4" Type="TimeOut" ExecutionDelay="3" SetCustomTimeout="true" TriggeringEvent="XComponent.Common.Event.DefaultEvent" />
+    <TransitionData Id="7" Name="Pause" FromKey="State3" ToKey="State5" Type="Standard" TriggeringEvent="XComponent.LightManager.UserObject.Pause" />
+    <TransitionData Id="11" Name="UpdatePeriods" FromKey="State3" ToKey="State3" Type="Standard" TriggeringEvent="XComponent.LightManager.UserObject.UpdatePeriods">
+      <MatchingRules>
+        <MatchingRuleData EventProperty="Id" IsInternalMemberProperty="false" MemberProperty="Id" />
+      </MatchingRules>
+    </TransitionData>
+    <TransitionData Id="3" Name="FromOrangeToRed" FromKey="State4" ToKey="State2" Type="TimeOut" ExecutionDelay="1" SetCustomTimeout="true" TriggeringEvent="XComponent.Common.Event.DefaultEvent" />
+    <TransitionData Id="6" Name="Pause" FromKey="State4" ToKey="State5" Type="Standard" TriggeringEvent="XComponent.LightManager.UserObject.Pause" />
+    <TransitionData Id="10" Name="UpdatePeriods" FromKey="State4" ToKey="State4" Type="Standard" TriggeringEvent="XComponent.LightManager.UserObject.UpdatePeriods">
+      <MatchingRules>
+        <MatchingRuleData EventProperty="Id" IsInternalMemberProperty="false" MemberProperty="Id" />
+      </MatchingRules>
+    </TransitionData>
+    <TransitionData Id="8" Name="Start" FromKey="State5" ToKey="State2" Type="Standard" TriggeringEvent="XComponent.LightManager.UserObject.Start" />
+    <TransitionData Id="13" Name="BlinkUpdate" FromKey="State5" ToKey="State5" Type="TimeOut" ExecutionDelay="1" SetCustomTimeout="true" TriggeringEvent="XComponent.Common.Event.DefaultEvent" />
+  </Links>
+</ComponentData>

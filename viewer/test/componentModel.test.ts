@@ -1,24 +1,35 @@
 import { ComponentModel } from "../src/componentModel";
 import * as fs from "fs-extra";
-import { correctNodeDataArray, correctLinkDataArray, correctLinkDataArrayWithoutGraphical, correctNodeDataArrayWithoutGraphical, correctLinkDataArrayWithExtraData, correctNodeDataArrayWithExtraData } from "./componentModel.expectation";
+import { correctNodeDataArrayLightManager, correctLinkDataArrayLightManager, correctNodeDataArray, correctLinkDataArray, correctLinkDataArrayWithoutGraphical, correctNodeDataArrayWithoutGraphical, correctLinkDataArrayWithExtraData, correctNodeDataArrayWithExtraData } from "./componentModel.expectation";
 import { DrawComponentData } from "../src/gojsTemplates";
 import * as chai from "chai";
 const should = chai.should();
 
+
 describe("Test ComponentModel", () => {
 
-    test("Should get the right data from the model and graphical files", (done) => {
+    const testCorrectData = (modelPath, graphicalPath, correctNodeDataArray, correctLinkDataArray) => {
         let componentModel: ComponentModel;
         let model, graphical;
-        model = fs.readFileSync("./test/ressources/WorldHello.cxml").toString();
-        graphical = fs.readFileSync("./test/ressources/WorldHello_Graphical.xml").toString();
+        model = fs.readFileSync(modelPath).toString();
+        graphical = fs.readFileSync(graphicalPath).toString();
         componentModel = new ComponentModel({ model, graphical });
 
-        componentModel.load().then((data: DrawComponentData) => {
+        return componentModel.load().then((data: DrawComponentData) => {
             data.nodeDataArray.should.eql(correctNodeDataArray);
             data.linkDataArray.should.eql(correctLinkDataArray);
-            done();
         });
+
+    }
+
+    test("Should get the right data from the model and graphical files", (done) => {
+        testCorrectData("./test/ressources/WorldHello.cxml", "./test/ressources/WorldHello_Graphical.xml", correctNodeDataArray, correctLinkDataArray)
+            .then(() => {
+                return testCorrectData("./test/ressources/LightManager.cxml", "./test/ressources/LightManager_Graphical.xml", correctNodeDataArrayLightManager, correctLinkDataArrayLightManager)
+            })
+            .then(() => {
+                done();
+            });
     });
 
     test("Should throw an error while parsing invalid model files.", (done) => {

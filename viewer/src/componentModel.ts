@@ -232,8 +232,13 @@ export class ComponentModel {
             to = this.states[linksJson[i].$.ToKey];
             text = linksJson[i].$.Name;
             key = linksJson[i].$.Id;
-            const isForkTransition = from.group === to.key.split(modelTags.Separator)[0];
-            const color = (isForkTransition) ? "black" : "green";
+            const isForkTransition = !(from.group === to.key.split(modelTags.Separator)[0]);
+            let color = "black";
+            if (isForkTransition) {
+                color = "green";
+            } else if (linksJson[i].$.Type === "TimeOut") {
+                color = "orange";
+            }
             this.linkDataArray.push({
                 "key": key,
                 "from": from.key,
@@ -254,7 +259,8 @@ export class ComponentModel {
                 "text": text
             });
         }
-        const triggerableLinksJson = modelJson.ComponentData.TransversalLinks[0].TransversalTransitionData || [];
+
+        const triggerableLinksJson = modelJson.ComponentData.TransversalLinks && modelJson.ComponentData.TransversalLinks.length > 0 ? modelJson.ComponentData.TransversalLinks[0].TransversalTransitionData : [];
         for (let j = 0; j < triggerableLinksJson.length; j++) {
             from = this.states[triggerableLinksJson[j].$.FromKey];
             if (!from)
@@ -300,8 +306,7 @@ export class ComponentModel {
         }
         // transition pattern state
         const transitionPatternStates = {};
-        let transitionPatternStateDataJson = modelJson.ComponentData.TransitionPatternStates[0].TransitionPatternStateData;
-        transitionPatternStateDataJson = (transitionPatternStateDataJson === undefined) ? [] : transitionPatternStateDataJson;
+        const transitionPatternStateDataJson = modelJson.ComponentData.TransitionPatternStates && modelJson.ComponentData.TransitionPatternStates.length > 0 ? modelJson.ComponentData.TransitionPatternStates[0].TransitionPatternStateData : [];
         for (let i = 0; i < transitionPatternStateDataJson.length; i++) {
             id = transitionPatternStateDataJson[i].$.SubGraphKey;
             group = this.stateMachines[id].name;
